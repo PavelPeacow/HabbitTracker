@@ -7,44 +7,56 @@
 
 import SwiftUI
 
-struct HabbitItem: Identifiable, Codable {
-    var id: UUID
-    var nameHabbit: String
-    var decriptionHabbit: String
-}
-
-class Habbits: ObservableObject {
-    @Published var habbit = [HabbitItem]()
-}
 
 struct ContentView: View {
-    @StateObject var habbit = Habbits()
+    @StateObject var habbits = Habbits()
     @State private var isSheetActive = false
     
     var body: some View {
         NavigationView {
             List {
-                ForEach(0..<5) { item in
+                ForEach(habbits.habbits) { item in
                     NavigationLink {
-                        HabbitDetailView(habbit: habbit)
+                        HabbitDetailView(habbit: item)
                     } label: {
-                        Text("DetailView")
+                        HStack{
+                            Text(item.nameHabbit)
+                            Rectangle()
+                                .foregroundColor(.green)
+                                .frame(width: 5, height: 30)
+                            Spacer()
+
+                        }
+                        HStack {
+                            Text("\(item.streak)")
+                        }
+                       
                     }
                 }
+                .onDelete(perform: performDelete)
             }
+            .listStyle(.plain)
             .toolbar {
                 ToolbarItem {
                     Button {
                         isSheetActive.toggle()
                     } label: {
-                        Image(systemName: "circle.fill")
+                        Image(systemName: "plus.circle")
                     }
+                }
+                ToolbarItem(placement: .navigationBarLeading) {
+                    EditButton()
                 }
             }
             .sheet(isPresented: $isSheetActive) {
-                AddHabbitView()
+                AddHabbitView(habbit: habbits)
             }
+            .navigationTitle("HabbitTracker")
         }
+    }
+    
+    func performDelete(at offset: IndexSet) {
+        habbits.habbits.remove(atOffsets: offset)
     }
 }
 

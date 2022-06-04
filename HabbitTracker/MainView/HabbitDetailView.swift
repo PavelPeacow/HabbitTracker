@@ -8,17 +8,47 @@
 import SwiftUI
 
 struct HabbitDetailView: View {
-    @ObservedObject var habbit: Habbits
+    var habbit: HabbitItem
     
     var body: some View {
         NavigationView {
-            Text("Habbit detail view")
+            VStack {
+                VStack {
+                    Text(habbit.nameHabbit)
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                    Text("Streak: \(habbit.streak)")
+                        .font(.subheadline)
+                }
+                Rectangle()
+                    .frame(height: 10)
+                    .foregroundColor(.green)
+                Spacer()
+                VStack {
+                    Text(habbit.decriptionHabbit)
+                        .font(.headline)
+                }
+                
+                Spacer()
+                Spacer()
+                Spacer()
+                
+                Button {
+                    
+                } label: {
+                    Text("I've done today's habit")
+                }
+                Spacer()
+                Spacer()
+            }
+            
+           
         }
     }
 }
 
 struct HabbitDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        HabbitDetailView(habbit: .init())
+        HabbitDetailView(habbit: .init(nameHabbit: "Read book", decriptionHabbit: "read books twice a week", streak: 12))
     }
 }
