@@ -9,15 +9,15 @@ import SwiftUI
 
 
 struct ContentView: View {
-    @StateObject var habbits = Habbits()
+    @StateObject var habbitsList = Habbits()
     @State private var isSheetActive = false
     
     var body: some View {
         NavigationView {
             List {
-                ForEach(habbits.habbits) { item in
+                ForEach(habbitsList.habbits) { item in
                     NavigationLink {
-                        HabbitDetailView(habbit: item)
+                        HabbitDetailView(habbit: item, habbitsList: habbitsList)
                     } label: {
                         HStack{
                             Text(item.nameHabbit)
@@ -49,14 +49,14 @@ struct ContentView: View {
                 }
             }
             .sheet(isPresented: $isSheetActive) {
-                AddHabbitView(habbit: habbits)
+                AddHabbitView(habbitsList: habbitsList)
             }
             .navigationTitle("HabbitTracker")
         }
     }
     
     func performDelete(at offset: IndexSet) {
-        habbits.habbits.remove(atOffsets: offset)
+        habbitsList.habbits.remove(atOffsets: offset)
     }
 }
 

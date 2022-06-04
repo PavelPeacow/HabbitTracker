@@ -9,6 +9,7 @@ import SwiftUI
 
 struct HabbitDetailView: View {
     var habbit: HabbitItem
+    var habbitsList: Habbits
     
     var body: some View {
         NavigationView {
@@ -34,7 +35,9 @@ struct HabbitDetailView: View {
                 Spacer()
                 
                 Button {
-                    
+                    var item = habbit
+                    item.streak += 1
+                    habbitsList.habbits[habbitsList.habbits.firstIndex(of: habbit)!] = item
                 } label: {
                     Text("I've done today's habit")
                 }
@@ -49,6 +52,6 @@ struct HabbitDetailView: View {
 
 struct HabbitDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        HabbitDetailView(habbit: .init(nameHabbit: "Read book", decriptionHabbit: "read books twice a week", streak: 12))
+        HabbitDetailView(habbit: .init(nameHabbit: "Read book", decriptionHabbit: "read books twice a week", streak: 12), habbitsList: .init())
     }
 }

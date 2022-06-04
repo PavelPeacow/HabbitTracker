@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AddHabbitView: View {
-    @ObservedObject var habbit: Habbits
+    @ObservedObject var habbitsList: Habbits
 
     @State private var habbitName = ""
     @State private var habbitDescription = ""
@@ -29,7 +29,7 @@ struct AddHabbitView: View {
                 Section {
                     Button {
                         let item = HabbitItem(nameHabbit: habbitName, decriptionHabbit: habbitDescription, streak: 0)
-                        habbit.habbits.append(item)
+                        habbitsList.habbits.append(item)
                         dismiss()
                     } label: {
                         Text("Add")
@@ -43,6 +43,6 @@ struct AddHabbitView: View {
 
 struct AddHabbitView_Previews: PreviewProvider {
     static var previews: some View {
-        AddHabbitView(habbit: .init())
+        AddHabbitView(habbitsList: .init())
     }
 }
