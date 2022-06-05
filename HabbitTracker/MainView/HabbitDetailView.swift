@@ -20,10 +20,11 @@ struct HabbitDetailView: View {
                         .fontWeight(.bold)
                     Text("Streak: \(habbit.streak)")
                         .font(.subheadline)
+                    Rectangle()
+                        .frame(height: 10)
+                        .foregroundColor(.green)
                 }
-                Rectangle()
-                    .frame(height: 10)
-                    .foregroundColor(.green)
+
                 Spacer()
                 VStack {
                     Text(habbit.decriptionHabbit)
@@ -32,8 +33,6 @@ struct HabbitDetailView: View {
                 
                 Spacer()
                 Spacer()
-                Spacer()
-                
                 Button {
                     var item = habbit
                     item.streak += 1
@@ -42,7 +41,17 @@ struct HabbitDetailView: View {
                     Text("I've done today's habit")
                 }
                 Spacer()
+                
+                Button {
+                    var item = habbit
+                    item.streak -= 1
+                    habbitsList.habbits[habbitsList.habbits.firstIndex(of: habbit)!] = item
+                } label: {
+                    Text("I've not done today's habit")
+                }
                 Spacer()
+                Spacer()
+                
             }
             
            
