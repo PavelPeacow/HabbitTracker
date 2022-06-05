@@ -13,6 +13,7 @@ struct HabbitItem: Identifiable, Codable, Equatable {
     var decriptionHabbit: String
     var streak: Int
     var color: String
+    var frequency: [String]
 }
 
 class Habbits: ObservableObject {

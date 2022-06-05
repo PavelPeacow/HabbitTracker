@@ -27,6 +27,11 @@ struct HabbitDetailView: View {
 
                 Spacer()
                 VStack {
+                    HStack {
+                        ForEach(habbit.frequency, id: \.self) { day in
+                            Text(day)
+                        }
+                    }
                     Text(habbit.decriptionHabbit)
                         .font(.headline)
                 }
@@ -61,6 +66,6 @@ struct HabbitDetailView: View {
 
 struct HabbitDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        HabbitDetailView(habbit: .init(nameHabbit: "Read book", decriptionHabbit: "read books twice a week", streak: 12, color: "Color-3"), habbitsList: .init())
+        HabbitDetailView(habbit: .init(nameHabbit: "Read book", decriptionHabbit: "read books twice a week", streak: 12, color: "Color-3", frequency: ["Sunday", "Sunday", "Sunday",]), habbitsList: .init())
     }
 }

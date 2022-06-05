@@ -14,7 +14,7 @@ struct AddHabbitView: View {
     @State private var habbitDescription = ""
     
     @State private var selectedColor = ""
-    let colors: [Color] = [.red, .yellow, .green, .gray, .orange, .purple, .cyan]
+    @State private var selectedFrequency = [String]()
     
     @Environment(\.dismiss) var dismiss
     
@@ -34,7 +34,7 @@ struct AddHabbitView: View {
                         let color = "Color-\(index)"
                         Circle()
                             .fill(Color(color))
-                            .frame(width: 30, height: 30)
+                            .frame(maxWidth: .infinity)
                             .overlay(content: {
                                 if color == selectedColor {
                                     Image(systemName: "checkmark")
@@ -42,14 +42,45 @@ struct AddHabbitView: View {
                                 }
                             })
                             .onTapGesture {
-                                    selectedColor = color
+                                selectedColor = color
                             }
                     }
                 }
+                
+                Section("frequency") {
+                    let weekDays = Calendar.current.weekdaySymbols
+                    HStack{
+                        ForEach(weekDays, id: \.self) { day in
+                            let index = selectedFrequency.firstIndex { value in
+                                return value == day
+                            } ?? -1
+                            Text(day.prefix(2))
+                                .foregroundColor(.white)
+                                .font(.headline)
+                                .frame(maxWidth: .infinity)
+                                .padding(.vertical, 12)
+                                .background {
+                                    Rectangle()
+                                        .fill(index != -1 ? Color(selectedColor) : .red.opacity(0.4))
+                                }
+                                .onTapGesture {
+                                    withAnimation {
+                                        if index != -1 {
+                                            selectedFrequency.remove(at: index)
+                                        } else {
+                                            selectedFrequency.append(day)
+                                        }
+                                    }
+                                    
 
+                                }
+                        }
+                    }
+                }
+                
                 Section {
                     Button {
-                        let item = HabbitItem(nameHabbit: habbitName, decriptionHabbit: habbitDescription, streak: 0, color: selectedColor)
+                        let item = HabbitItem(nameHabbit: habbitName, decriptionHabbit: habbitDescription, streak: 0, color: selectedColor, frequency: selectedFrequency)
                         habbitsList.habbits.append(item)
                         dismiss()
                     } label: {
