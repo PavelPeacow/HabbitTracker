@@ -20,12 +20,11 @@ struct ContentView: View {
                         HabbitDetailView(habbit: item, habbitsList: habbitsList)
                     } label: {
                         HStack{
+                            Circle()
+                                .fill(Color(item.color))
+                                .frame(width: 50, height: 50)
                             Text(item.nameHabbit)
-                            Rectangle()
-                                .foregroundColor(.green)
-                                .frame(width: 5, height: 30)
                             Spacer()
-
                         }
                         HStack {
                             Text("\(item.streak)")

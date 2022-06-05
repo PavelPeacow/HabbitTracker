@@ -22,7 +22,7 @@ struct HabbitDetailView: View {
                         .font(.subheadline)
                     Rectangle()
                         .frame(height: 10)
-                        .foregroundColor(.green)
+                        .foregroundColor(Color(habbit.color))
                 }
 
                 Spacer()
@@ -61,6 +61,6 @@ struct HabbitDetailView: View {
 
 struct HabbitDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        HabbitDetailView(habbit: .init(nameHabbit: "Read book", decriptionHabbit: "read books twice a week", streak: 12), habbitsList: .init())
+        HabbitDetailView(habbit: .init(nameHabbit: "Read book", decriptionHabbit: "read books twice a week", streak: 12, color: "Color-3"), habbitsList: .init())
     }
 }
