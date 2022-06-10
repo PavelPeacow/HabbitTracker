@@ -18,7 +18,7 @@ struct AddHabbitView: View {
     @State private var selectedFrequency = [String]()
     
     @State private var isReminderOn = false
-    @State private var currentDate = Date()
+    @State private var selectedDate = Date()
     
     @Environment(\.dismiss) var dismiss
     
@@ -88,7 +88,7 @@ struct AddHabbitView: View {
                     }
                     
                     if isReminderOn {
-                        DatePicker("Pick time", selection: $currentDate, displayedComponents: .hourAndMinute)
+                        DatePicker("Pick time", selection: $selectedDate, displayedComponents: .hourAndMinute)
                         
                     }
                 }
@@ -98,12 +98,60 @@ struct AddHabbitView: View {
                         let item = HabbitItem(nameHabbit: habbitName, decriptionHabbit: habbitDescription, streak: 0, color: selectedColor, frequency: selectedFrequency)
                         habbitsList.habbits.append(item)
                         dismiss()
+                        requestAuthorization()
+                        //MARK: Adding notification
+                        if  isReminderOn {
+                            let content = UNMutableNotificationContent()
+                            content.title = "Habit Remainder"
+                            content.subtitle = habbitDescription
+                            content.sound = .default
+                            
+                            let calendar = Calendar.current
+                            let weekDaySybmols: [String] = calendar.weekdaySymbols
+                            
+                            for weekDay in selectedFrequency {
+                                let id = UUID().uuidString
+                                let hour = calendar.component(.hour, from: selectedDate)
+                                let minute = calendar.component(.minute, from: selectedDate)
+                                let day = weekDaySybmols.firstIndex { currentDay in
+                                    return currentDay == weekDay
+                                } ?? -1
+                                
+                                var components = DateComponents()
+                                components.hour = hour
+                                components.minute = minute
+                                components.day = day + 1
+                                
+                                let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: true)
+                                
+                                let request = UNNotificationRequest(identifier: id, content: content, trigger: trigger)
+                                
+                                UNUserNotificationCenter.current().add(request)
+                            }
+                            
+                            print("Pushing notification")
+                        } else {
+                            print("Not Pushing notification")
+                        }
+                        
+                        
                     } label: {
                         Text("Add")
                     }
                 }
             }
             .navigationTitle("Add new habbit")
+        }
+    }
+    
+    func requestAuthorization() {
+        let options: UNAuthorizationOptions = [.alert, .sound, .badge]
+        UNUserNotificationCenter.current().requestAuthorization(options: options) { authorizarionSuccess, error in
+            if let error = error {
+                print("Error \(error.localizedDescription)")
+            } else {
+                print("Authorization request success")
+            }
         }
     }
 }
