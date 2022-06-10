@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UserNotifications
 
 struct AddHabbitView: View {
     @ObservedObject var habbitsList: Habbits
@@ -15,6 +16,9 @@ struct AddHabbitView: View {
     
     @State private var selectedColor = ""
     @State private var selectedFrequency = [String]()
+    
+    @State private var isReminderOn = false
+    @State private var currentDate = Date()
     
     @Environment(\.dismiss) var dismiss
     
@@ -79,6 +83,17 @@ struct AddHabbitView: View {
                 }
                 
                 Section {
+                    Toggle(isOn: $isReminderOn.animation()) {
+                        Text("Do you want get notifications?")
+                    }
+                    
+                    if isReminderOn {
+                        DatePicker("Pick time", selection: $currentDate, displayedComponents: .hourAndMinute)
+                        
+                    }
+                }
+                
+                VStack {
                     Button {
                         let item = HabbitItem(nameHabbit: habbitName, decriptionHabbit: habbitDescription, streak: 0, color: selectedColor, frequency: selectedFrequency)
                         habbitsList.habbits.append(item)
