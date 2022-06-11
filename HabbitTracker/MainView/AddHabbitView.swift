@@ -120,16 +120,15 @@ struct AddHabbitView: View {
                                 var components = DateComponents()
                                 components.hour = hour
                                 components.minute = minute
-                                components.day = day + 1
+                                components.weekday = day + 1
                                 
                                 let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: true)
                                 
                                 let request = UNNotificationRequest(identifier: id, content: content, trigger: trigger)
                                 
                                 UNUserNotificationCenter.current().add(request)
+                                print("Pushing notification")
                             }
-                            
-                            print("Pushing notification")
                         } else {
                             print("Not Pushing notification")
                         }
