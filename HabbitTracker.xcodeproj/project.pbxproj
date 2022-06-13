@@ -13,7 +13,9 @@
 		B5280F6A284B85F10043409A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5280F69284B85F10043409A /* Preview Assets.xcassets */; };
 		B574C8BC284B864B00879410 /* AddHabbitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B574C8BB284B864B00879410 /* AddHabbitView.swift */; };
 		B574C8BE284B8A9E00879410 /* HabbitDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B574C8BD284B8A9E00879410 /* HabbitDetailView.swift */; };
-		B5E4CB70284B9C5F00DABAA1 /* HabbitClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E4CB6F284B9C5F00DABAA1 /* HabbitClass.swift */; };
+		B5D065842857733800388545 /* HabbitTracker.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B5D065822857733800388545 /* HabbitTracker.xcdatamodeld */; };
+		B5D06586285774CF00388545 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D06585285774CF00388545 /* DataController.swift */; };
+		B5E4CB70284B9C5F00DABAA1 /* HabbitViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E4CB6F284B9C5F00DABAA1 /* HabbitViewModel.swift */; };
 		B5F666972857305E00A89F54 /* HabitLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F666962857305E00A89F54 /* HabitLabel.swift */; };
 /* End PBXBuildFile section */
 
@@ -25,7 +27,9 @@
 		B5280F69284B85F10043409A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		B574C8BB284B864B00879410 /* AddHabbitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddHabbitView.swift; sourceTree = "<group>"; };
 		B574C8BD284B8A9E00879410 /* HabbitDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabbitDetailView.swift; sourceTree = "<group>"; };
-		B5E4CB6F284B9C5F00DABAA1 /* HabbitClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabbitClass.swift; sourceTree = "<group>"; };
+		B5D065832857733800388545 /* HabbitTracker.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = HabbitTracker.xcdatamodel; sourceTree = "<group>"; };
+		B5D06585285774CF00388545 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
+		B5E4CB6F284B9C5F00DABAA1 /* HabbitViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabbitViewModel.swift; sourceTree = "<group>"; };
 		B5F666962857305E00A89F54 /* HabitLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitLabel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -60,9 +64,10 @@
 			isa = PBXGroup;
 			children = (
 				B5280F62284B85F00043409A /* HabbitTrackerApp.swift */,
+				B5D065872857814B00388545 /* ViewModel */,
 				B574C8BF284B8ABB00879410 /* MainView */,
 				B5F666982857306900A89F54 /* SmallView */,
-				B574C8C2284B8CFE00879410 /* Classes */,
+				B574C8C2284B8CFE00879410 /* DataModel */,
 				B5280F68284B85F10043409A /* Preview Content */,
 			);
 			path = HabbitTracker;
@@ -87,12 +92,22 @@
 			path = MainView;
 			sourceTree = "<group>";
 		};
-		B574C8C2284B8CFE00879410 /* Classes */ = {
+		B574C8C2284B8CFE00879410 /* DataModel */ = {
 			isa = PBXGroup;
 			children = (
-				B5E4CB6F284B9C5F00DABAA1 /* HabbitClass.swift */,
+				B5D06585285774CF00388545 /* DataController.swift */,
+				B5D065822857733800388545 /* HabbitTracker.xcdatamodeld */,
 			);
-			path = Classes;
+			path = DataModel;
+			sourceTree = "<group>";
+		};
+		B5D065872857814B00388545 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				B5E4CB6F284B9C5F00DABAA1 /* HabbitViewModel.swift */,
+			);
+			name = ViewModel;
+			path = DataModel;
 			sourceTree = "<group>";
 		};
 		B5F666982857306900A89F54 /* SmallView */ = {
@@ -173,11 +188,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5D065842857733800388545 /* HabbitTracker.xcdatamodeld in Sources */,
 				B5280F65284B85F00043409A /* ContentView.swift in Sources */,
 				B5F666972857305E00A89F54 /* HabitLabel.swift in Sources */,
 				B574C8BE284B8A9E00879410 /* HabbitDetailView.swift in Sources */,
 				B574C8BC284B864B00879410 /* AddHabbitView.swift in Sources */,
-				B5E4CB70284B9C5F00DABAA1 /* HabbitClass.swift in Sources */,
+				B5D06586285774CF00388545 /* DataController.swift in Sources */,
+				B5E4CB70284B9C5F00DABAA1 /* HabbitViewModel.swift in Sources */,
 				B5280F63284B85F00043409A /* HabbitTrackerApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -379,6 +396,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		B5D065822857733800388545 /* HabbitTracker.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				B5D065832857733800388545 /* HabbitTracker.xcdatamodel */,
+			);
+			currentVersion = B5D065832857733800388545 /* HabbitTracker.xcdatamodel */;
+			path = HabbitTracker.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = B5280F57284B85F00043409A /* Project object */;
 }
