@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HabitLabel: View {
-    @Binding var habitItem: HabbitItem
+    @Binding var habitItem: Habit
     
     var fetchCurrentWeek: [Date] {
         
@@ -55,7 +55,7 @@ struct HabitLabel: View {
                         Circle()
                             .fill(.red)
                             .frame(width: 30, height: 30)
-                        Text(habitItem.nameHabbit)
+                        Text(habitItem.name!)
                         Spacer()
                     }
                     HStack {

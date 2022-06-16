@@ -9,28 +9,21 @@ import SwiftUI
 import UserNotifications
 
 struct AddHabbitView: View {
-    @ObservedObject var habbitsList: Habbits
     
-    @State private var habbitName = ""
-    @State private var habbitDescription = ""
-    
-    @State private var selectedColor = ""
-    @State private var selectedFrequency = [String]()
-    
-    @State private var isReminderOn = false
-    @State private var selectedDate = Date()
+    @ObservedObject var habitViewModel: HabbitViewModel
     
     @Environment(\.dismiss) var dismiss
+    @Environment(\.managedObjectContext) var  moc
     
     var body: some View {
         NavigationView {
             Form {
                 Section("Enter name of habbit") {
-                    TextField("Enter name of habbit", text: $habbitName)
+                    TextField("Enter name of habbit", text:  $habitViewModel.nameHabbit)
                 }
                 
                 Section("Enter decription") {
-                    TextField("Enter description", text: $habbitDescription)
+                    TextField("Enter description", text: $habitViewModel.decriptionHabbit)
                 }
                 
                 HStack() {
@@ -40,13 +33,13 @@ struct AddHabbitView: View {
                             .fill(Color(color))
                             .frame(maxWidth: .infinity)
                             .overlay(content: {
-                                if color == selectedColor {
+                                if color == habitViewModel.color {
                                     Image(systemName: "checkmark")
                                         .font(.caption.bold())
                                 }
                             })
                             .onTapGesture {
-                                selectedColor = color
+                                habitViewModel.color = color
                             }
                     }
                 }
@@ -55,7 +48,7 @@ struct AddHabbitView: View {
                     let weekDays = Calendar.current.weekdaySymbols
                     HStack{
                         ForEach(weekDays, id: \.self) { day in
-                            let index = selectedFrequency.firstIndex { value in
+                            let index = habitViewModel.frequency.firstIndex { value in
                                 return value == day
                             } ?? -1
                             Text(day.prefix(2))
@@ -65,14 +58,14 @@ struct AddHabbitView: View {
                                 .padding(.vertical, 12)
                                 .background {
                                     Rectangle()
-                                        .fill(index != -1 ? Color(selectedColor) : .red.opacity(0.4))
+                                        .fill(index != -1 ? Color(habitViewModel.color) : .red.opacity(0.4))
                                 }
                                 .onTapGesture {
                                     withAnimation {
                                         if index != -1 {
-                                            selectedFrequency.remove(at: index)
+                                            habitViewModel.frequency.remove(at: index)
                                         } else {
-                                            selectedFrequency.append(day)
+                                            habitViewModel.frequency .append(day)
                                         }
                                     }
                                     
@@ -83,54 +76,22 @@ struct AddHabbitView: View {
                 }
                 
                 Section {
-                    Toggle(isOn: $isReminderOn.animation()) {
+                    Toggle(isOn: $habitViewModel.isRemainderOn.animation()) {
                         Text("Do you want get notifications?")
                     }
                     
-                    if isReminderOn {
-                        DatePicker("Pick time", selection: $selectedDate, displayedComponents: .hourAndMinute)
+                    if habitViewModel.isRemainderOn {
+                        DatePicker("Pick time", selection: $habitViewModel.remainderDate, displayedComponents: .hourAndMinute)
                         
                     }
                 }
                 
                 VStack {
                     Button {
-                        let item = HabbitItem(nameHabbit: habbitName, decriptionHabbit: habbitDescription, streak: 0, color: selectedColor, frequency: selectedFrequency)
-                        habbitsList.habbits.append(item)
-                        dismiss()
-                        requestAuthorization()
-                        //MARK: Adding notification
-                        if  isReminderOn {
-                            let content = UNMutableNotificationContent()
-                            content.title = "Habit Remainder"
-                            content.subtitle = habbitDescription
-                            content.sound = .default
-                            
-                            let calendar = Calendar.current
-                            let weekDaySybmols: [String] = calendar.weekdaySymbols
-                            
-                            for weekDay in selectedFrequency {
-                                let id = UUID().uuidString
-                                let hour = calendar.component(.hour, from: selectedDate)
-                                let minute = calendar.component(.minute, from: selectedDate)
-                                let day = weekDaySybmols.firstIndex { currentDay in
-                                    return currentDay == weekDay
-                                } ?? -1
-                                
-                                var components = DateComponents()
-                                components.hour = hour
-                                components.minute = minute
-                                components.weekday = day + 1
-                                
-                                let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: true)
-                                
-                                let request = UNNotificationRequest(identifier: id, content: content, trigger: trigger)
-                                
-                                UNUserNotificationCenter.current().add(request)
-                                print("Pushing notification")
+                        Task {
+                            if try await habitViewModel.addHabit(context: moc) {
+                                dismiss()
                             }
-                        } else {
-                            print("Not Pushing notification")
                         }
                         
                         
@@ -157,6 +118,6 @@ struct AddHabbitView: View {
 
 struct AddHabbitView_Previews: PreviewProvider {
     static var previews: some View {
-        AddHabbitView(habbitsList: .init())
+        AddHabbitView(habitViewModel: HabbitViewModel.init())
     }
 }

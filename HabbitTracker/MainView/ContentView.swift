@@ -9,25 +9,29 @@ import SwiftUI
 
 
 struct ContentView: View {
-    @StateObject var habbitsList = Habbits()
+    
+    @StateObject var habitViewModel = HabbitViewModel()
+    
     @State private var isSheetActive = false
+    @Environment(\.managedObjectContext) var moc
+    @FetchRequest(sortDescriptors: []) var habits: FetchedResults<Habit>
     
     var body: some View {
         NavigationView {
             List {
-                ForEach(habbitsList.habbits) { item in
+                ForEach(habits) { habitItem in
                     NavigationLink {
-                        HabbitDetailView(habbit: item, habbitsList: habbitsList)
+                        HabbitDetailView(habit: habitItem)
                     } label: {
                         HStack{
                             Circle()
-                                .fill(Color(item.color))
+                                .fill(Color(habitItem.color ?? "Color-1"))
                                 .frame(width: 50, height: 50)
-                            Text(item.nameHabbit)
+                            Text(habitItem.name ?? "")
                             Spacer()
                         }
                         HStack {
-                            Text("\(item.streak)")
+                            Text("\(habitItem.streak)")
                         }
                        
                     }
@@ -48,14 +52,14 @@ struct ContentView: View {
                 }
             }
             .sheet(isPresented: $isSheetActive) {
-                AddHabbitView(habbitsList: habbitsList)
+                AddHabbitView(habitViewModel: habitViewModel)
             }
             .navigationTitle("HabbitTracker")
         }
     }
     
     func performDelete(at offset: IndexSet) {
-        habbitsList.habbits.remove(atOffsets: offset)
+//        habbitsList.habbits.remove(atOffsets: offset)
     }
 }
 
