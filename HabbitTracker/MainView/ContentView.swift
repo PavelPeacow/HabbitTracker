@@ -33,7 +33,7 @@ struct ContentView: View {
                         HStack {
                             Text("\(habitItem.streak)")
                         }
-                       
+                        
                     }
                 }
                 .onDelete(perform: performDelete)
@@ -52,14 +52,22 @@ struct ContentView: View {
                 }
             }
             .sheet(isPresented: $isSheetActive) {
-                AddHabbitView(habitViewModel: habitViewModel)
+                habitViewModel.resetData()
+            } content: {
+                AddHabbitView()
+                    .environmentObject(habitViewModel)
             }
             .navigationTitle("HabbitTracker")
         }
     }
     
     func performDelete(at offset: IndexSet) {
-//        habbitsList.habbits.remove(atOffsets: offset)
+        withAnimation {
+            
+            offset.map { habits[$0] }.forEach(moc.delete)
+            
+            try? moc.save()
+        }
     }
 }
 
@@ -68,3 +76,4 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
+

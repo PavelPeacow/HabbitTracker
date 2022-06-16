@@ -28,7 +28,7 @@ class HabbitViewModel: ObservableObject {
         habit.streak = Int16(streak)
         habit.color = color
         habit.frequency = frequency
-        
+        habit.id = UUID()
         habit.isRemainderOn = isRemainderOn
         habit.remainderDate = remainderDate
         habit.notificationsIDs = []
@@ -44,10 +44,24 @@ class HabbitViewModel: ObservableObject {
             if let _ = try? context.save() {
                 return true
             }
+            
         }
         
         return false
     }
+    
+    
+    func resetData() {
+        nameHabbit = ""
+        decriptionHabbit = ""
+        streak = 0
+        color = "Card-1"
+        frequency = []
+        
+        isRemainderOn = false
+        remainderDate = Date()
+    }
+    
     
     func scheduleNotification() async throws -> [String] {
         let content = UNMutableNotificationContent()

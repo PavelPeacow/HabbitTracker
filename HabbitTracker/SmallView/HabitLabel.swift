@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HabitLabel: View {
-    @Binding var habitItem: Habit
+    let habitItem: Habit
     
     var fetchCurrentWeek: [Date] {
         

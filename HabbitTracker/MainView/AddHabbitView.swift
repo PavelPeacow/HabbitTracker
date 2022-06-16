@@ -10,7 +10,7 @@ import UserNotifications
 
 struct AddHabbitView: View {
     
-    @ObservedObject var habitViewModel: HabbitViewModel
+    @EnvironmentObject var habitViewModel: HabbitViewModel
     
     @Environment(\.dismiss) var dismiss
     @Environment(\.managedObjectContext) var  moc
@@ -89,6 +89,7 @@ struct AddHabbitView: View {
                 VStack {
                     Button {
                         Task {
+                            requestAuthorization()
                             if try await habitViewModel.addHabit(context: moc) {
                                 dismiss()
                             }
@@ -118,6 +119,7 @@ struct AddHabbitView: View {
 
 struct AddHabbitView_Previews: PreviewProvider {
     static var previews: some View {
-        AddHabbitView(habitViewModel: HabbitViewModel.init())
+        AddHabbitView()
+            .environmentObject(HabbitViewModel())
     }
 }
