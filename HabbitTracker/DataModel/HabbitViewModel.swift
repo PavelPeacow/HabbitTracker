@@ -8,6 +8,7 @@
 import Foundation
 import CoreData
 import NotificationCenter
+import SwiftUI
 
 class HabbitViewModel: ObservableObject {
     
@@ -63,6 +64,19 @@ class HabbitViewModel: ObservableObject {
     }
     
     
+    func performDelete(at offsets: IndexSet, context: NSManagedObjectContext, habitsFetch: FetchedResults<Habit>) {
+            for index in offsets {
+                let habit = habitsFetch[index]
+                context.delete(habit)
+                
+                if habit.isRemainderOn {
+                    UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: habit.notificationsIDs ?? [])
+                }
+            }
+            
+            try? context.save()
+    }
+        
     func scheduleNotification() async throws -> [String] {
         let content = UNMutableNotificationContent()
         content.title = "Habit Remainder"

@@ -36,7 +36,9 @@ struct ContentView: View {
                         
                     }
                 }
-                .onDelete(perform: performDelete)
+                .onDelete { IndexSet in
+                    habitViewModel.performDelete(at: IndexSet, context: moc, habitsFetch: habits)
+                }
             }
             .listStyle(.plain)
             .toolbar {
@@ -61,14 +63,6 @@ struct ContentView: View {
         }
     }
     
-    func performDelete(at offset: IndexSet) {
-        withAnimation {
-            
-            offset.map { habits[$0] }.forEach(moc.delete)
-            
-            try? moc.save()
-        }
-    }
 }
 
 struct ContentView_Previews: PreviewProvider {
