@@ -23,17 +23,7 @@ struct ContentView: View {
                     NavigationLink {
                         HabbitDetailView(habit: habitItem)
                     } label: {
-                        HStack{
-                            Circle()
-                                .fill(Color(habitItem.color ?? "Color-1"))
-                                .frame(width: 50, height: 50)
-                            Text(habitItem.name ?? "")
-                            Spacer()
-                        }
-                        HStack {
-                            Text("\(habitItem.streak)")
-                        }
-                        
+                        HabitLabel(habitItem: habitItem)
                     }
                 }
                 .onDelete { IndexSet in

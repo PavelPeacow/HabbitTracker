@@ -66,7 +66,10 @@ struct HabbitDetailView: View {
 
 struct HabbitDetailView_Previews: PreviewProvider {
     
+    static let context = DataController().container.viewContext
+    static let habbit = Habit(context: context)
+    
     static var previews: some View {
-        HabbitDetailView(habit: .init())
+        HabbitDetailView(habit: habbit)
     }
 }

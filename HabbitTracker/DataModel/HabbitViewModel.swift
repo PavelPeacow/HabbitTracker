@@ -12,16 +12,25 @@ import SwiftUI
 
 class HabbitViewModel: ObservableObject {
     
+    //Habit
     @Published var nameHabbit: String = ""
     @Published var decriptionHabbit: String = ""
     @Published var streak: Int = 0
     @Published var color: String = "Card-1"
+    
+    //Choosen weekdays
     @Published var frequency: [String] = []
     
+    //Remainder
     @Published var isRemainderOn: Bool = false
     @Published var remainderDate = Date()
     
+    //CurrentDate
+    @Published var currentDay = Date()
     
+    
+    
+    //MARK: Adding habit when tapping Add button in AddHabbitView
     func addHabit(context: NSManagedObjectContext) async throws  -> Bool {
         let habit = Habit(context: context)
         habit.name = nameHabbit
@@ -51,7 +60,7 @@ class HabbitViewModel: ObservableObject {
         return false
     }
     
-    
+    //MARK: Reseting data when dismiss AddHabbitView
     func resetData() {
         nameHabbit = ""
         decriptionHabbit = ""
@@ -63,7 +72,7 @@ class HabbitViewModel: ObservableObject {
         remainderDate = Date()
     }
     
-    
+    //MARK: Deleting from list
     func performDelete(at offsets: IndexSet, context: NSManagedObjectContext, habitsFetch: FetchedResults<Habit>) {
             for index in offsets {
                 let habit = habitsFetch[index]
@@ -77,6 +86,7 @@ class HabbitViewModel: ObservableObject {
             try? context.save()
     }
         
+    //MARK: Scheduling notifications
     func scheduleNotification() async throws -> [String] {
         let content = UNMutableNotificationContent()
         content.title = "Habit Remainder"
@@ -112,6 +122,13 @@ class HabbitViewModel: ObservableObject {
         }
         
         return notificationsIDs
+    }
+    
+    //MARK: Date
+    func isToday(date: Date) -> Bool {
+        let calendar = Calendar.current
+        
+        return calendar.isDate(currentDay, inSameDayAs: date)
     }
     
 }
