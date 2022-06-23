@@ -13,7 +13,7 @@ struct HabbitTrackerApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            TabBarView()
                 .environment(\.managedObjectContext, dataController.container.viewContext)
         }
     }

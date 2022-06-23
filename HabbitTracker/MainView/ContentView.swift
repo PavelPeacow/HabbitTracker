@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @StateObject var habitViewModel = HabbitViewModel()
+    @EnvironmentObject var habitViewModel: HabbitViewModel
     
     @State private var isSheetActive = false
     @Environment(\.managedObjectContext) var moc
