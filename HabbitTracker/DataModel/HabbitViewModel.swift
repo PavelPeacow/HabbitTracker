@@ -124,11 +124,33 @@ class HabbitViewModel: ObservableObject {
         return notificationsIDs
     }
     
-    //MARK: Date
+    //MARK: Date HabbitLabel
     func isToday(date: Date) -> Bool {
         let calendar = Calendar.current
         
         return calendar.isDate(currentDay, inSameDayAs: date)
+    }
+    
+    func fetchCurrentWeek() -> [Date] {
+        
+        let calendar = Calendar.current
+        let week = calendar.dateInterval(of: .weekOfMonth, for: Date())
+        var currentWeek: [Date] = []
+        
+        
+        (0...6).forEach { day in
+            if let weekday = calendar.date(byAdding: .day, value: day, to: week!.start) {
+                currentWeek.append(weekday)
+            }
+        }
+        
+        return currentWeek
+    }
+    
+    func extractDate(date: Date, format: String) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = format
+        return formatter.string(from: date)
     }
     
 }
