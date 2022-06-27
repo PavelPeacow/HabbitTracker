@@ -11,6 +11,7 @@
 		B5280F65284B85F00043409A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5280F64284B85F00043409A /* ContentView.swift */; };
 		B5280F67284B85F10043409A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5280F66284B85F10043409A /* Assets.xcassets */; };
 		B5280F6A284B85F10043409A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5280F69284B85F10043409A /* Preview Assets.xcassets */; };
+		B54AAE4E2869BCEF00413374 /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = B54AAE4D2869BCEF00413374 /* FSCalendar */; };
 		B574C8BC284B864B00879410 /* AddHabbitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B574C8BB284B864B00879410 /* AddHabbitView.swift */; };
 		B574C8BE284B8A9E00879410 /* HabbitDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B574C8BD284B8A9E00879410 /* HabbitDetailView.swift */; };
 		B57E4E9128644DBB00937D9B /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57E4E9028644DBB00937D9B /* TabBarView.swift */; };
@@ -44,6 +45,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B54AAE4E2869BCEF00413374 /* FSCalendar in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -143,6 +145,9 @@
 			dependencies = (
 			);
 			name = HabbitTracker;
+			packageProductDependencies = (
+				B54AAE4D2869BCEF00413374 /* FSCalendar */,
+			);
 			productName = HabbitTracker;
 			productReference = B5280F5F284B85F00043409A /* HabbitTracker.app */;
 			productType = "com.apple.product-type.application";
@@ -171,6 +176,9 @@
 				Base,
 			);
 			mainGroup = B5280F56284B85F00043409A;
+			packageReferences = (
+				B54AAE4C2869BCEF00413374 /* XCRemoteSwiftPackageReference "FSCalendar" */,
+			);
 			productRefGroup = B5280F60284B85F00043409A /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -408,6 +416,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B54AAE4C2869BCEF00413374 /* XCRemoteSwiftPackageReference "FSCalendar" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/WenchaoD/FSCalendar";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B54AAE4D2869BCEF00413374 /* FSCalendar */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B54AAE4C2869BCEF00413374 /* XCRemoteSwiftPackageReference "FSCalendar" */;
+			productName = FSCalendar;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		B5D065822857733800388545 /* HabbitTracker.xcdatamodeld */ = {
