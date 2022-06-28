@@ -55,18 +55,34 @@ struct StatisticsView_Previews: PreviewProvider {
 
 
 struct CalendarView: UIViewRepresentable {
+    @StateObject var habitViewModel = HabbitViewModel()
+    @FetchRequest(sortDescriptors: []) var habits: FetchedResults<Habit>
     @Binding var selectedDay: Date
     var calendar = FSCalendar()
+    
+    
+    var daysComplete: [String] {
+        var completeDays = [String]()
+        for i in habits {
+            print(i.habitDaysComplete!)
+            completeDays += i.habitDaysComplete!
+        }
+        
+        return completeDays
+    }
+    //Sample
+    //var datesWithEvent = ["2022-06-03", "2022-06-06", "2022-06-12", "2022-06-25"]
     
     func updateUIView(_ uiView: FSCalendar, context: Context) {
     }
     
-
+    
     //MARK: Make UI
     func makeUIView(context: Context) -> FSCalendar {
         calendar.delegate = context.coordinator
         calendar.dataSource = context.coordinator
-    
+        
+        calendar.appearance.eventDefaultColor = .green
         return calendar
     }
     
@@ -85,7 +101,15 @@ struct CalendarView: UIViewRepresentable {
             parent.selectedDay = date
         }
         
+        func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
+            
+            let dateString = parent.habitViewModel.extractDate(date: date, format: "yyyy-MM-dd")
+            
+            if parent.daysComplete.contains(dateString) {
+                return 1
+            }
+            
+            return 0
+        }
     }
-    
-
 }
