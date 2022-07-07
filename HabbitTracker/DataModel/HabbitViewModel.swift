@@ -31,29 +31,59 @@ class HabbitViewModel: ObservableObject {
     //EmptyArray of daysComplete
     @Published var daysComplete: [String] = []
     
+    @Published var daysCompleteDick: [Int:String] = [:]
+    
     //MARK: Update habit and mark today's date when click on it in ContentView
-    func dayComplete(context: NSManagedObjectContext, habitToSave: Habit) {
-        habitToSave.habitDaysComplete?.append(extractDate(date: Date.now, format: "yyyy-MM-dd"))
-        print(habitToSave.habitDaysComplete ?? "loh")
+//    func dayComplete(context: NSManagedObjectContext, habitToSave: Habit) {
+//        habitToSave.habitDaysComplete?.append(extractDate(date: Date.now, format: "yyyy-MM-dd"))
+//        print(habitToSave.habitDaysComplete ?? "loh")
+//        habitToSave.streak += 1
+//
+//        try? context.save()
+//    }
+    
+    //MARK: Update habit and mark today's date when click on it in ContentView
+    func dayComplete(context: NSManagedObjectContext, habitToSave: Habit, indexDay: Int) {
+        let date = extractDate(date: Date.now, format: "yyyy-MM-dd")
+        habitToSave.dictionaryDateDay?[indexDay] = date
+        print(habitToSave.dictionaryDateDay ?? "dick empty")
         habitToSave.streak += 1
-        
         try? context.save()
     }
     
     func isTaptedOnDay(indexDay: Int, habitItem: Habit, moc: NSManagedObjectContext) {
         if showSelectedDays(frequency: habitItem.frequency ?? []).contains(indexDay) {
-            dayComplete(context: moc, habitToSave: habitItem)
+            dayComplete(context: moc, habitToSave: habitItem, indexDay: indexDay)
         }
     }
     
-    func isDayAlreadyTapped(context: NSManagedObjectContext, habitToSave: Habit) -> Bool {
-        if habitToSave.habitDaysComplete!.contains(where: { date in
-            date == extractDate(date: Date.now, format: "yyyy-MM-dd")
-        }) {
-            let removeDate = habitToSave.habitDaysComplete?.firstIndex(where: { date in
-                date == extractDate(date: Date.now, format: "yyyy-MM-dd")
-            }) ?? -1
-            habitToSave.habitDaysComplete?.remove(at: removeDate)
+//    func isDayAlreadyTapped(context: NSManagedObjectContext, habitToSave: Habit) -> Bool {
+//        if habitToSave.habitDaysComplete!.contains(where: { date in
+//            date == extractDate(date: Date.now, format: "yyyy-MM-dd")
+//        }) {
+//            let removeDate = habitToSave.habitDaysComplete?.firstIndex(where: { date in
+//                date == extractDate(date: Date.now, format: "yyyy-MM-dd")
+//            }) ?? -1
+//            habitToSave.habitDaysComplete?.remove(at: removeDate)
+//            habitToSave.streak -= 1
+//            print("dadadaadad")
+//            try? context.save()
+//            return true
+//        } else {
+//            return false
+//        }
+//
+//    }
+    
+    //MARK: check isDay already tapped: if dictionary contains today Date and dayIndex - delete else nothing
+    func isDayAlreadyTapped(context: NSManagedObjectContext, habitToSave: Habit, dayIndex: Int) -> Bool {
+        if ((habitToSave.dictionaryDateDay?.contains(where: { (key: Int, value: String) in
+            (key,value) == (dayIndex,extractDate(date: Date.now, format: "yyyy-MM-dd"))
+        })) != nil) {
+            guard let removeDate = (habitToSave.dictionaryDateDay?.firstIndex(where: { (key: Int, value: String) in
+                (key,value) == (dayIndex,extractDate(date: Date.now, format: "yyyy-MM-dd"))
+            })) else { return false }
+            habitToSave.dictionaryDateDay?.remove(at: removeDate)
             habitToSave.streak -= 1
             print("dadadaadad")
             try? context.save()
@@ -65,7 +95,7 @@ class HabbitViewModel: ObservableObject {
     }
     
     func checkSaveOrNotToSave(dayNum: Int, habitItem: Habit, moc: NSManagedObjectContext) {
-        if isDayAlreadyTapped(context: moc, habitToSave: habitItem) != true {
+        if isDayAlreadyTapped(context: moc, habitToSave: habitItem, dayIndex: dayNum) != true {
             isTaptedOnDay(indexDay: dayNum, habitItem: habitItem, moc: moc)
         } 
     }
@@ -83,6 +113,7 @@ class HabbitViewModel: ObservableObject {
         habit.remainderDate = remainderDate
         habit.notificationsIDs = []
         habit.habitDaysComplete = daysComplete
+        habit.dictionaryDateDay = daysCompleteDick
         
         if isRemainderOn {
             if let ids = try? await scheduleNotification() {
