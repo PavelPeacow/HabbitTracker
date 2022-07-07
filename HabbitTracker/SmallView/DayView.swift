@@ -25,11 +25,12 @@ struct DayView: View {
                     .opacity(habitViewModel.showSelectedDays(frequency: habitItem.frequency ?? []).contains(dayNum) ? 1.0 : 0.5)
                     .frame(width: 40, height: 55)
                     .onTapGesture {
-                        habitViewModel.checkSaveOrNotToSave(dayNum: dayNum, habitItem: habitItem, moc: moc)
-                        withAnimation(.easeInOut(duration: 0.5)) {
-                            isOn.toggle()
+                        if habitViewModel.showSelectedDays(frequency: habitItem.frequency ?? []).contains(dayNum) {
+                            habitViewModel.checkSaveOrNotToSave(dayNum: dayNum, habitItem: habitItem, moc: moc)
+                            withAnimation(.easeInOut(duration: 0.5)) {
+                                isOn.toggle()
+                            }
                         }
-                        
                     }
             }
             .background(
