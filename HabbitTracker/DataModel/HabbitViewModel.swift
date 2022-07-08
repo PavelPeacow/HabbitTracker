@@ -75,7 +75,25 @@ class HabbitViewModel: ObservableObject {
 //
 //    }
     
-    //MARK: check isDay already tapped: if dictionary contains today Date and dayIndex - delete else nothing
+    func whenDaysAppear(habitToSave: Habit, dayIndex: Int) -> Bool {
+        
+        var isContains = false
+        
+        guard habitToSave.dictionaryDateDay == nil else {
+            if (habitToSave.dictionaryDateDay!.contains(where: { (key: Int, value: String) in
+                (key,value) == (dayIndex,extractDate(date: Date.now, format: "yyyy-MM-dd"))
+            })) {
+                isContains = true
+            } else {
+                isContains = false
+            }
+            return isContains
+        }
+        return isContains
+        
+    }
+    
+    //MARK: check isDay already tapped: if dictionary contains today Date and dayIndex - delete, else nothing
     func isDayAlreadyTapped(context: NSManagedObjectContext, habitToSave: Habit, dayIndex: Int) -> Bool {
         if ((habitToSave.dictionaryDateDay?.contains(where: { (key: Int, value: String) in
             (key,value) == (dayIndex,extractDate(date: Date.now, format: "yyyy-MM-dd"))
