@@ -25,7 +25,7 @@ struct DayView: View {
                     .opacity(habitViewModel.showSelectedDays(frequency: habitItem.frequency ?? []).contains(dayNum) ? 1.0 : 0.5)
                     .frame(width: 40, height: 55)
                     .onTapGesture {
-                        if habitViewModel.showSelectedDays(frequency: habitItem.frequency ?? []).contains(dayNum) {
+                        if habitViewModel.showSelectedDays(frequency: habitItem.frequency ?? []).contains(dayNum) && Date.now >= dayDate   {
                             habitViewModel.isTaptedOnDay(indexDay: dayNum, habitItem: habitItem, moc: moc, dayDate: dayDate)
                             withAnimation(.easeInOut(duration: 0.5)) {
                                 isOn.toggle()
@@ -33,7 +33,7 @@ struct DayView: View {
                         }
                     }
                     .onAppear {
-                        if habitViewModel.isDaysAppear(habitToSave: habitItem, dayIndex: dayNum, dayDate: dayDate) {
+                        if habitViewModel.isDaysAppear(habitToSave: habitItem, dayDate: dayDate) {
                             isOn = true
                         } else {
                             isOn = false

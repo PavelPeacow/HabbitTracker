@@ -29,57 +29,50 @@ class HabbitViewModel: ObservableObject {
     @Published var currentDay = Date()
     
     //EmptyArray of daysComplete that assigned to CoreData attrubute when creating a habit
-    @Published var daysCompleteDayAndDate: [Int:String] = [:]
+    @Published var daysComplete: [String] = []
     
     //MARK: Update habit and mark today's date when click on it in ContentView
-    func dayComplete(context: NSManagedObjectContext, habitToSave: Habit, indexDay: Int, dayDate: Date) {
+    func dayComplete(context: NSManagedObjectContext, habitToSave: Habit, dayDate: Date) {
         let date = extractDate(date: dayDate, format: "yyyy-MM-dd")
-        habitToSave.daysComplete?[indexDay] = date
+        habitToSave.daysComplete?.append(date)
         habitToSave.streak += 1
         try? context.save()
     }
     
     //MARK: if user tapted on day, check if he already tapted, delete it, or save if doesn't
     func isTaptedOnDay(indexDay: Int, habitItem: Habit, moc: NSManagedObjectContext, dayDate: Date) {
-        if isDayAlreadyTapped(context: moc, habitToSave: habitItem, dayIndex: indexDay, dayDate: dayDate) != true {
+        if isDayAlreadyTapped(context: moc, habitToSave: habitItem, dayDate: dayDate) != true {
             if showSelectedDays(frequency: habitItem.frequency ?? []).contains(indexDay) {
-                dayComplete(context: moc, habitToSave: habitItem, indexDay: indexDay, dayDate: dayDate)
+                dayComplete(context: moc, habitToSave: habitItem, dayDate: dayDate)
             }
         }
     }
     
     //MARK: check isDay already tapped: if dictionary contains today Date and dayIndex - delete, else nothing
-    func isDayAlreadyTapped(context: NSManagedObjectContext, habitToSave: Habit, dayIndex: Int, dayDate: Date) -> Bool {
+    func isDayAlreadyTapped(context: NSManagedObjectContext, habitToSave: Habit, dayDate: Date) -> Bool {
         guard habitToSave.daysComplete != nil else {
             return false
         }
         
-        if habitToSave.daysComplete!.contains(where: { (key: Int, value: String) in
-            (key,value) == (dayIndex,extractDate(date: dayDate, format: "yyyy-MM-dd"))
-        }) {
-            
-            guard let removeDate = habitToSave.daysComplete?.firstIndex(where: { (key: Int, value: String) in
-                (key,value) == (dayIndex,extractDate(date: dayDate, format: "yyyy-MM-dd"))
-            }) else { return false }
-            
-            habitToSave.daysComplete?.remove(at: removeDate)
-            habitToSave.streak -= 1
+        guard let removeDate = habitToSave.daysComplete?.firstIndex(where: { key in
+            key == extractDate(date: dayDate, format: "yyyy-MM-dd")
+        }) else { return false }
+        
+        habitToSave.daysComplete?.remove(at: removeDate)
+        habitToSave.streak -= 1
 
-            try? context.save()
-            return true
-        } else {
-            return false
-        }
+        try? context.save()
+        return true
     }
     
     //MARK: When ContentView appears, check days that already marked, then color it
-    func isDaysAppear(habitToSave: Habit, dayIndex: Int, dayDate: Date) -> Bool {
+    func isDaysAppear(habitToSave: Habit, dayDate: Date) -> Bool {
         guard habitToSave.daysComplete != nil else {
             return false
         }
         
-        if habitToSave.daysComplete!.contains(where: { (key: Int, value: String) in
-            (key,value) == (dayIndex,extractDate(date: dayDate, format: "yyyy-MM-dd"))
+        if habitToSave.daysComplete!.contains(where: { key in
+            key == extractDate(date: dayDate, format: "yyyy-MM-dd")
         }) {
             return true
         } else {
@@ -100,7 +93,7 @@ class HabbitViewModel: ObservableObject {
         habit.isRemainderOn = isRemainderOn
         habit.remainderDate = remainderDate
         habit.notificationsIDs = []
-        habit.daysComplete = daysCompleteDayAndDate
+        habit.daysComplete = daysComplete
         
         if isRemainderOn {
             if let ids = try? await scheduleNotification() {
