@@ -40,36 +40,6 @@ class HabbitViewModel: ObservableObject {
         try? context.save()
     }
     
-    func isTaptedOnDay(indexDay: Int, habitItem: Habit, moc: NSManagedObjectContext) {
-        if showSelectedDays(frequency: habitItem.frequency ?? []).contains(indexDay) {
-            dayComplete(context: moc, habitToSave: habitItem)
-        }
-    }
-    
-    func isDayAlreadyTapped(context: NSManagedObjectContext, habitToSave: Habit) -> Bool {
-        if habitToSave.habitDaysComplete!.contains(where: { date in
-            date == extractDate(date: Date.now, format: "yyyy-MM-dd")
-        }) {
-            let removeDate = habitToSave.habitDaysComplete?.firstIndex(where: { date in
-                date == extractDate(date: Date.now, format: "yyyy-MM-dd")
-            }) ?? -1
-            habitToSave.habitDaysComplete?.remove(at: removeDate)
-            habitToSave.streak -= 1
-            print("dadadaadad")
-            try? context.save()
-            return true
-        } else {
-            return false
-        }
-            
-    }
-    
-    func checkSaveOrNotToSave(dayNum: Int, habitItem: Habit, moc: NSManagedObjectContext) {
-        if isDayAlreadyTapped(context: moc, habitToSave: habitItem) != true {
-            isTaptedOnDay(indexDay: dayNum, habitItem: habitItem, moc: moc)
-        } 
-    }
-    
     //MARK: Adding habit when tapping Add button in AddHabbitView
     func addHabit(context: NSManagedObjectContext) async throws  -> Bool {
         let habit = Habit(context: context)
@@ -210,5 +180,11 @@ class HabbitViewModel: ObservableObject {
         formatter.dateFormat = format
         return formatter.string(from: date)
     }
-        
+    
+    func isTaptedOnDay(indexDay: Int, habitItem: Habit, moc: NSManagedObjectContext) {
+        if showSelectedDays(frequency: habitItem.frequency ?? []).contains(indexDay) {
+            dayComplete(context: moc, habitToSave: habitItem)
+        }
+    }
+    
 }
