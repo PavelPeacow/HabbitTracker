@@ -9,6 +9,7 @@ import SwiftUI
 
 struct HabitLabel: View {
     let habitItem: FetchedResults<Habit>.Element
+    @Environment(\.managedObjectContext) var moc
     @ObservedObject var habitViewModel = HabbitViewModel()
     
     var body: some View {
@@ -61,7 +62,9 @@ struct HabitLabel: View {
                 ZStack {
                     Capsule()
                         .foregroundColor(.brown)
-                    
+                        .onTapGesture {
+                            habitViewModel.dayComplete(context: moc, habitToSave: habitItem)
+                        }
                 }
             )
         }
