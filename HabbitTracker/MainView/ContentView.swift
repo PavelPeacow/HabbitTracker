@@ -19,6 +19,7 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             List {
+                CurrentWeekView()
                 ForEach(habits) { habitItem in
                     NavigationLink {
                         HabbitDetailView(habit: habitItem)
