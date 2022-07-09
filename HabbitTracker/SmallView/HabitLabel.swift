@@ -30,17 +30,17 @@ struct HabitLabel: View {
                         ZStack() {
                             Capsule()
                             //                                .fill(habitViewModel.isToday(date: dayDate) ? .black : Color(habitItem.color ?? "Color-1"))
-                                .stroke(lineWidth: 2)
                                 .fill(habitViewModel.showSelectedDays(frequency: habitItem.frequency ?? []).contains(dayNum) ? Color(habitItem.color ?? "Color-1") : .gray)
                                 .opacity(habitViewModel.showSelectedDays(frequency: habitItem.frequency ?? []).contains(dayNum) ? 1.0 : 0.5)
-                                .frame(width: 40, height: 55)  
+                                .frame(width: 40, height: 55)
+                                .onTapGesture {
+                                    if habitViewModel.showSelectedDays(frequency: habitItem.frequency ?? []).contains(dayNum) {
+                                        habitViewModel.dayComplete(context: moc, habitToSave: habitItem)
+                                    }
+                                }
+                            
                         }
                     )
-                    .onTapGesture {
-                        if habitViewModel.showSelectedDays(frequency: habitItem.frequency ?? []).contains(dayNum) {
-                            habitViewModel.dayComplete(context: moc, habitToSave: habitItem)
-                        }
-                    }
                 }
             }
             .padding(.horizontal, 10)
