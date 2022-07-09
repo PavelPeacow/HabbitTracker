@@ -28,17 +28,7 @@ class HabbitViewModel: ObservableObject {
     //CurrentDate
     @Published var currentDay = Date()
     
-    //EmptyArray of daysComplete
-    @Published var daysComplete: [String] = []
     
-    //MARK: Update habit and mark today's date when click on it in ContentView
-    func dayComplete(context: NSManagedObjectContext, habitToSave: Habit) {
-        habitToSave.habitDaysComplete?.append(extractDate(date: Date.now, format: "yyyy-MM-dd"))
-        print(habitToSave.habitDaysComplete ?? "loh")
-        habitToSave.streak += 1
-        
-        try? context.save()
-    }
     
     //MARK: Adding habit when tapping Add button in AddHabbitView
     func addHabit(context: NSManagedObjectContext) async throws  -> Bool {
@@ -52,7 +42,6 @@ class HabbitViewModel: ObservableObject {
         habit.isRemainderOn = isRemainderOn
         habit.remainderDate = remainderDate
         habit.notificationsIDs = []
-        habit.habitDaysComplete = daysComplete
         
         if isRemainderOn {
             if let ids = try? await scheduleNotification() {
