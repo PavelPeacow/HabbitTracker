@@ -26,14 +26,14 @@ struct DayView: View {
                     .frame(width: 40, height: 55)
                     .onTapGesture {
                         if habitViewModel.showSelectedDays(frequency: habitItem.frequency ?? []).contains(dayNum) {
-                            habitViewModel.isTaptedOnDay(indexDay: dayNum, habitItem: habitItem, moc: moc)
+                            habitViewModel.isTaptedOnDay(indexDay: dayNum, habitItem: habitItem, moc: moc, dayDate: dayDate)
                             withAnimation(.easeInOut(duration: 0.5)) {
                                 isOn.toggle()
                             }
                         }
                     }
                     .onAppear {
-                        if habitViewModel.isDaysAppear(habitToSave: habitItem, dayIndex: dayNum) {
+                        if habitViewModel.isDaysAppear(habitToSave: habitItem, dayIndex: dayNum, dayDate: dayDate) {
                             isOn = true
                         } else {
                             isOn = false
