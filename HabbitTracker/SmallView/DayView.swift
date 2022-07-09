@@ -14,8 +14,6 @@ struct DayView: View {
     let dayDate: Date
     let dayNum: Int
     
-    @State private var isOn = false
-    
     var body: some View {
         VStack {
             ZStack() {
@@ -26,17 +24,8 @@ struct DayView: View {
                     .frame(width: 40, height: 55)
                     .onTapGesture {
                         habitViewModel.isTaptedOnDay(indexDay: dayNum, habitItem: habitItem, moc: moc)
-                        withAnimation(.easeInOut(duration: 0.5)) {
-                            isOn.toggle()
-                        }
-                        
                     }
             }
-            .background(
-                Capsule()
-                    .opacity(isOn ? 1.0 : 0.0)
-                    .foregroundColor(isOn ? Color(habitItem.color ?? "Color-1") : .gray)
-            )
         }
         .foregroundColor(.white)
         .frame(maxWidth: .infinity)
