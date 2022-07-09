@@ -32,13 +32,6 @@ struct DayView: View {
                             }
                         }
                     }
-                    .onAppear {
-                        if habitViewModel.whenDaysAppear(habitToSave: habitItem, dayIndex: dayNum) {
-                            isOn = true
-                        } else {
-                            isOn = false
-                        }
-                    }
             }
             .background(
                 Capsule()
