@@ -64,12 +64,10 @@ struct CalendarView: UIViewRepresentable {
     var daysComplete: [String] {
         var completeDays = [String]()
         for i in habits {
-            for (_, value) in i.daysComplete! {
-                completeDays.append(value)
-            }
-            print(i.daysComplete!)
+            print(i.habitDaysComplete!)
+            completeDays += i.habitDaysComplete!
         }
-
+        
         return completeDays
     }
     //Sample
