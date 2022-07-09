@@ -96,23 +96,6 @@ class HabbitViewModel: ObservableObject {
             
             try? context.save()
     }
-    
-    //MARK: Show selectedDays in HabitLabel's weekView
-    func showSelectedDays(frequency: [String]) -> [Int] {
-        let calendar = Calendar.current
-        let weekDaySybmols: [String] = calendar.weekdaySymbols
-        var selectedDays: [Int] = []
-        
-        for weekDay in frequency {
-            let day = weekDaySybmols.firstIndex { currentDay in
-                return currentDay == weekDay
-            } ?? -1
-            print(day)
-            selectedDays.append(day)
-        }
-        print(selectedDays)
-        return selectedDays
-    }
         
     //MARK: Scheduling notifications
     func scheduleNotification() async throws -> [String] {
@@ -159,16 +142,16 @@ class HabbitViewModel: ObservableObject {
         return calendar.isDate(currentDay, inSameDayAs: date)
     }
     
-    func fetchCurrentWeek() -> [Int:Date] {
+    func fetchCurrentWeek() -> [Date] {
         
         let calendar = Calendar.current
         let week = calendar.dateInterval(of: .weekOfMonth, for: Date())
-        var currentWeek: [Int:Date] = [:]
+        var currentWeek: [Date] = []
         
         
         (0...6).forEach { day in
             if let weekday = calendar.date(byAdding: .day, value: day, to: week!.start) {
-                currentWeek[day] = weekday
+                currentWeek.append(weekday)
             }
         }
         

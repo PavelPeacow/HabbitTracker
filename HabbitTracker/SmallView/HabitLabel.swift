@@ -15,13 +15,13 @@ struct HabitLabel: View {
     var body: some View {
         VStack {
             HStack {
-                ForEach(habitViewModel.fetchCurrentWeek().sorted(by: <), id: \.key) { dayNum, dayDate in
+                ForEach(habitViewModel.fetchCurrentWeek(), id: \.self) { day in
                     
                     VStack {
-                        Text(habitViewModel.extractDate(date: dayDate, format: "dd"))
+                        Text(habitViewModel.extractDate(date: day, format: "dd"))
                             .font(.title2)
                         
-                        Text(habitViewModel.extractDate(date: dayDate, format: "EEE"))
+                        Text(habitViewModel.extractDate(date: day, format: "EEE"))
                             .font(.callout)
                     }
                     .foregroundColor(.white)
@@ -29,8 +29,7 @@ struct HabitLabel: View {
                     .background(
                         ZStack() {
                             Capsule()
-//                                .fill(habitViewModel.isToday(date: dayDate) ? .black : Color(habitItem.color ?? "Color-1"))
-                                .fill(habitViewModel.showSelectedDays(frequency: habitItem.frequency ?? []).contains(dayNum) ? .orange : .red)
+                                .fill(habitViewModel.isToday(date: day) ? .black : Color(habitItem.color ?? "Color-1"))
                                 .frame(width: 40, height: 55)
                                 .onTapGesture {
                                     habitViewModel.dayComplete(context: moc, habitToSave: habitItem)
