@@ -181,10 +181,4 @@ class HabbitViewModel: ObservableObject {
         return formatter.string(from: date)
     }
     
-    func isTaptedOnDay(indexDay: Int, habitItem: Habit, moc: NSManagedObjectContext) {
-        if showSelectedDays(frequency: habitItem.frequency ?? []).contains(indexDay) {
-            dayComplete(context: moc, habitToSave: habitItem)
-        }
-    }
-    
 }
