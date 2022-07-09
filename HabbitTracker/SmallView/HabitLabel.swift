@@ -31,42 +31,30 @@ struct HabitLabel: View {
                             Capsule()
                                 .fill(habitViewModel.isToday(date: day) ? .black : Color(habitItem.color ?? "Color-1"))
                                 .frame(width: 40, height: 55)
-                                .onTapGesture {
-                                    habitViewModel.dayComplete(context: moc, habitToSave: habitItem)
-                                    habitItem.streak += 1 - 1 //dunno why += 1 equals 2
-                                }
                         }
                     )
                 }
             }
-            .padding(.horizontal, 10)
             
             Divider()
                 .frame(height: 1)
                 .background(Color.orange)
             
-            VStack {
+            HStack {
                 HStack {
                     Circle()
                         .fill(Color(habitItem.color ?? "Color-1"))
                         .frame(width: 30, height: 30)
-                    
                     VStack(alignment: .leading) {
                         Text(habitItem.name ?? "Read")
                         Text(habitItem.descr ?? "Read more books")
                             .font(.caption2)
                     }
                     
-                    HStack{
-                        Text("\(habitItem.streak)")
-                        Image(systemName: "flame")
-                    }
-                    .padding(.horizontal, 15)
-                    
-                    HStack {
-                        Image(systemName: "calendar")
-                        Image(systemName: "arrow.right")
-                    }
+                    Spacer()
+                }
+                HStack {
+                    Text("\(habitItem.streak)")
                 }
             }
             .padding()
@@ -74,6 +62,9 @@ struct HabitLabel: View {
                 ZStack {
                     Capsule()
                         .foregroundColor(.brown)
+                        .onTapGesture {
+                            habitViewModel.dayComplete(context: moc, habitToSave: habitItem)
+                        }
                 }
             )
         }
