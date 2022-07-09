@@ -2,7 +2,7 @@
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21F79" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Habit" representedClassName="Habit" syncable="YES" codeGenerationType="class">
         <attribute name="color" optional="YES" attributeType="String"/>
-        <attribute name="daysComplete" optional="YES" attributeType="Transformable" customClassName="[Int:String]"/>
+        <attribute name="daysComplete" optional="YES" attributeType="Transformable" customClassName="[String]"/>
         <attribute name="descr" optional="YES" attributeType="String"/>
         <attribute name="frequency" optional="YES" attributeType="Transformable" customClassName="[String]"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
