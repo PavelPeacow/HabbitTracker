@@ -4,7 +4,6 @@
         <attribute name="color" optional="YES" attributeType="String"/>
         <attribute name="descr" optional="YES" attributeType="String"/>
         <attribute name="frequency" optional="YES" attributeType="Transformable" customClassName="[String]"/>
-        <attribute name="habitDaysComplete" optional="YES" attributeType="Transformable" customClassName="[String]"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="isRemainderOn" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
@@ -13,6 +12,6 @@
         <attribute name="streak" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
     </entity>
     <elements>
-        <element name="Habit" positionX="-63" positionY="-18" width="128" height="179"/>
+        <element name="Habit" positionX="-63" positionY="-18" width="128" height="164"/>
     </elements>
 </model>
