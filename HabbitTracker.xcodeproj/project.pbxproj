@@ -21,8 +21,6 @@
 		B5D06586285774CF00388545 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D06585285774CF00388545 /* DataController.swift */; };
 		B5E4CB70284B9C5F00DABAA1 /* HabbitViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E4CB6F284B9C5F00DABAA1 /* HabbitViewModel.swift */; };
 		B5F666972857305E00A89F54 /* HabitLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F666962857305E00A89F54 /* HabitLabel.swift */; };
-		B5F9ECF6287430FA009B3971 /* CurrentWeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F9ECF5287430FA009B3971 /* CurrentWeekView.swift */; };
-		B5F9ECF828743787009B3971 /* DayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F9ECF728743787009B3971 /* DayView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,8 +38,6 @@
 		B5D06585285774CF00388545 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		B5E4CB6F284B9C5F00DABAA1 /* HabbitViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabbitViewModel.swift; sourceTree = "<group>"; };
 		B5F666962857305E00A89F54 /* HabitLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitLabel.swift; sourceTree = "<group>"; };
-		B5F9ECF5287430FA009B3971 /* CurrentWeekView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWeekView.swift; sourceTree = "<group>"; };
-		B5F9ECF728743787009B3971 /* DayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,8 +125,6 @@
 			isa = PBXGroup;
 			children = (
 				B5F666962857305E00A89F54 /* HabitLabel.swift */,
-				B5F9ECF728743787009B3971 /* DayView.swift */,
-				B5F9ECF5287430FA009B3971 /* CurrentWeekView.swift */,
 			);
 			path = SmallView;
 			sourceTree = "<group>";
@@ -213,13 +207,11 @@
 			files = (
 				B5D065842857733800388545 /* HabbitTracker.xcdatamodeld in Sources */,
 				B5ACB202286461F900730456 /* StatisticsView.swift in Sources */,
-				B5F9ECF828743787009B3971 /* DayView.swift in Sources */,
 				B57E4E9128644DBB00937D9B /* TabBarView.swift in Sources */,
 				B5280F65284B85F00043409A /* ContentView.swift in Sources */,
 				B5F666972857305E00A89F54 /* HabitLabel.swift in Sources */,
 				B574C8BE284B8A9E00879410 /* HabbitDetailView.swift in Sources */,
 				B574C8BC284B864B00879410 /* AddHabbitView.swift in Sources */,
-				B5F9ECF6287430FA009B3971 /* CurrentWeekView.swift in Sources */,
 				B5D06586285774CF00388545 /* DataController.swift in Sources */,
 				B5E4CB70284B9C5F00DABAA1 /* HabbitViewModel.swift in Sources */,
 				B5ACB2042864625A00730456 /* AchievementsView.swift in Sources */,
