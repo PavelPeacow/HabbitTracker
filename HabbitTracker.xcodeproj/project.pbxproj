@@ -15,6 +15,7 @@
 		B574C8BC284B864B00879410 /* AddHabbitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B574C8BB284B864B00879410 /* AddHabbitView.swift */; };
 		B574C8BE284B8A9E00879410 /* HabbitDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B574C8BD284B8A9E00879410 /* HabbitDetailView.swift */; };
 		B57E4E9128644DBB00937D9B /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57E4E9028644DBB00937D9B /* TabBarView.swift */; };
+		B5842CDD287AB7680077AECD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5842CDC287AB7680077AECD /* LaunchScreen.storyboard */; };
 		B5ACB202286461F900730456 /* StatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5ACB201286461F900730456 /* StatisticsView.swift */; };
 		B5ACB2042864625A00730456 /* AchievementsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5ACB2032864625A00730456 /* AchievementsView.swift */; };
 		B5D065842857733800388545 /* HabbitTracker.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B5D065822857733800388545 /* HabbitTracker.xcdatamodeld */; };
@@ -34,6 +35,7 @@
 		B574C8BB284B864B00879410 /* AddHabbitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddHabbitView.swift; sourceTree = "<group>"; };
 		B574C8BD284B8A9E00879410 /* HabbitDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabbitDetailView.swift; sourceTree = "<group>"; };
 		B57E4E9028644DBB00937D9B /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
+		B5842CDC287AB7680077AECD /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B5ACB201286461F900730456 /* StatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsView.swift; sourceTree = "<group>"; };
 		B5ACB2032864625A00730456 /* AchievementsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementsView.swift; sourceTree = "<group>"; };
 		B5D065832857733800388545 /* HabbitTracker.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = HabbitTracker.xcdatamodel; sourceTree = "<group>"; };
@@ -76,6 +78,7 @@
 			isa = PBXGroup;
 			children = (
 				B5280F62284B85F00043409A /* HabbitTrackerApp.swift */,
+				B5842CDC287AB7680077AECD /* LaunchScreen.storyboard */,
 				B5D065872857814B00388545 /* ViewModel */,
 				B574C8BF284B8ABB00879410 /* MainView */,
 				B5F666982857306900A89F54 /* SmallView */,
@@ -199,6 +202,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5842CDD287AB7680077AECD /* LaunchScreen.storyboard in Resources */,
 				B5280F6A284B85F10043409A /* Preview Assets.xcassets in Resources */,
 				B5280F67284B85F10043409A /* Assets.xcassets in Resources */,
 			);
@@ -347,7 +351,7 @@
 		B5280F6E284B85F10043409A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -358,6 +362,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -376,7 +381,7 @@
 		B5280F6F284B85F10043409A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -387,6 +392,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
