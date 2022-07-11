@@ -18,20 +18,31 @@ struct ContentView: View {
     
     var body: some View {
         NavigationView {
-            List {
-                CurrentWeekView()
-                ForEach(habits) { habitItem in
-                    NavigationLink {
-                        HabbitDetailView(habit: habitItem)
-                    } label: {
-                        HabitLabel(habitItem: habitItem)
+            ScrollView {
+                LazyVStack {
+                    CurrentWeekView()
+                    ForEach(habits) { habitItem in
+                        
+                        HabitWeekDaysView(habitItem: habitItem)
+                        
+                        Divider()
+                            .frame(height: 1)
+                            .background(Color.orange)
+                            .padding(.horizontal, 5)
+                        
+                        NavigationLink {
+                            HabbitDetailView(habit: habitItem)
+                        } label: {
+                            HabitLabel(habitItem: habitItem)
+                        }
+                        
+                    }
+                    .onDelete { IndexSet in
+                        habitViewModel.performDelete(at: IndexSet, context: moc, habitsFetch: habits)
                     }
                 }
-                .onDelete { IndexSet in
-                    habitViewModel.performDelete(at: IndexSet, context: moc, habitsFetch: habits)
-                }
             }
-            .listStyle(.plain)
+            .tint(.white)
             .toolbar {
                 ToolbarItem {
                     Button {

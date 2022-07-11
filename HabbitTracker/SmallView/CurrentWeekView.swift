@@ -12,8 +12,8 @@ struct CurrentWeekView: View {
     
     var body: some View {
         VStack {
-            HStack {
-                ForEach(habitViewModel.fetchCurrentWeek().sorted(by: <), id: \.key) { dayNum, dayDate in
+            HStack(spacing: 0) {
+                ForEach(habitViewModel.fetchCurrentWeek().sorted(by: <), id: \.key) { _, dayDate in
                     
                     VStack {
                         Text(habitViewModel.extractDate(date: dayDate, format: "dd"))
@@ -36,12 +36,13 @@ struct CurrentWeekView: View {
                             Image(systemName: "circle.circle.fill")
                                 .opacity(habitViewModel.isToday(date: dayDate) ? 1 : 0)
                                 .foregroundColor(.green)
-                                .position(x: 20, y: -15)
+                                .position(x: 23.5, y: -20)
+                                .aspectRatio(contentMode: .fit)
                         }
                     )
                 }
             }
-            .padding(.horizontal, 10)
+            .padding(.horizontal, 5)
         }
         .padding(.vertical, 30)
         

@@ -24,14 +24,7 @@ struct DayView: View {
                     .fill(habitViewModel.showSelectedDays(frequency: habitItem.frequency ?? []).contains(dayNum) ? Color(habitItem.color ?? "Color-1") : .gray)
                     .opacity(habitViewModel.showSelectedDays(frequency: habitItem.frequency ?? []).contains(dayNum) ? 1.0 : 0.5)
                     .frame(width: 40, height: 55)
-                    .onTapGesture {
-                        if habitViewModel.showSelectedDays(frequency: habitItem.frequency ?? []).contains(dayNum) && Date.now >= dayDate   {
-                            habitViewModel.isTaptedOnDay(indexDay: dayNum, habitItem: habitItem, moc: moc, dayDate: dayDate)
-                            withAnimation(.easeInOut(duration: 0.5)) {
-                                isOn.toggle()
-                            }
-                        }
-                    }
+
                     .onAppear {
                         if habitViewModel.isDaysAppear(habitToSave: habitItem, dayDate: dayDate) {
                             isOn = true
@@ -42,11 +35,18 @@ struct DayView: View {
             }
             .background(
                 Capsule()
-                    .opacity(isOn ? 1.0 : 0.0)
+                    .opacity(isOn ? 1.0 : 0.1)
                     .foregroundColor(isOn ? Color(habitItem.color ?? "Color-1") : .gray)
+                    .onTapGesture {
+                        if habitViewModel.showSelectedDays(frequency: habitItem.frequency ?? []).contains(dayNum) && Date.now >= dayDate   {
+                            habitViewModel.isTaptedOnDay(indexDay: dayNum, habitItem: habitItem, moc: moc, dayDate: dayDate)
+                            withAnimation(.easeInOut(duration: 0.5)) {
+                                isOn.toggle()
+                            }
+                        }
+                    }
             )
         }
-        .foregroundColor(.white)
         .frame(maxWidth: .infinity)
     }
 }
