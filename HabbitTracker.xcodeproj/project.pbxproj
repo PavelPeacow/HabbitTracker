@@ -18,6 +18,7 @@
 		B5842CDD287AB7680077AECD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5842CDC287AB7680077AECD /* LaunchScreen.storyboard */; };
 		B5ACB202286461F900730456 /* StatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5ACB201286461F900730456 /* StatisticsView.swift */; };
 		B5ACB2042864625A00730456 /* AchievementsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5ACB2032864625A00730456 /* AchievementsView.swift */; };
+		B5C6B62D287C43D000CB6976 /* HabitWeekDaysView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C6B62C287C43D000CB6976 /* HabitWeekDaysView.swift */; };
 		B5D065842857733800388545 /* HabbitTracker.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B5D065822857733800388545 /* HabbitTracker.xcdatamodeld */; };
 		B5D06586285774CF00388545 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D06585285774CF00388545 /* DataController.swift */; };
 		B5E4CB70284B9C5F00DABAA1 /* HabbitViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E4CB6F284B9C5F00DABAA1 /* HabbitViewModel.swift */; };
@@ -38,6 +39,7 @@
 		B5842CDC287AB7680077AECD /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B5ACB201286461F900730456 /* StatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsView.swift; sourceTree = "<group>"; };
 		B5ACB2032864625A00730456 /* AchievementsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementsView.swift; sourceTree = "<group>"; };
+		B5C6B62C287C43D000CB6976 /* HabitWeekDaysView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitWeekDaysView.swift; sourceTree = "<group>"; };
 		B5D065832857733800388545 /* HabbitTracker.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = HabbitTracker.xcdatamodel; sourceTree = "<group>"; };
 		B5D06585285774CF00388545 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		B5E4CB6F284B9C5F00DABAA1 /* HabbitViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabbitViewModel.swift; sourceTree = "<group>"; };
@@ -81,6 +83,7 @@
 				B5842CDC287AB7680077AECD /* LaunchScreen.storyboard */,
 				B5D065872857814B00388545 /* ViewModel */,
 				B574C8BF284B8ABB00879410 /* MainView */,
+				B5C6B630287C4DAA00CB6976 /* HabitLabelViews */,
 				B5F666982857306900A89F54 /* SmallView */,
 				B574C8C2284B8CFE00879410 /* DataModel */,
 				B5280F68284B85F10043409A /* Preview Content */,
@@ -119,6 +122,16 @@
 			path = DataModel;
 			sourceTree = "<group>";
 		};
+		B5C6B630287C4DAA00CB6976 /* HabitLabelViews */ = {
+			isa = PBXGroup;
+			children = (
+				B5F666962857305E00A89F54 /* HabitLabel.swift */,
+				B5C6B62C287C43D000CB6976 /* HabitWeekDaysView.swift */,
+				B5F9ECF728743787009B3971 /* DayView.swift */,
+			);
+			path = HabitLabelViews;
+			sourceTree = "<group>";
+		};
 		B5D065872857814B00388545 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -131,8 +144,6 @@
 		B5F666982857306900A89F54 /* SmallView */ = {
 			isa = PBXGroup;
 			children = (
-				B5F666962857305E00A89F54 /* HabitLabel.swift */,
-				B5F9ECF728743787009B3971 /* DayView.swift */,
 				B5F9ECF5287430FA009B3971 /* CurrentWeekView.swift */,
 			);
 			path = SmallView;
@@ -216,6 +227,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B5D065842857733800388545 /* HabbitTracker.xcdatamodeld in Sources */,
+				B5C6B62D287C43D000CB6976 /* HabitWeekDaysView.swift in Sources */,
 				B5ACB202286461F900730456 /* StatisticsView.swift in Sources */,
 				B5F9ECF828743787009B3971 /* DayView.swift in Sources */,
 				B57E4E9128644DBB00937D9B /* TabBarView.swift in Sources */,

@@ -13,18 +13,6 @@ struct HabitLabel: View {
     @ObservedObject var habitViewModel = HabbitViewModel()
     
     var body: some View {
-        VStack {
-            HStack {
-                ForEach(habitViewModel.fetchCurrentWeek().sorted(by: <), id: \.key) { dayNum, dayDate in
-                    DayView(habitItem: habitItem, habitViewModel: habitViewModel, dayDate: dayDate, dayNum: dayNum)
-                }
-            }
-            .padding(.horizontal, 10)
-            
-            Divider()
-                .frame(height: 1)
-                .background(Color.orange)
-            
             VStack {
                 HStack {
                     Circle()
@@ -56,9 +44,7 @@ struct HabitLabel: View {
                         .foregroundColor(.brown)
                 }
             )
-        }
-        .padding(.vertical, 30)
-        
+            .padding(.bottom, 40)
     }
 }
 
