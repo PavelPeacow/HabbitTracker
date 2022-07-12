@@ -123,18 +123,26 @@ class HabbitViewModel: ObservableObject {
         remainderDate = Date()
     }
     
-    //MARK: Deleting from list
-    func performDelete(at offsets: IndexSet, context: NSManagedObjectContext, habitsFetch: FetchedResults<Habit>) {
-            for index in offsets {
-                let habit = habitsFetch[index]
-                context.delete(habit)
-                
-                if habit.isRemainderOn {
-                    UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: habit.notificationsIDs ?? [])
-                }
-            }
-            
-            try? context.save()
+//    //MARK: Deleting from list
+//    func performDelete(at offsets: IndexSet, context: NSManagedObjectContext, habitsFetch: FetchedResults<Habit>) {
+//            for index in offsets {
+//                let habit = habitsFetch[index]
+//                context.delete(habit)
+//
+//                if habit.isRemainderOn {
+//                    UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: habit.notificationsIDs ?? [])
+//                }
+//            }
+//
+//            try? context.save()
+//    }
+    
+    //MARK: Delete habit in ContentView
+    func deleteHabit(context: NSManagedObjectContext, habitItem: Habit) {
+        
+        context.delete(habitItem)
+        try? context.save()
+        
     }
     
     //MARK: Show selectedDays in HabitLabel's weekView

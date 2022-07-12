@@ -28,6 +28,7 @@ struct HabitLabel: View {
                     HStack{
                         Text("\(habitItem.streak)")
                         Image(systemName: "flame")
+                        Image(systemName: habitItem.isRemainderOn ? "bell.fill" : "bell.slash.fill")
                     }
                     .padding(.horizontal, 15)
                     

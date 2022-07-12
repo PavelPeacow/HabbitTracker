@@ -37,9 +37,6 @@ struct ContentView: View {
                         }
                         
                     }
-                    .onDelete { IndexSet in
-                        habitViewModel.performDelete(at: IndexSet, context: moc, habitsFetch: habits)
-                    }
                 }
             }
             .tint(.white)
@@ -51,9 +48,6 @@ struct ContentView: View {
                         Image(systemName: "plus.circle")
                     }
                 }
-                ToolbarItem(placement: .navigationBarLeading) {
-                    EditButton()
-                }
             }
             .sheet(isPresented: $isSheetActive) {
                 habitViewModel.resetData()
@@ -62,6 +56,7 @@ struct ContentView: View {
                     .environmentObject(habitViewModel)
             }
             .navigationTitle("HabbitTracker")
+            .navigationBarTitleDisplayMode(.inline)
         }
     }
     

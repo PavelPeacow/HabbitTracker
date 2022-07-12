@@ -9,7 +9,10 @@ import SwiftUI
 
 struct HabbitDetailView: View {
     let habit: Habit
+    @StateObject var habitViewModel = HabbitViewModel()
+    @Environment(\.managedObjectContext) var moc
     
+    @State private var isShowingAlert = false
     
     var body: some View {
         NavigationView {
@@ -25,7 +28,6 @@ struct HabbitDetailView: View {
                         .foregroundColor(Color(habit.color ?? "Color-1"))
                 }
 
-                Spacer()
                 VStack {
                     HStack {
                         ForEach(habit.frequency ?? [""], id: \.self) { day in
@@ -36,30 +38,17 @@ struct HabbitDetailView: View {
                         .font(.headline)
                 }
                 
-                //                Spacer()
-                //                Spacer()
-                //                Button {
-                //                    var item = habit
-                //                    item.streak += 1
-                //                    habbitsList.habbits[habbitsList.habbits.firstIndex(of: habbit)!] = item
-                //                } label: {
-                //                    Text("I've done today's habit")
-                //                }
-                //                Spacer()
-                //
-                //                Button {
-                //                    var item = habit
-                //                    item.streak -= 1
-                //                    habbitsList.habbits[habbitsList.habbits.firstIndex(of: habbit)!] = item
-                //                } label: {
-                //                    Text("I've not done today's habit")
-                //                }
-                //                Spacer()
-                //                Spacer()
-                
+                Button {
+                    isShowingAlert.toggle()
+                } label: {
+                    Text("Delete habit")
+                }
             }
-            
-            
+            .alert("Are you shure?", isPresented: $isShowingAlert) {
+                Button("Delete", role: .destructive) {
+                    habitViewModel.deleteHabit(context: moc, habitItem: habit)
+                }
+            }
         }
     }
 }
