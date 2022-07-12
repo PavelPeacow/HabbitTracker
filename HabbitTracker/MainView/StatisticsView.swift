@@ -10,36 +10,63 @@ import UIKit
 import FSCalendar
 
 struct StatisticsView: View {
-    @State private var selectedDay = Date()
+    @StateObject var habitViewModel = HabbitViewModel()
+    @FetchRequest(sortDescriptors: []) var habits: FetchedResults<Habit>
+    
+    private var daysCompleteCount: Double {
+        var completeDays = 0.0
+        for i in habits {
+            completeDays += Double(i.daysComplete?.count ?? 0)
+        }
+
+        return completeDays
+    }
     
     var body: some View {
-        VStack {
-            Text("Statistic")
-            CalendarView(selectedDay: $selectedDay)
-                .padding()
-                .background(
-                    RoundedRectangle(cornerRadius: 30)
-                        .foregroundColor(.orange)
-                )
-                .frame(height: 260)
-            Text("\(selectedDay)")
-            Spacer()
-            
+        ScrollView {
             VStack {
+                Text("Statistic")
+                CalendarView()
+                    .padding()
+                    .background(
+                        RoundedRectangle(cornerRadius: 30)
+                            .foregroundColor(.orange)
+                    )
+                    .frame(height: 260)
+                    .padding()
+
+                Spacer()
+                
                 HStack {
-                    Text("Days in a row 7")
+                    ChartBarView(daysCompleteCount: daysCompleteCount)
+                        .font(.headline)
+                        .foregroundColor(.black)
                         .padding()
                         .background(
                             RoundedRectangle(cornerRadius: 20)
-                                .foregroundColor(.blue)
+                                .opacity(0.96)
+                                .foregroundColor(.orange)
                         )
-                    Text("Habit strong 49%")
-                        .padding()
-                        .background(
-                            RoundedRectangle(cornerRadius: 20)
-                                .foregroundColor(.blue)
-                        )
+                        .fixedSize()
                 }
+                .padding()
+               
+                VStack {
+                    HStack {
+                        Text("Days in a row 7")
+                            .font(.headline)
+                            .foregroundColor(.black)
+                        Image(systemName: "flame")
+                            .foregroundColor(.black)
+                    }
+                    .padding()
+                    .background(
+                        RoundedRectangle(cornerRadius: 20)
+                            .foregroundColor(.orange)
+                            .opacity(0.96)
+                    )
+                }
+                .padding()
             }
         }
         
@@ -57,7 +84,6 @@ struct StatisticsView_Previews: PreviewProvider {
 struct CalendarView: UIViewRepresentable {
     @StateObject var habitViewModel = HabbitViewModel()
     @FetchRequest(sortDescriptors: []) var habits: FetchedResults<Habit>
-    @Binding var selectedDay: Date
     var calendar = FSCalendar()
     
     
@@ -95,10 +121,6 @@ struct CalendarView: UIViewRepresentable {
 
         init(_ parent: CalendarView) {
             self.parent = parent
-        }
-        
-        func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
-            parent.selectedDay = date
         }
         
         func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {

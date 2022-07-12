@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B501D912287DB35600B87104 /* ChartBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B501D911287DB35600B87104 /* ChartBarView.swift */; };
 		B5280F63284B85F00043409A /* HabbitTrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5280F62284B85F00043409A /* HabbitTrackerApp.swift */; };
 		B5280F65284B85F00043409A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5280F64284B85F00043409A /* ContentView.swift */; };
 		B5280F67284B85F10043409A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5280F66284B85F10043409A /* Assets.xcassets */; };
@@ -21,6 +22,7 @@
 		B5C6B62D287C43D000CB6976 /* HabitWeekDaysView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C6B62C287C43D000CB6976 /* HabitWeekDaysView.swift */; };
 		B5D065842857733800388545 /* HabbitTracker.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B5D065822857733800388545 /* HabbitTracker.xcdatamodeld */; };
 		B5D06586285774CF00388545 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D06585285774CF00388545 /* DataController.swift */; };
+		B5D8AB59287DC1AA006D5B1D /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = B5D8AB58287DC1AA006D5B1D /* SwiftUICharts */; };
 		B5E4CB70284B9C5F00DABAA1 /* HabbitViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E4CB6F284B9C5F00DABAA1 /* HabbitViewModel.swift */; };
 		B5F666972857305E00A89F54 /* HabitLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F666962857305E00A89F54 /* HabitLabel.swift */; };
 		B5F9ECF6287430FA009B3971 /* CurrentWeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F9ECF5287430FA009B3971 /* CurrentWeekView.swift */; };
@@ -28,6 +30,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B501D911287DB35600B87104 /* ChartBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartBarView.swift; sourceTree = "<group>"; };
 		B5280F5F284B85F00043409A /* HabbitTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HabbitTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5280F62284B85F00043409A /* HabbitTrackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabbitTrackerApp.swift; sourceTree = "<group>"; };
 		B5280F64284B85F00043409A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -54,6 +57,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B54AAE4E2869BCEF00413374 /* FSCalendar in Frameworks */,
+				B5D8AB59287DC1AA006D5B1D /* SwiftUICharts in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -144,6 +148,7 @@
 		B5F666982857306900A89F54 /* SmallView */ = {
 			isa = PBXGroup;
 			children = (
+				B501D911287DB35600B87104 /* ChartBarView.swift */,
 				B5F9ECF5287430FA009B3971 /* CurrentWeekView.swift */,
 			);
 			path = SmallView;
@@ -167,6 +172,7 @@
 			name = HabbitTracker;
 			packageProductDependencies = (
 				B54AAE4D2869BCEF00413374 /* FSCalendar */,
+				B5D8AB58287DC1AA006D5B1D /* SwiftUICharts */,
 			);
 			productName = HabbitTracker;
 			productReference = B5280F5F284B85F00043409A /* HabbitTracker.app */;
@@ -198,6 +204,7 @@
 			mainGroup = B5280F56284B85F00043409A;
 			packageReferences = (
 				B54AAE4C2869BCEF00413374 /* XCRemoteSwiftPackageReference "FSCalendar" */,
+				B5D8AB57287DC1AA006D5B1D /* XCRemoteSwiftPackageReference "SwiftUICharts" */,
 			);
 			productRefGroup = B5280F60284B85F00043409A /* Products */;
 			projectDirPath = "";
@@ -229,6 +236,7 @@
 				B5D065842857733800388545 /* HabbitTracker.xcdatamodeld in Sources */,
 				B5C6B62D287C43D000CB6976 /* HabitWeekDaysView.swift in Sources */,
 				B5ACB202286461F900730456 /* StatisticsView.swift in Sources */,
+				B501D912287DB35600B87104 /* ChartBarView.swift in Sources */,
 				B5F9ECF828743787009B3971 /* DayView.swift in Sources */,
 				B57E4E9128644DBB00937D9B /* TabBarView.swift in Sources */,
 				B5280F65284B85F00043409A /* ContentView.swift in Sources */,
@@ -452,6 +460,14 @@
 				minimumVersion = 2.0.0;
 			};
 		};
+		B5D8AB57287DC1AA006D5B1D /* XCRemoteSwiftPackageReference "SwiftUICharts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mecid/SwiftUICharts";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -459,6 +475,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B54AAE4C2869BCEF00413374 /* XCRemoteSwiftPackageReference "FSCalendar" */;
 			productName = FSCalendar;
+		};
+		B5D8AB58287DC1AA006D5B1D /* SwiftUICharts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B5D8AB57287DC1AA006D5B1D /* XCRemoteSwiftPackageReference "SwiftUICharts" */;
+			productName = SwiftUICharts;
 		};
 /* End XCSwiftPackageProductDependency section */
 

@@ -141,6 +141,11 @@ class HabbitViewModel: ObservableObject {
     func deleteHabit(context: NSManagedObjectContext, habitItem: Habit) {
         
         context.delete(habitItem)
+        
+        if habitItem.isRemainderOn {
+            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: habitItem.notificationsIDs ?? [])
+        }
+        
         try? context.save()
         
     }
