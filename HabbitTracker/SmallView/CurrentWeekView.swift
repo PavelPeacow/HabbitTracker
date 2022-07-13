@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CurrentWeekView: View {
-    @ObservedObject var habitViewModel = HabbitViewModel()
+    @EnvironmentObject var habitViewModel: HabbitViewModel
     
     var body: some View {
         VStack {
@@ -53,5 +53,6 @@ struct ButtonsTest_Previews: PreviewProvider {
     static var previews: some View {
         CurrentWeekView()
             .preferredColorScheme(.dark)
+            .environmentObject(HabbitViewModel())
     }
 }

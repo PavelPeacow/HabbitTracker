@@ -8,13 +8,15 @@
 import SwiftUI
 
 struct HabitWeekDaysView: View {
+    @EnvironmentObject var habitViewModel: HabbitViewModel
+    
     let habitItem: FetchedResults<Habit>.Element
-    @ObservedObject var habitViewModel = HabbitViewModel()
     
     var body: some View {
             HStack(spacing: 0) {
                 ForEach(habitViewModel.fetchCurrentWeek().sorted(by: <), id: \.key) { dayNum, dayDate in
-                    DayView(habitItem: habitItem, habitViewModel: habitViewModel, dayDate: dayDate, dayNum: dayNum)
+                    DayView(habitItem: habitItem, dayDate: dayDate, dayNum: dayNum)
+                        .environmentObject(habitViewModel)
                 }
             }
             .padding(.horizontal, 5)
@@ -28,5 +30,6 @@ struct WeekDaysView_Previews: PreviewProvider {
     static var previews: some View {
         HabitWeekDaysView(habitItem: habbit)
             .preferredColorScheme(.dark)
+            .environmentObject(HabbitViewModel())
     }
 }

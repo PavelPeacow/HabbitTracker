@@ -8,11 +8,12 @@
 import SwiftUI
 
 struct HabbitDetailView: View {
-    let habit: Habit
-    @StateObject var habitViewModel = HabbitViewModel()
+    @EnvironmentObject var habitViewModel: HabbitViewModel
     @Environment(\.managedObjectContext) var moc
     
     @State private var isShowingAlert = false
+    
+    let habit: Habit
     
     var body: some View {
         NavigationView {
@@ -60,5 +61,6 @@ struct HabbitDetailView_Previews: PreviewProvider {
     
     static var previews: some View {
         HabbitDetailView(habit: habbit)
+            .environmentObject(HabbitViewModel())
     }
 }

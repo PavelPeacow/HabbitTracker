@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B501D912287DB35600B87104 /* ChartBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B501D911287DB35600B87104 /* ChartBarView.swift */; };
 		B5280F63284B85F00043409A /* HabbitTrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5280F62284B85F00043409A /* HabbitTrackerApp.swift */; };
 		B5280F65284B85F00043409A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5280F64284B85F00043409A /* ContentView.swift */; };
 		B5280F67284B85F10043409A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5280F66284B85F10043409A /* Assets.xcassets */; };
@@ -30,7 +29,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		B501D911287DB35600B87104 /* ChartBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartBarView.swift; sourceTree = "<group>"; };
 		B5280F5F284B85F00043409A /* HabbitTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HabbitTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5280F62284B85F00043409A /* HabbitTrackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabbitTrackerApp.swift; sourceTree = "<group>"; };
 		B5280F64284B85F00043409A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -87,7 +85,6 @@
 				B5842CDC287AB7680077AECD /* LaunchScreen.storyboard */,
 				B5D065872857814B00388545 /* ViewModel */,
 				B574C8BF284B8ABB00879410 /* MainView */,
-				B5C6B630287C4DAA00CB6976 /* HabitLabelViews */,
 				B5F666982857306900A89F54 /* SmallView */,
 				B574C8C2284B8CFE00879410 /* DataModel */,
 				B5280F68284B85F10043409A /* Preview Content */,
@@ -108,9 +105,9 @@
 			isa = PBXGroup;
 			children = (
 				B57E4E9028644DBB00937D9B /* TabBarView.swift */,
+				B5280F64284B85F00043409A /* ContentView.swift */,
 				B5ACB201286461F900730456 /* StatisticsView.swift */,
 				B5ACB2032864625A00730456 /* AchievementsView.swift */,
-				B5280F64284B85F00043409A /* ContentView.swift */,
 				B574C8BB284B864B00879410 /* AddHabbitView.swift */,
 				B574C8BD284B8A9E00879410 /* HabbitDetailView.swift */,
 			);
@@ -148,8 +145,8 @@
 		B5F666982857306900A89F54 /* SmallView */ = {
 			isa = PBXGroup;
 			children = (
-				B501D911287DB35600B87104 /* ChartBarView.swift */,
 				B5F9ECF5287430FA009B3971 /* CurrentWeekView.swift */,
+				B5C6B630287C4DAA00CB6976 /* HabitLabelViews */,
 			);
 			path = SmallView;
 			sourceTree = "<group>";
@@ -236,7 +233,6 @@
 				B5D065842857733800388545 /* HabbitTracker.xcdatamodeld in Sources */,
 				B5C6B62D287C43D000CB6976 /* HabitWeekDaysView.swift in Sources */,
 				B5ACB202286461F900730456 /* StatisticsView.swift in Sources */,
-				B501D912287DB35600B87104 /* ChartBarView.swift in Sources */,
 				B5F9ECF828743787009B3971 /* DayView.swift in Sources */,
 				B57E4E9128644DBB00937D9B /* TabBarView.swift in Sources */,
 				B5280F65284B85F00043409A /* ContentView.swift in Sources */,

@@ -9,6 +9,7 @@ import Foundation
 import CoreData
 import NotificationCenter
 import SwiftUI
+import SwiftUICharts
 
 class HabbitViewModel: ObservableObject {
     
@@ -233,6 +234,19 @@ class HabbitViewModel: ObservableObject {
         let formatter = DateFormatter()
         formatter.dateFormat = format
         return formatter.string(from: date)
+    }
+    
+    //MARK: Get data for chart bar
+    func getChartData(daysCompleteCount: Double) -> [DataPoint] {
+        let daysComplete = Legend(color: .green, label: "Days complete", order: 1)
+        let daysLost = Legend(color: .red, label: "Days lost", order: 2)
+
+        let points: [DataPoint] = [
+            .init(value: daysCompleteCount, label: "\(daysCompleteCount.formatted())", legend: daysComplete),
+            .init(value: 3, label: "2", legend: daysLost)
+        ]
+        
+        return points
     }
         
 }

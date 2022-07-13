@@ -8,9 +8,10 @@
 import SwiftUI
 import UIKit
 import FSCalendar
+import SwiftUICharts
 
 struct StatisticsView: View {
-    @StateObject var habitViewModel = HabbitViewModel()
+    @EnvironmentObject var habitViewModel: HabbitViewModel
     @FetchRequest(sortDescriptors: []) var habits: FetchedResults<Habit>
     
     private var daysCompleteCount: Double {
@@ -18,7 +19,7 @@ struct StatisticsView: View {
         for i in habits {
             completeDays += Double(i.daysComplete?.count ?? 0)
         }
-
+        
         return completeDays
     }
     
@@ -26,31 +27,24 @@ struct StatisticsView: View {
         ScrollView {
             VStack {
                 Text("Statistic")
-                CalendarView()
-                    .padding()
-                    .background(
-                        RoundedRectangle(cornerRadius: 30)
-                            .foregroundColor(.orange)
-                    )
+                CalendarView(habits: habits)
+                    .environmentObject(habitViewModel)
+                    .orangeRectangle()
                     .frame(height: 260)
                     .padding()
-
+                
                 Spacer()
                 
                 HStack {
-                    ChartBarView(daysCompleteCount: daysCompleteCount)
+                    HorizontalBarChartView(dataPoints: habitViewModel.getChartData(daysCompleteCount: daysCompleteCount))
                         .font(.headline)
                         .foregroundColor(.black)
                         .padding()
-                        .background(
-                            RoundedRectangle(cornerRadius: 20)
-                                .opacity(0.96)
-                                .foregroundColor(.orange)
-                        )
+                        .orangeRectangle()
                         .fixedSize()
                 }
                 .padding()
-               
+                
                 VStack {
                     HStack {
                         Text("Days in a row 7")
@@ -60,11 +54,7 @@ struct StatisticsView: View {
                             .foregroundColor(.black)
                     }
                     .padding()
-                    .background(
-                        RoundedRectangle(cornerRadius: 20)
-                            .foregroundColor(.orange)
-                            .opacity(0.96)
-                    )
+                    .orangeRectangle()
                 }
                 .padding()
             }
@@ -77,13 +67,33 @@ struct StatisticsView_Previews: PreviewProvider {
     static var previews: some View {
         StatisticsView()
             .preferredColorScheme(.dark)
+            .environmentObject(HabbitViewModel())
+    }
+}
+
+struct OrangeRectangle: ViewModifier {
+    func body(content: Content) -> some View {
+        ZStack(alignment: .bottomTrailing) {
+            content
+                .background(
+                    RoundedRectangle(cornerRadius: 20)
+                        .foregroundColor(.orange)
+                        .opacity(0.96)
+                )
+        }
+    }
+}
+
+extension View {
+    func orangeRectangle() -> some View {
+        self.modifier(OrangeRectangle())
     }
 }
 
 
 struct CalendarView: UIViewRepresentable {
-    @StateObject var habitViewModel = HabbitViewModel()
-    @FetchRequest(sortDescriptors: []) var habits: FetchedResults<Habit>
+    @EnvironmentObject var habitViewModel: HabbitViewModel
+    var habits: FetchedResults<Habit>
     var calendar = FSCalendar()
     
     
@@ -93,7 +103,7 @@ struct CalendarView: UIViewRepresentable {
             completeDays += i.daysComplete!
             print(i.daysComplete!)
         }
-
+        
         return completeDays
     }
     //Sample
@@ -115,10 +125,10 @@ struct CalendarView: UIViewRepresentable {
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
     }
-
+    
     class Coordinator: NSObject, FSCalendarDelegate, FSCalendarDataSource {
         var parent: CalendarView
-
+        
         init(_ parent: CalendarView) {
             self.parent = parent
         }

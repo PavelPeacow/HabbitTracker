@@ -20,10 +20,14 @@ struct ContentView: View {
         NavigationView {
             ScrollView {
                 LazyVStack {
+                    
                     CurrentWeekView()
+                        .environmentObject(habitViewModel)
+                    
                     ForEach(habits) { habitItem in
                         
                         HabitWeekDaysView(habitItem: habitItem)
+                            .environmentObject(habitViewModel)
                         
                         Divider()
                             .frame(height: 1)
@@ -32,8 +36,10 @@ struct ContentView: View {
                         
                         NavigationLink {
                             HabbitDetailView(habit: habitItem)
+                                .environmentObject(habitViewModel)
                         } label: {
                             HabitLabel(habitItem: habitItem)
+                                .environmentObject(habitViewModel)
                         }
                         
                     }
@@ -58,6 +64,7 @@ struct ContentView: View {
             .navigationTitle("HabbitTracker")
             .navigationBarTitleDisplayMode(.inline)
         }
+
     }
     
 }
@@ -65,6 +72,7 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+            .environmentObject(HabbitViewModel())
     }
 }
 

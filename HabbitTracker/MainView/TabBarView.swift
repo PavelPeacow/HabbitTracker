@@ -33,6 +33,7 @@ struct TabBarView: View {
                     Image(systemName: "calendar.circle")
                     Text("Statistics")
                 }
+                .environmentObject(habitViewModel)
             
             AchievementsView()
                 .tabItem {

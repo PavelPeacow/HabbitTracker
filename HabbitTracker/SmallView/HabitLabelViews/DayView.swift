@@ -8,9 +8,10 @@
 import SwiftUI
 
 struct DayView: View {
-    let habitItem: FetchedResults<Habit>.Element
-    @ObservedObject var habitViewModel: HabbitViewModel
+    @EnvironmentObject var habitViewModel: HabbitViewModel
     @Environment(\.managedObjectContext) var moc
+    
+    let habitItem: FetchedResults<Habit>.Element
     let dayDate: Date
     let dayNum: Int
     
@@ -57,7 +58,8 @@ struct DayView_Previews: PreviewProvider {
     static let habbit = Habit(context: context)
     
     static var previews: some View {
-        DayView(habitItem: habbit, habitViewModel: HabbitViewModel(), dayDate: Date.now, dayNum: 0)
+        DayView(habitItem: habbit, dayDate: Date.now, dayNum: 0)
             .preferredColorScheme(.dark)
+            .environmentObject(HabbitViewModel())
     }
 }

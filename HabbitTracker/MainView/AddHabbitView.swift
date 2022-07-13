@@ -9,7 +9,6 @@ import SwiftUI
 import UserNotifications
 
 struct AddHabbitView: View {
-    
     @EnvironmentObject var habitViewModel: HabbitViewModel
     
     @Environment(\.dismiss) var dismiss
