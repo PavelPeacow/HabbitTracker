@@ -31,6 +31,31 @@ class HabbitViewModel: ObservableObject {
     
     //EmptyArray of daysComplete that assigned to CoreData attrubute when creating a habit
     @Published var daysComplete: [String] = []
+    @Published var daysLost: [String] = []
+    
+    func isDayLost(dayDate: Date) -> Bool {
+        let calendar = Calendar.current.dateComponents([.year,.month,.day], from: Date())
+        let todayDate = Calendar.current.date(from: calendar)!
+        if todayDate > dayDate {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    func dayLostAdd(habit: Habit, dayDate: Date, context: NSManagedObjectContext) -> Bool {
+        let date = extractDate(date: dayDate, format: "yyyy-MM-dd")
+        
+        
+        if habit.daysLost!.contains(where: { dateDay in
+            dateDay == date
+        }) != true {
+            habit.daysLost?.append(date)
+        }
+        try? context.save()
+        return true
+    }
+    
     
     //MARK: Update habit and mark today's date when click on it in ContentView
     func dayComplete(context: NSManagedObjectContext, habitToSave: Habit, dayDate: Date) {
@@ -95,6 +120,7 @@ class HabbitViewModel: ObservableObject {
         habit.remainderDate = remainderDate
         habit.notificationsIDs = []
         habit.daysComplete = daysComplete
+        habit.daysLost = daysLost
         
         if isRemainderOn {
             if let ids = try? await scheduleNotification() {
@@ -237,13 +263,13 @@ class HabbitViewModel: ObservableObject {
     }
     
     //MARK: Get data for chart bar
-    func getChartData(daysCompleteCount: Double) -> [DataPoint] {
+    func getChartData(daysCompleteCount: Double, daysLostCount: Double) -> [DataPoint] {
         let daysComplete = Legend(color: .green, label: "Days complete", order: 1)
         let daysLost = Legend(color: .red, label: "Days lost", order: 2)
 
         let points: [DataPoint] = [
             .init(value: daysCompleteCount, label: "\(daysCompleteCount.formatted())", legend: daysComplete),
-            .init(value: 3, label: "2", legend: daysLost)
+            .init(value: daysLostCount, label: "\(daysLostCount.formatted())", legend: daysLost)
         ]
         
         return points

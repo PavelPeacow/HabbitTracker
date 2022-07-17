@@ -16,6 +16,8 @@ struct DayView: View {
     let dayNum: Int
     
     @State private var isOn = false
+    
+    @State private var isDayLost = false
         
     var body: some View {
         VStack {
@@ -26,10 +28,16 @@ struct DayView: View {
                     .opacity(tappedOpacity)
                     .frame(width: 40, height: 55)
 
-                    .onAppear {
+                    .onAppear() {
                         if habitViewModel.isDaysAppear(habitToSave: habitItem, dayDate: dayDate) {
                             isOn = true
+                            
+                        } else if habitViewModel.isDayLost(dayDate: dayDate) && habitViewModel.showSelectedDays(frequency: habitItem.frequency ?? []).contains(dayNum) {
+                            habitViewModel.dayLostAdd(habit: habitItem, dayDate: dayDate, context: moc)
+                            isDayLost = true
+                            print("days lost array - \(habitItem.daysLost ?? [])")
                         } else {
+                            
                             isOn = false
                         }
                     }
@@ -38,18 +46,38 @@ struct DayView: View {
                 Capsule()
                     .fill(isOnColor)
                     .opacity(isOnOpacity)
+                    .background(
+                        dayLostCircle
+                            .foregroundColor(Color(habitItem.color ?? "Color-1"))
+                            .frame(width: 15, height: 15)
+                    )
                 
                     .onTapGesture {
                         if whenTap  {
                             habitViewModel.isTaptedOnDay(indexDay: dayNum, habitItem: habitItem, moc: moc, dayDate: dayDate)
                             withAnimation(.easeInOut(duration: 0.5)) {
                                 isOn.toggle()
+                                if habitViewModel.extractDate(date: Date(), format: "yyyy-MM-dd") != habitViewModel.extractDate(date: dayDate, format: "yyyy-MM-dd") {
+                                    isDayLost.toggle()
+                                    if habitItem.daysLost!.contains(where: { date in
+                                        date == habitViewModel.extractDate(date: dayDate, format: "yyyy-MM-dd")
+                                    }) {
+                                        habitItem.daysLost?.remove(at: habitItem.daysLost?.firstIndex(where: { date in
+                                            date == habitViewModel.extractDate(date: dayDate, format: "yyyy-MM-dd")
+                                        }) ?? -1)
+                                    }
+                                    
+                                }
                             }
                         }
                     }
             )
         }
         .frame(maxWidth: .infinity)
+    }
+    
+    private var dayLostCircle: some View {
+        isDayLost ? Capsule() : nil
     }
     
     private var tappedColor: Color {
@@ -69,7 +97,7 @@ struct DayView: View {
     }
     
     private var whenTap: Bool {
-        habitViewModel.showSelectedDays(frequency: habitItem.frequency ?? []).contains(dayNum) && Date.now == dayDate
+        habitViewModel.showSelectedDays(frequency: habitItem.frequency ?? []).contains(dayNum) && Date.now >= dayDate
     }
 
 }

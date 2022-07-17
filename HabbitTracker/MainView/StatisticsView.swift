@@ -23,6 +23,12 @@ struct StatisticsView: View {
         return completeDays
     }
     
+    private var daysLostCount: Double {
+        var lostDays = 0.0
+        lostDays += Double(habitItem.daysLost?.count ?? 0)
+        return lostDays
+    }
+    
     var body: some View {
         NavigationView {
             ScrollView {
@@ -38,7 +44,7 @@ struct StatisticsView: View {
                     
                     VStack {
                         
-                        HorizontalBarChartView(dataPoints: habitViewModel.getChartData(daysCompleteCount: daysCompleteCount))
+                        HorizontalBarChartView(dataPoints: habitViewModel.getChartData(daysCompleteCount: daysCompleteCount, daysLostCount: daysLostCount))
                             .font(.headline)
                             .foregroundColor(.black)
                             .padding()
