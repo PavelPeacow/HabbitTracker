@@ -9,12 +9,26 @@ import SwiftUI
 
 struct SettingView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationView {
+            List {
+                Section {
+                    Text("Terms of use")
+                }
+                
+                
+                Text("Delete all habits")
+            }
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationTitle("Settings")
+            .padding()
+        }
+        
     }
 }
 
 struct SettingView_Previews: PreviewProvider {
     static var previews: some View {
         SettingView()
+            .preferredColorScheme(.dark)
     }
 }

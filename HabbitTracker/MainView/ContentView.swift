@@ -35,7 +35,7 @@ struct ContentView: View {
                             .padding(.horizontal, 5)
                         
                         NavigationLink {
-                            HabbitDetailView(habit: habitItem)
+                            StatisticsView(habitItem: habitItem)
                                 .environmentObject(habitViewModel)
                         } label: {
                             HabitLabel(habitItem: habitItem)

@@ -12,51 +12,67 @@ import SwiftUICharts
 
 struct StatisticsView: View {
     @EnvironmentObject var habitViewModel: HabbitViewModel
-    @FetchRequest(sortDescriptors: []) var habits: FetchedResults<Habit>
+    var habitItem: Habit
+    
+    @State private var isShowingAlert = false
+    @Environment(\.managedObjectContext) var moc
     
     private var daysCompleteCount: Double {
         var completeDays = 0.0
-        for i in habits {
-            completeDays += Double(i.daysComplete?.count ?? 0)
-        }
-        
+        completeDays += Double(habitItem.daysComplete?.count ?? 0)
         return completeDays
     }
     
     var body: some View {
-        ScrollView {
-            VStack {
-                Text("Statistic")
-                CalendarView(habits: habits)
-                    .environmentObject(habitViewModel)
-                    .orangeRectangle()
-                    .frame(height: 260)
-                    .padding()
-                
-                Spacer()
-                
-                HStack {
-                    HorizontalBarChartView(dataPoints: habitViewModel.getChartData(daysCompleteCount: daysCompleteCount))
-                        .font(.headline)
-                        .foregroundColor(.black)
-                        .padding()
-                        .orangeRectangle()
-                        .fixedSize()
-                }
-                .padding()
-                
+        NavigationView {
+            ScrollView {
                 VStack {
-                    HStack {
-                        Text("Days in a row 7")
+                    Text("Statistic")
+                    CalendarView(habits: habitItem)
+                        .environmentObject(habitViewModel)
+                        .orangeRectangle()
+                        .frame(height: 260)
+                        .padding()
+                    
+                    Spacer()
+                    
+                    VStack {
+                        
+                        HorizontalBarChartView(dataPoints: habitViewModel.getChartData(daysCompleteCount: daysCompleteCount))
                             .font(.headline)
                             .foregroundColor(.black)
-                        Image(systemName: "flame")
-                            .foregroundColor(.black)
+                            .padding()
+                            .orangeRectangle()
+                            .fixedSize()
+                            .padding()
+                        
+                        HStack {
+                            Text("Days in a row 7")
+                                .font(.headline)
+                                .foregroundColor(.black)
+                            Image(systemName: "flame")
+                                .foregroundColor(.black)
+                        }
+                        .padding()
+                        .orangeRectangle()
+                        
+                        Button {
+                            isShowingAlert.toggle()
+                        } label: {
+                            Text("Delete habit")
+                                .font(.headline)
+                                .padding()
+                                .orangeRectangle()
+                                .padding()
+                        }
                     }
                     .padding()
-                    .orangeRectangle()
+                    .alert("Are you shure?", isPresented: $isShowingAlert) {
+                        Button("Delete", role: .destructive) {
+                            habitViewModel.deleteHabit(context: moc, habitItem: habitItem)
+                        }
+                    }
                 }
-                .padding()
             }
         }
         
@@ -64,8 +80,12 @@ struct StatisticsView: View {
 }
 
 struct StatisticsView_Previews: PreviewProvider {
+    
+    static let context = DataController().container.viewContext
+    static let habbit = Habit(context: context)
+    
     static var previews: some View {
-        StatisticsView()
+        StatisticsView(habitItem: habbit)
             .preferredColorScheme(.dark)
             .environmentObject(HabbitViewModel())
     }
@@ -93,15 +113,14 @@ extension View {
 
 struct CalendarView: UIViewRepresentable {
     @EnvironmentObject var habitViewModel: HabbitViewModel
-    var habits: FetchedResults<Habit>
+    var habits: Habit
     var calendar = FSCalendar()
     
     
     var daysComplete: [String] {
         var completeDays = [String]()
-        for i in habits {
-            completeDays += i.daysComplete!
-            print(i.daysComplete!)
+        for i in habits.daysComplete ?? [] {
+            completeDays.append(i)
         }
         
         return completeDays
