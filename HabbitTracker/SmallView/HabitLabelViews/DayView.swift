@@ -16,14 +16,14 @@ struct DayView: View {
     let dayNum: Int
     
     @State private var isOn = false
-    
+        
     var body: some View {
         VStack {
             ZStack() {
                 Capsule()
                     .stroke(lineWidth: 2)
-                    .fill(habitViewModel.showSelectedDays(frequency: habitItem.frequency ?? []).contains(dayNum) ? Color(habitItem.color ?? "Color-1") : .gray)
-                    .opacity(habitViewModel.showSelectedDays(frequency: habitItem.frequency ?? []).contains(dayNum) ? 1.0 : 0.5)
+                    .fill(tappedColor)
+                    .opacity(tappedOpacity)
                     .frame(width: 40, height: 55)
 
                     .onAppear {
@@ -36,10 +36,11 @@ struct DayView: View {
             }
             .background(
                 Capsule()
-                    .opacity(isOn ? 1.0 : 0.1)
-                    .foregroundColor(isOn ? Color(habitItem.color ?? "Color-1") : .gray)
+                    .fill(isOnColor)
+                    .opacity(isOnOpacity)
+                
                     .onTapGesture {
-                        if habitViewModel.showSelectedDays(frequency: habitItem.frequency ?? []).contains(dayNum) && Date.now >= dayDate   {
+                        if whenTap  {
                             habitViewModel.isTaptedOnDay(indexDay: dayNum, habitItem: habitItem, moc: moc, dayDate: dayDate)
                             withAnimation(.easeInOut(duration: 0.5)) {
                                 isOn.toggle()
@@ -50,6 +51,27 @@ struct DayView: View {
         }
         .frame(maxWidth: .infinity)
     }
+    
+    private var tappedColor: Color {
+        habitViewModel.showSelectedDays(frequency: habitItem.frequency ?? []).contains(dayNum) ? Color(habitItem.color ?? "Color-1") : .gray
+    }
+    
+    private var tappedOpacity: Double {
+        habitViewModel.showSelectedDays(frequency: habitItem.frequency ?? []).contains(dayNum) ? 1.0 : 0.5
+    }
+    
+    private var isOnColor: Color {
+        isOn ? Color(habitItem.color ?? "Color-1") : .gray
+    }
+    
+    private var isOnOpacity: Double {
+        isOn ? 1.0 : 0.1
+    }
+    
+    private var whenTap: Bool {
+        habitViewModel.showSelectedDays(frequency: habitItem.frequency ?? []).contains(dayNum) && Date.now == dayDate
+    }
+
 }
 
 struct DayView_Previews: PreviewProvider {
