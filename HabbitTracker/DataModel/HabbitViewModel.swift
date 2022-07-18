@@ -43,9 +43,16 @@ class HabbitViewModel: ObservableObject {
         }
     }
     
-    func dayLostAdd(habit: Habit, dayDate: Date, context: NSManagedObjectContext) -> Bool {
+    func removeFromDayLostArray(context: NSManagedObjectContext, habit: Habit, dayDate: Date) {
+        let removeDate = habit.daysLost?.firstIndex(where: { date in
+            date == extractDate(date: dayDate, format: "yyyy-MM-dd")
+        })
+            
+        habit.daysLost?.remove(at: removeDate ?? -1)
+    }
+    
+    func dayLostAdd(habit: Habit, dayDate: Date, context: NSManagedObjectContext) {
         let date = extractDate(date: dayDate, format: "yyyy-MM-dd")
-        
         
         if habit.daysLost!.contains(where: { dateDay in
             dateDay == date
@@ -53,7 +60,6 @@ class HabbitViewModel: ObservableObject {
             habit.daysLost?.append(date)
         }
         try? context.save()
-        return true
     }
     
     

@@ -33,8 +33,8 @@ struct StatisticsView: View {
         NavigationView {
             ScrollView {
                 VStack {
-                    Text("Statistic")
-                    CalendarView(habits: habitItem)
+                    
+                    CalendarView(habit: habitItem)
                         .environmentObject(habitViewModel)
                         .orangeRectangle()
                         .frame(height: 260)
@@ -80,23 +80,13 @@ struct StatisticsView: View {
                     }
                 }
             }
+            .navigationTitle(habitItem.name ?? "Habit")
         }
-        
+       
     }
 }
 
-struct StatisticsView_Previews: PreviewProvider {
-    
-    static let context = DataController().container.viewContext
-    static let habbit = Habit(context: context)
-    
-    static var previews: some View {
-        StatisticsView(habitItem: habbit)
-            .preferredColorScheme(.dark)
-            .environmentObject(HabbitViewModel())
-    }
-}
-
+//MARK: Custom modifier
 struct OrangeRectangle: ViewModifier {
     func body(content: Content) -> some View {
         ZStack(alignment: .bottomTrailing) {
@@ -117,22 +107,13 @@ extension View {
 }
 
 
+
+//MARK: FSCalendar implementation
 struct CalendarView: UIViewRepresentable {
     @EnvironmentObject var habitViewModel: HabbitViewModel
-    var habits: Habit
+    var habit: Habit
     var calendar = FSCalendar()
     
-    
-    var daysComplete: [String] {
-        var completeDays = [String]()
-        for i in habits.daysComplete ?? [] {
-            completeDays.append(i)
-        }
-        
-        return completeDays
-    }
-    //Sample
-    //var datesWithEvent = ["2022-06-03", "2022-06-06", "2022-06-12", "2022-06-25"]
     
     func updateUIView(_ uiView: FSCalendar, context: Context) {
     }
@@ -144,6 +125,14 @@ struct CalendarView: UIViewRepresentable {
         calendar.dataSource = context.coordinator
         
         calendar.appearance.eventDefaultColor = .green
+        calendar.appearance.headerDateFormat = "dd MMMM yyyy EEEE"
+        
+        calendar.appearance.headerTitleColor = .black
+        calendar.appearance.weekdayTextColor = .black
+        calendar.appearance.weekdayFont = UIFont.systemFont(ofSize: 12)
+        calendar.appearance.titleFont = UIFont.systemFont(ofSize: 18)
+        calendar.appearance.todayColor = .black
+        
         return calendar
     }
     
@@ -151,22 +140,48 @@ struct CalendarView: UIViewRepresentable {
         Coordinator(self)
     }
     
-    class Coordinator: NSObject, FSCalendarDelegate, FSCalendarDataSource {
+    //MARK: Calendar logic
+    class Coordinator: NSObject, FSCalendarDelegate, FSCalendarDataSource, FSCalendarDelegateAppearance {
         var parent: CalendarView
         
         init(_ parent: CalendarView) {
             self.parent = parent
         }
         
-        func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
-            
+        
+        func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillDefaultColorFor date: Date) -> UIColor? {
+
             let dateString = parent.habitViewModel.extractDate(date: date, format: "yyyy-MM-dd")
             
-            if parent.daysComplete.contains(dateString) {
-                return 1
+            guard parent.habit.daysComplete != nil else {
+                return nil
             }
             
-            return 0
+            guard parent.habit.daysLost != nil else {
+                return nil
+            }
+
+            if parent.habit.daysComplete!.contains(dateString) {
+                return .green
+            } else if parent.habit.daysLost!.contains(dateString) {
+                return .red
+            }
+            
+            return nil
         }
+    }
+}
+
+
+
+struct StatisticsView_Previews: PreviewProvider {
+    
+    static let context = DataController().container.viewContext
+    static let habbit = Habit(context: context)
+    
+    static var previews: some View {
+        StatisticsView(habitItem: habbit)
+            .preferredColorScheme(.dark)
+            .environmentObject(HabbitViewModel())
     }
 }
