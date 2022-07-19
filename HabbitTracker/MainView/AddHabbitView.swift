@@ -35,6 +35,7 @@ struct AddHabbitView: View {
                                 if color == habitViewModel.color {
                                     Image(systemName: "checkmark")
                                         .font(.caption.bold())
+                                        .foregroundColor(.black)
                                 }
                             })
                             .onTapGesture {
@@ -45,7 +46,7 @@ struct AddHabbitView: View {
                 
                 Section("frequency") {
                     let weekDays = Calendar.current.weekdaySymbols
-                    HStack{
+                    HStack {
                         ForEach(weekDays, id: \.self) { day in
                             let index = habitViewModel.frequency.firstIndex { value in
                                 return value == day
@@ -120,5 +121,6 @@ struct AddHabbitView_Previews: PreviewProvider {
     static var previews: some View {
         AddHabbitView()
             .environmentObject(HabbitViewModel())
+            .preferredColorScheme(.dark)
     }
 }

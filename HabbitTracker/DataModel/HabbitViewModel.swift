@@ -58,6 +58,7 @@ class HabbitViewModel: ObservableObject {
         })
             
         habit.daysLost?.remove(at: removeDate ?? -1)
+        try? context.save()
     }
     
     func dayLostAdd(habit: Habit, dayDate: Date, context: NSManagedObjectContext) {
@@ -76,7 +77,7 @@ class HabbitViewModel: ObservableObject {
     func dayComplete(context: NSManagedObjectContext, habitToSave: Habit, dayDate: Date) {
         let date = extractDate(date: dayDate, format: "yyyy-MM-dd")
         habitToSave.daysComplete?.append(date)
-        
+        habitToSave.streak += 1
         try? context.save()
     }
     
@@ -100,7 +101,7 @@ class HabbitViewModel: ObservableObject {
         }) else { return false }
         
         habitToSave.daysComplete?.remove(at: removeDate)
-        
+        habitToSave.streak -= 1
 
         try? context.save()
         return true
