@@ -46,6 +46,7 @@ struct TabBarView: View {
                     Image(systemName: "gear.circle")
                     Text("Settings")
                 }
+                .environmentObject(habitViewModel)
         }
     }
 }

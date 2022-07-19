@@ -33,6 +33,15 @@ class HabbitViewModel: ObservableObject {
     @Published var daysComplete: [String] = []
     @Published var daysLost: [String] = []
     
+
+    func deleteAllHabits(context: NSManagedObjectContext, habits: FetchedResults<Habit> ) {
+        habits.forEach { habit in
+            context.delete(habit)
+        }
+        
+        try? context.save()
+    }
+    
     func isDayLost(dayDate: Date) -> Bool {
         let calendar = Calendar.current.dateComponents([.year,.month,.day], from: Date())
         let todayDate = Calendar.current.date(from: calendar)!
@@ -67,7 +76,7 @@ class HabbitViewModel: ObservableObject {
     func dayComplete(context: NSManagedObjectContext, habitToSave: Habit, dayDate: Date) {
         let date = extractDate(date: dayDate, format: "yyyy-MM-dd")
         habitToSave.daysComplete?.append(date)
-        habitToSave.streak += 1
+        
         try? context.save()
     }
     
@@ -91,7 +100,7 @@ class HabbitViewModel: ObservableObject {
         }) else { return false }
         
         habitToSave.daysComplete?.remove(at: removeDate)
-        habitToSave.streak -= 1
+        
 
         try? context.save()
         return true
