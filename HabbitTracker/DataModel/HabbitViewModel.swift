@@ -17,7 +17,7 @@ class HabbitViewModel: ObservableObject {
     @Published var nameHabbit: String = ""
     @Published var decriptionHabbit: String = ""
     @Published var streak: Int = 0
-    @Published var color: String = "Card-1"
+    @Published var color: String = "Color-1"
     
     //Choosen weekdays
     @Published var frequency: [String] = []

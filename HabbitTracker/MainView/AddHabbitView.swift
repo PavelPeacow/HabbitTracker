@@ -16,66 +16,53 @@ struct AddHabbitView: View {
     
     var body: some View {
         NavigationView {
-            Form {
-                Section("Enter name of habbit") {
+            
+            VStack {
+                
+                VStack {
                     TextField("Enter name of habbit", text:  $habitViewModel.nameHabbit)
-                }
-                
-                Section("Enter decription") {
+                        .padding()
+                        .background(
+                            RoundedRectangle(cornerRadius: 12)
+                                .stroke()
+                                .fill(Color(habitViewModel.color ))
+                        )
+                        .padding()
+                    
                     TextField("Enter description", text: $habitViewModel.decriptionHabbit)
+                        .padding()
+                        .background(
+                            RoundedRectangle(cornerRadius: 12)
+                                .stroke()
+                                .fill(Color(habitViewModel.color ))
+                        )
+                        .padding()
                 }
                 
-                HStack() {
-                    ForEach(1...7, id: \.self) { index in
-                        let color = "Color-\(index)"
-                        Circle()
-                            .fill(Color(color))
-                            .frame(maxWidth: .infinity)
-                            .overlay(content: {
-                                if color == habitViewModel.color {
-                                    Image(systemName: "checkmark")
-                                        .font(.caption.bold())
-                                        .foregroundColor(.black)
-                                }
-                            })
-                            .onTapGesture {
-                                habitViewModel.color = color
-                            }
-                    }
+                VStack {
+                    ChooseHabitColorView()
+                        .environmentObject(habitViewModel)
+                        .padding()
+                        .background(
+                            RoundedRectangle(cornerRadius: 12)
+                                .stroke()
+                                .fill(Color(habitViewModel.color ))
+                        )
+                        .padding()
+                    
+                    ChooseHabitFrequencyView()
+                        .environmentObject(habitViewModel)
+                        .padding()
+                        .background(
+                            RoundedRectangle(cornerRadius: 12)
+                                .stroke()
+                                .fill(Color(habitViewModel.color ))
+                        )
+                        .padding()
                 }
                 
-                Section("frequency") {
-                    let weekDays = Calendar.current.weekdaySymbols
-                    HStack {
-                        ForEach(weekDays, id: \.self) { day in
-                            let index = habitViewModel.frequency.firstIndex { value in
-                                return value == day
-                            } ?? -1
-                            Text(day.prefix(2))
-                                .foregroundColor(.white)
-                                .font(.headline)
-                                .frame(maxWidth: .infinity)
-                                .padding(.vertical, 12)
-                                .background {
-                                    Rectangle()
-                                        .fill(index != -1 ? Color(habitViewModel.color) : .red.opacity(0.4))
-                                }
-                                .onTapGesture {
-                                    withAnimation {
-                                        if index != -1 {
-                                            habitViewModel.frequency.remove(at: index)
-                                        } else {
-                                            habitViewModel.frequency .append(day)
-                                        }
-                                    }
-                                    
-
-                                }
-                        }
-                    }
-                }
                 
-                Section {
+                VStack {
                     Toggle(isOn: $habitViewModel.isRemainderOn.animation()) {
                         Text("Do you want get notifications?")
                     }
@@ -85,6 +72,13 @@ struct AddHabbitView: View {
                         
                     }
                 }
+                .padding()
+                .background(
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke()
+                        .fill(Color(habitViewModel.color ))
+                )
+                .padding()
                 
                 VStack {
                     Button {
@@ -94,10 +88,16 @@ struct AddHabbitView: View {
                                 dismiss()
                             }
                         }
-                        
-                        
                     } label: {
-                        Text("Add")
+                        Text("Add habit")
+                            .foregroundColor(Color(habitViewModel.color))
+                            .padding()
+                            .background(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .stroke()
+                                    .fill(Color(habitViewModel.color))
+                            )
+                            .padding()
                     }
                 }
             }
