@@ -1,15 +1,16 @@
 //
-//  AddHabbitView.swift
+//  ChangeHabitVIew.swift
 //  HabbitTracker
 //
-//  Created by Павел Кай on 04.06.2022.
+//  Created by Павел Кай on 20.07.2022.
 //
 
 import SwiftUI
-import UserNotifications
 
-struct AddHabbitView: View {
+struct ChangeHabitVIew: View {
     @EnvironmentObject var habitViewModel: HabbitViewModel
+    
+    let habit: Habit
     
     @Environment(\.dismiss) var dismiss
     @Environment(\.managedObjectContext) var  moc
@@ -25,7 +26,18 @@ struct AddHabbitView: View {
                     
                     TextField("Enter description", text: $habitViewModel.decriptionHabbit)
                         .colorStrokeRectangle(color: Color(habitViewModel.color))
+                        .onAppear {
+                            habitViewModel.nameHabbit = habit.name ?? ""
+                            habitViewModel.decriptionHabbit = habit.descr ?? ""
+                            habitViewModel.isRemainderOn = habit.isRemainderOn
+                            if habitViewModel.isRemainderOn {
+                                habitViewModel.remainderDate = habit.remainderDate!
+                            }
+                            habitViewModel.color = habit.color ?? "Color-1"
+                            habitViewModel.frequency = habit.frequency ?? []
+                        }
                 }
+                
                 
                 VStack {
                     ChooseHabitColorView()
@@ -53,46 +65,41 @@ struct AddHabbitView: View {
                 VStack {
                     Button {
                         Task {
-                            if try await habitViewModel.addHabit(context: moc) {
+                            requestAuthorization()
+                            if try await habitViewModel.changeHabit(context: moc, habit: habit) {
                                 dismiss()
                             }
                         }
                     } label: {
-                        Text("Add habit")
+                        Text("Change habit")
                             .foregroundColor(Color(habitViewModel.color))
                             .colorStrokeRectangle(color: Color(habitViewModel.color))
                     }
                 }
             }
-            .navigationTitle("Add new habbit")
+            .navigationTitle("Change habbit")
+        }
+    }
+    
+    func requestAuthorization() {
+        let options: UNAuthorizationOptions = [.alert, .sound, .badge]
+        UNUserNotificationCenter.current().requestAuthorization(options: options) { authorizarionSuccess, error in
+            if let error = error {
+                print("Error \(error.localizedDescription)")
+            } else {
+                print("Authorization request success")
+            }
         }
     }
 }
 
-struct ColorStrokeRectangle: ViewModifier {
-    let strokeColor: Color
+struct ChangeHabitVIew_Previews: PreviewProvider {
     
-    func body(content: Content) -> some View {
-        content
-            .padding()
-            .background(
-                RoundedRectangle(cornerRadius: 12)
-                    .stroke()
-                    .fill(strokeColor)
-            )
-            .padding()
-    }
-}
-
-extension View {
-    func colorStrokeRectangle(color: Color) -> some View {
-        self.modifier(ColorStrokeRectangle(strokeColor: color))
-    }
-}
-
-struct AddHabbitView_Previews: PreviewProvider {
+    static let context = DataController().container.viewContext
+    static let habbit = Habit(context: context)
+    
     static var previews: some View {
-        AddHabbitView()
+        ChangeHabitVIew(habit: habbit)
             .environmentObject(HabbitViewModel())
             .preferredColorScheme(.dark)
     }

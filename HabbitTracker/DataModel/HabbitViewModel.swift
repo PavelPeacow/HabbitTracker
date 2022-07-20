@@ -33,7 +33,48 @@ class HabbitViewModel: ObservableObject {
     @Published var daysComplete: [String] = []
     @Published var daysLost: [String] = []
     
-
+    
+    func changeHabit(context: NSManagedObjectContext, habit: Habit) async throws  -> Bool {
+        habit.name = nameHabbit
+        habit.descr = decriptionHabbit
+        habit.color = color
+        habit.frequency = frequency
+        habit.isRemainderOn = isRemainderOn
+        habit.remainderDate = remainderDate
+        
+        if isRemainderOn {
+            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: habit.notificationsIDs ?? [])
+            if let ids = try? await scheduleNotification() {
+                habit.notificationsIDs = ids
+                if let _ = try? context.save() {
+                    return true
+                }
+            }
+        } else {
+            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: habit.notificationsIDs ?? [])
+            if let _ = try? context.save() {
+                return true
+            }
+        }
+        
+        return false
+    }
+    
+    func requestAuthorization() {
+        let options: UNAuthorizationOptions = [.alert, .sound, .badge]
+        UNUserNotificationCenter.current().requestAuthorization(options: options) { authorizarionSuccess, error in
+            if let error = error {
+                print("Error \(error.localizedDescription)")
+            } else {
+                print("Authorization request success")
+            }
+        }
+    }
+    
+    init() {
+        requestAuthorization()
+    }
+    
     func deleteAllHabits(context: NSManagedObjectContext, habits: FetchedResults<Habit> ) {
         habits.forEach { habit in
             context.delete(habit)
@@ -56,7 +97,7 @@ class HabbitViewModel: ObservableObject {
         let removeDate = habit.daysLost?.firstIndex(where: { date in
             date == extractDate(date: dayDate, format: "yyyy-MM-dd")
         })
-            
+        
         habit.daysLost?.remove(at: removeDate ?? -1)
         try? context.save()
     }
@@ -102,7 +143,7 @@ class HabbitViewModel: ObservableObject {
         
         habitToSave.daysComplete?.remove(at: removeDate)
         habitToSave.streak -= 1
-
+        
         try? context.save()
         return true
     }
@@ -120,7 +161,7 @@ class HabbitViewModel: ObservableObject {
         } else {
             return false
         }
-
+        
     }
     
     //MARK: Adding habit when tapping Add button in AddHabbitView
@@ -159,26 +200,26 @@ class HabbitViewModel: ObservableObject {
         nameHabbit = ""
         decriptionHabbit = ""
         streak = 0
-        color = "Card-1"
+        color = "Color-1"
         frequency = []
         
         isRemainderOn = false
         remainderDate = Date()
     }
     
-//    //MARK: Deleting from list
-//    func performDelete(at offsets: IndexSet, context: NSManagedObjectContext, habitsFetch: FetchedResults<Habit>) {
-//            for index in offsets {
-//                let habit = habitsFetch[index]
-//                context.delete(habit)
-//
-//                if habit.isRemainderOn {
-//                    UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: habit.notificationsIDs ?? [])
-//                }
-//            }
-//
-//            try? context.save()
-//    }
+    //    //MARK: Deleting from list
+    //    func performDelete(at offsets: IndexSet, context: NSManagedObjectContext, habitsFetch: FetchedResults<Habit>) {
+    //            for index in offsets {
+    //                let habit = habitsFetch[index]
+    //                context.delete(habit)
+    //
+    //                if habit.isRemainderOn {
+    //                    UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: habit.notificationsIDs ?? [])
+    //                }
+    //            }
+    //
+    //            try? context.save()
+    //    }
     
     //MARK: Delete habit in ContentView
     func deleteHabit(context: NSManagedObjectContext, habitItem: Habit) {
@@ -208,7 +249,7 @@ class HabbitViewModel: ObservableObject {
         
         return selectedDays
     }
-        
+    
     //MARK: Scheduling notifications
     func scheduleNotification() async throws -> [String] {
         let content = UNMutableNotificationContent()
@@ -282,7 +323,7 @@ class HabbitViewModel: ObservableObject {
     func getChartData(daysCompleteCount: Double, daysLostCount: Double) -> [DataPoint] {
         let daysComplete = Legend(color: .green, label: "Days complete", order: 1)
         let daysLost = Legend(color: .red, label: "Days lost", order: 2)
-
+        
         let points: [DataPoint] = [
             .init(value: daysCompleteCount, label: "\(daysCompleteCount.formatted())", legend: daysComplete),
             .init(value: daysLostCount, label: "\(daysLostCount.formatted())", legend: daysLost)
@@ -290,5 +331,5 @@ class HabbitViewModel: ObservableObject {
         
         return points
     }
-        
+    
 }

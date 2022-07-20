@@ -15,6 +15,7 @@ struct StatisticsView: View {
     var habitItem: Habit
     
     @State private var isShowingAlert = false
+    @State private var isShowingSheet = false
     @Environment(\.managedObjectContext) var moc
     
     private var daysCompleteCount: Double {
@@ -110,7 +111,7 @@ struct StatisticsView: View {
                     
                     HStack(spacing: 25) {
                         Button {
-                            
+                            isShowingSheet.toggle()
                         } label: {
                             Text("Change habit")
                                 .textHeadline()
@@ -135,6 +136,12 @@ struct StatisticsView: View {
                     Button("Delete", role: .destructive) {
                         habitViewModel.deleteHabit(context: moc, habitItem: habitItem)
                     }
+                }
+                .sheet(isPresented: $isShowingSheet) {
+                    habitViewModel.resetData()
+                } content: {
+                    ChangeHabitVIew(habit: habitItem)
+                        .environmentObject(HabbitViewModel())
                 }
             }
             .navigationBarHidden(true)

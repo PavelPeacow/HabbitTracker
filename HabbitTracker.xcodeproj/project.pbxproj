@@ -27,6 +27,7 @@
 		B5E4CB70284B9C5F00DABAA1 /* HabbitViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E4CB6F284B9C5F00DABAA1 /* HabbitViewModel.swift */; };
 		B5E66A5C287F06BA007A830C /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E66A5B287F06BA007A830C /* SettingView.swift */; };
 		B5F666972857305E00A89F54 /* HabitLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F666962857305E00A89F54 /* HabitLabel.swift */; };
+		B5F8C7EE2887F708002EE16A /* ChangeHabitVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F8C7ED2887F708002EE16A /* ChangeHabitVIew.swift */; };
 		B5F9ECF6287430FA009B3971 /* CurrentWeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F9ECF5287430FA009B3971 /* CurrentWeekView.swift */; };
 		B5F9ECF828743787009B3971 /* DayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F9ECF728743787009B3971 /* DayView.swift */; };
 /* End PBXBuildFile section */
@@ -51,6 +52,7 @@
 		B5E4CB6F284B9C5F00DABAA1 /* HabbitViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabbitViewModel.swift; sourceTree = "<group>"; };
 		B5E66A5B287F06BA007A830C /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		B5F666962857305E00A89F54 /* HabitLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitLabel.swift; sourceTree = "<group>"; };
+		B5F8C7ED2887F708002EE16A /* ChangeHabitVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeHabitVIew.swift; sourceTree = "<group>"; };
 		B5F9ECF5287430FA009B3971 /* CurrentWeekView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWeekView.swift; sourceTree = "<group>"; };
 		B5F9ECF728743787009B3971 /* DayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -116,6 +118,7 @@
 				B5ACB201286461F900730456 /* StatisticsView.swift */,
 				B5ACB2032864625A00730456 /* AchievementsView.swift */,
 				B574C8BB284B864B00879410 /* AddHabbitView.swift */,
+				B5F8C7ED2887F708002EE16A /* ChangeHabitVIew.swift */,
 				B574C8BD284B8A9E00879410 /* HabbitDetailView.swift */,
 			);
 			path = MainView;
@@ -248,6 +251,7 @@
 				B5E66A5C287F06BA007A830C /* SettingView.swift in Sources */,
 				B5F666972857305E00A89F54 /* HabitLabel.swift in Sources */,
 				B54102FE288706FF004CB3E6 /* ChooseHabitFrequencyView.swift in Sources */,
+				B5F8C7EE2887F708002EE16A /* ChangeHabitVIew.swift in Sources */,
 				B574C8BE284B8A9E00879410 /* HabbitDetailView.swift in Sources */,
 				B574C8BC284B864B00879410 /* AddHabbitView.swift in Sources */,
 				B54103002887078C004CB3E6 /* ChooseHabitColorView.swift in Sources */,

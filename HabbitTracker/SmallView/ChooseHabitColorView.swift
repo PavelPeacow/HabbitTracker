@@ -11,7 +11,7 @@ struct ChooseHabitColorView: View {
     @EnvironmentObject var habitViewModel: HabbitViewModel
     
     var body: some View {
-        ScrollView(.horizontal) {
+        ScrollView(.horizontal, showsIndicators: false) {
             HStack {
                 ForEach(1...7, id: \.self) { index in
                     let color = "Color-\(index)"
