@@ -33,6 +33,42 @@ class HabbitViewModel: ObservableObject {
     @Published var daysComplete: [String] = []
     @Published var daysLost: [String] = []
     
+    @Published var onFirstWeek: Bool = false
+    
+    func extractDateToProperForm(date: Date) -> Date {
+        let calendar = Calendar.current.dateComponents([.year,.month,.day], from: date)
+        return Calendar.current.date(from: calendar)!
+    }
+    
+    func whenFirstWeekCreate(habit: Habit, context: NSManagedObjectContext) {
+        
+        let date = Date.now
+        
+        let calendar = Calendar.current.dateComponents([.year,.month,.day], from: date)
+        let todayDate = Calendar.current.date(from: calendar)!
+        let exapmle = Calendar.current.date(byAdding: .day, value: 1, to: todayDate)!
+        let weekDaySybmols: [String] = Calendar.current.weekdaySymbols
+        
+        
+        
+        let startWeek = (Calendar.current.dateInterval(of: .weekOfMonth, for: Date.now)?.start)!
+
+        
+        if todayDate == startWeek {
+            print("amahasla \(startWeek) true 12")
+            print("amahasla \(todayDate) true 12")
+            habit.onFirstWeek = false
+            try? context.save()
+        } else {
+            print("amahasla \(startWeek) false")
+            print("amahasla \(todayDate) true")
+        }
+        
+        
+        
+       
+        
+    }
     
     func changeHabit(context: NSManagedObjectContext, habit: Habit) async throws  -> Bool {
         habit.name = nameHabbit
@@ -41,6 +77,7 @@ class HabbitViewModel: ObservableObject {
         habit.frequency = frequency
         habit.isRemainderOn = isRemainderOn
         habit.remainderDate = remainderDate
+        habit.onFirstWeek = true
         
         if isRemainderOn {
             UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: habit.notificationsIDs ?? [])
@@ -178,6 +215,7 @@ class HabbitViewModel: ObservableObject {
         habit.notificationsIDs = []
         habit.daysComplete = daysComplete
         habit.daysLost = daysLost
+        habit.onFirstWeek = true
         
         if isRemainderOn {
             if let ids = try? await scheduleNotification() {

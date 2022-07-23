@@ -10,10 +10,11 @@
         <attribute name="isRemainderOn" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="notificationsIDs" optional="YES" attributeType="Transformable" customClassName="[String]"/>
+        <attribute name="onFirstWeek" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="remainderDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="streak" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
     </entity>
     <elements>
-        <element name="Habit" positionX="-63" positionY="-18" width="128" height="194"/>
+        <element name="Habit" positionX="-63" positionY="-18" width="128" height="209"/>
     </elements>
 </model>

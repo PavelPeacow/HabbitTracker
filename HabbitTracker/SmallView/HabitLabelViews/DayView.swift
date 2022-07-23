@@ -11,13 +11,15 @@ struct DayView: View {
     @EnvironmentObject var habitViewModel: HabbitViewModel
     @Environment(\.managedObjectContext) var moc
     
-    let habitItem: FetchedResults<Habit>.Element
+    let habitItem: Habit
     let dayDate: Date
     let dayNum: Int
     
     @State private var isOn = false
     
     @State private var isDayLost = false
+    
+    @State private var isOnFirstWeek1 = false
     
     var body: some View {
         VStack {
@@ -35,13 +37,27 @@ struct DayView: View {
                             
                         } else if isDayLostAndContained {
                             
-                            habitViewModel.dayLostAdd(habit: habitItem, dayDate: dayDate, context: moc)
-                            isDayLost = true
+                            if habitItem.onFirstWeek {
+                                print("wtf")
+                                isOnFirstWeek1 = true
+                            } else {
+                                print("amahasla false")
+                                isOnFirstWeek1 = false
+                            }
+                            
+                            if !isOnFirstWeek1 {
+                                habitViewModel.dayLostAdd(habit: habitItem, dayDate: dayDate, context: moc)
+                                isDayLost = true
+                            }
+                            
                             
                         } else {
-                            
+                            isDayLost = false
                             isOn = false
                         }
+                        
+                        habitViewModel.whenFirstWeekCreate(habit: habitItem, context: moc)
+                        
                     }
             }
             .background(
@@ -49,30 +65,32 @@ struct DayView: View {
                     .fill(isOnColor)
                     .opacity(isOnOpacity)
                     .background(
-                        dayLostCircle
-                            .foregroundColor(Color(habitItem.color ?? "Color-1"))
-                            .frame(width: 15, height: 15)
+                        
+                        isDay
+                        
                     )
                 
                     .onTapGesture {
-                        if whenTap  {
-                            
-                            habitViewModel.isTaptedOnDay(indexDay: dayNum, habitItem: habitItem, moc: moc, dayDate: dayDate)
-                            
-                            withAnimation(.easeInOut(duration: 0.5)) {
+                        if !isOnFirstWeek1 {
+                            if whenTap  {
                                 
-                                isOn.toggle()
+                                habitViewModel.isTaptedOnDay(indexDay: dayNum, habitItem: habitItem, moc: moc, dayDate: dayDate)
                                 
-                                if habitViewModel.isToday(date: dayDate) != true {
+                                withAnimation(.easeInOut(duration: 0.5)) {
                                     
-                                    isDayLost.toggle()
+                                    isOn.toggle()
                                     
-                                    if isDayLostContainTodayDate {
-                                        habitViewModel.removeFromDayLostArray(context: moc, habit: habitItem, dayDate: dayDate)
-                                    } else {
-                                        habitViewModel.dayLostAdd(habit: habitItem, dayDate: dayDate, context: moc)
+                                    if habitViewModel.isToday(date: dayDate) != true {
+                                        
+                                        isDayLost.toggle()
+                                        
+                                        if isDayLostContainTodayDate {
+                                            habitViewModel.removeFromDayLostArray(context: moc, habit: habitItem, dayDate: dayDate)
+                                        } else {
+                                            habitViewModel.dayLostAdd(habit: habitItem, dayDate: dayDate, context: moc)
+                                        }
+                                        
                                     }
-                                    
                                 }
                             }
                         }
@@ -92,8 +110,28 @@ struct DayView: View {
         habitViewModel.isDayLost(dayDate: dayDate) && habitViewModel.showSelectedDays(frequency: habitItem.frequency ?? []).contains(dayNum)
     }
     
+    @ViewBuilder
+    var isDay: some View {
+        if isOnFirstWeek1 {
+            firstWeekDay
+        } else {
+            dayLostCircle
+        }
+    }
+    
     private var dayLostCircle: some View {
-        isDayLost ? Capsule() : nil
+        isDayLost
+        ? Capsule()
+            .foregroundColor(Color(habitItem.color ?? "Color-1"))
+            .frame(width: 15, height: 15)
+        : nil
+    }
+    
+    private var firstWeekDay: some View {
+        Capsule()
+            .foregroundColor(.gray)
+            .opacity(0.5)
+            .frame(width: 15, height: 15)
     }
     
     private var tappedColor: Color {
