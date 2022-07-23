@@ -153,12 +153,54 @@ struct StatisticsView: View {
 //MARK: FSCalendar implementation
 struct CalendarView: UIViewRepresentable {
     @EnvironmentObject var habitViewModel: HabitViewModel
+    @Environment(\.managedObjectContext) var moc
     var habit: Habit
     var calendar = FSCalendar()
     
     func updateUIView(_ uiView: FSCalendar, context: Context) {
     }
     
+    
+    func alertMessage(dateString: String) {
+        let title: String = "Mark day"
+        var message: String = ""
+        
+        let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        let uncompleteAction = UIAlertAction(title: "Mark habit as uncomplete", style: .default) { (action: UIAlertAction) in
+            
+            if let remove = habit.daysComplete?.firstIndex(where: { dayDate in
+                dayDate == dateString
+            }) {
+                habit.daysComplete?.remove(at: remove)
+                habit.streak -= 1
+                try? moc.save()
+            }
+            
+        }
+        
+        let completeAction = UIAlertAction(title: "Mark habit as complete", style: .default) { (action: UIAlertAction) in
+            habit.daysComplete?.append(dateString)
+            habit.streak += 1
+            try? moc.save()
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .destructive) { (action: UIAlertAction) in }
+        
+        
+        if habit.daysComplete!.contains(dateString) {
+            alertVC.addAction(uncompleteAction)
+            message = "Do you want mark day as uncomlete?"
+        } else {
+            alertVC.addAction(completeAction)
+            message = "Do you wantnmark day as comlete?"
+        }
+        
+        alertVC.addAction(cancelAction)
+        
+        let viewController = UIApplication.shared.windows.first!.rootViewController!
+        viewController.present(alertVC, animated: true, completion: nil)
+    }
     
     //MARK: Make UI
     func makeUIView(context: Context) -> FSCalendar {
@@ -210,6 +252,16 @@ struct CalendarView: UIViewRepresentable {
             
             return nil
         }
+        
+        func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
+            
+            let dateString = parent.habitViewModel.extractDateToString(date: date, format: "yyyy-MM-dd")
+            parent.alertMessage(dateString: dateString)
+            
+            calendar.reloadData()
+        }
+        
+        
     }
 }
 
