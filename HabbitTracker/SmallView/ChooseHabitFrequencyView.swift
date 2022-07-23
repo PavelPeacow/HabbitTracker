@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct ChooseHabitFrequencyView: View {
-    @EnvironmentObject var habitViewModel: HabbitViewModel
+    @EnvironmentObject var habitViewModel: HabitViewModel
     
     var body: some View {
         let weekDays = Calendar.current.weekdaySymbols
         HStack {
             ForEach(weekDays, id: \.self) { day in
-                let index = habitViewModel.frequency.firstIndex { value in
+                let index = habitViewModel.habitFrequency.firstIndex { value in
                     return value == day
                 } ?? -1
                 Text(day.prefix(2))
@@ -25,14 +25,14 @@ struct ChooseHabitFrequencyView: View {
                     .background {
                         Capsule()
                             
-                            .fill(index != -1 ? Color(habitViewModel.color) : Color(habitViewModel.color).opacity(0.3))
+                            .fill(index != -1 ? Color(habitViewModel.habitColor) : Color(habitViewModel.habitColor).opacity(0.3))
                     }
                     .onTapGesture {
                         withAnimation {
                             if index != -1 {
-                                habitViewModel.frequency.remove(at: index)
+                                habitViewModel.habitFrequency.remove(at: index)
                             } else {
-                                habitViewModel.frequency .append(day)
+                                habitViewModel.habitFrequency .append(day)
                             }
                         }
                     }
@@ -44,6 +44,6 @@ struct ChooseHabitFrequencyView: View {
 struct ChooseHabitFrequencyView_Previews: PreviewProvider {
     static var previews: some View {
         ChooseHabitFrequencyView()
-            .environmentObject(HabbitViewModel())
+            .environmentObject(HabitViewModel())
     }
 }

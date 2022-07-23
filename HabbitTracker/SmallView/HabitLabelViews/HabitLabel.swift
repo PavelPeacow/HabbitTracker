@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct HabitLabel: View {
-    let habitItem: FetchedResults<Habit>.Element
+    let habitItem: Habit
     @Environment(\.managedObjectContext) var moc
-    @ObservedObject var habitViewModel = HabbitViewModel()
+    @ObservedObject var habitViewModel = HabitViewModel()
     
     var body: some View {
             VStack {

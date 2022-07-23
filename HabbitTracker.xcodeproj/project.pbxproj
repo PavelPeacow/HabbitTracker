@@ -15,16 +15,16 @@
 		B54103002887078C004CB3E6 /* ChooseHabitColorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54102FF2887078C004CB3E6 /* ChooseHabitColorView.swift */; };
 		B54AAE4E2869BCEF00413374 /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = B54AAE4D2869BCEF00413374 /* FSCalendar */; };
 		B574C8BC284B864B00879410 /* AddHabbitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B574C8BB284B864B00879410 /* AddHabbitView.swift */; };
-		B574C8BE284B8A9E00879410 /* HabbitDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B574C8BD284B8A9E00879410 /* HabbitDetailView.swift */; };
 		B57E4E9128644DBB00937D9B /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57E4E9028644DBB00937D9B /* TabBarView.swift */; };
 		B5842CDD287AB7680077AECD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5842CDC287AB7680077AECD /* LaunchScreen.storyboard */; };
 		B5ACB202286461F900730456 /* StatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5ACB201286461F900730456 /* StatisticsView.swift */; };
 		B5ACB2042864625A00730456 /* AchievementsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5ACB2032864625A00730456 /* AchievementsView.swift */; };
+		B5B84DFC288C213300E8C8D5 /* ViewModifires.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B84DFB288C213300E8C8D5 /* ViewModifires.swift */; };
 		B5C6B62D287C43D000CB6976 /* HabitWeekDaysView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C6B62C287C43D000CB6976 /* HabitWeekDaysView.swift */; };
 		B5D065842857733800388545 /* HabbitTracker.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B5D065822857733800388545 /* HabbitTracker.xcdatamodeld */; };
 		B5D06586285774CF00388545 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D06585285774CF00388545 /* DataController.swift */; };
 		B5D8AB59287DC1AA006D5B1D /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = B5D8AB58287DC1AA006D5B1D /* SwiftUICharts */; };
-		B5E4CB70284B9C5F00DABAA1 /* HabbitViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E4CB6F284B9C5F00DABAA1 /* HabbitViewModel.swift */; };
+		B5E4CB70284B9C5F00DABAA1 /* HabitViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E4CB6F284B9C5F00DABAA1 /* HabitViewModel.swift */; };
 		B5E66A5C287F06BA007A830C /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E66A5B287F06BA007A830C /* SettingView.swift */; };
 		B5F666972857305E00A89F54 /* HabitLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F666962857305E00A89F54 /* HabitLabel.swift */; };
 		B5F8C7EE2887F708002EE16A /* ChangeHabitVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F8C7ED2887F708002EE16A /* ChangeHabitVIew.swift */; };
@@ -41,15 +41,15 @@
 		B54102FD288706FF004CB3E6 /* ChooseHabitFrequencyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseHabitFrequencyView.swift; sourceTree = "<group>"; };
 		B54102FF2887078C004CB3E6 /* ChooseHabitColorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseHabitColorView.swift; sourceTree = "<group>"; };
 		B574C8BB284B864B00879410 /* AddHabbitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddHabbitView.swift; sourceTree = "<group>"; };
-		B574C8BD284B8A9E00879410 /* HabbitDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabbitDetailView.swift; sourceTree = "<group>"; };
 		B57E4E9028644DBB00937D9B /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
 		B5842CDC287AB7680077AECD /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B5ACB201286461F900730456 /* StatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsView.swift; sourceTree = "<group>"; };
 		B5ACB2032864625A00730456 /* AchievementsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementsView.swift; sourceTree = "<group>"; };
+		B5B84DFB288C213300E8C8D5 /* ViewModifires.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModifires.swift; sourceTree = "<group>"; };
 		B5C6B62C287C43D000CB6976 /* HabitWeekDaysView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitWeekDaysView.swift; sourceTree = "<group>"; };
 		B5D065832857733800388545 /* HabbitTracker.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = HabbitTracker.xcdatamodel; sourceTree = "<group>"; };
 		B5D06585285774CF00388545 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
-		B5E4CB6F284B9C5F00DABAA1 /* HabbitViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabbitViewModel.swift; sourceTree = "<group>"; };
+		B5E4CB6F284B9C5F00DABAA1 /* HabitViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitViewModel.swift; sourceTree = "<group>"; };
 		B5E66A5B287F06BA007A830C /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		B5F666962857305E00A89F54 /* HabitLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitLabel.swift; sourceTree = "<group>"; };
 		B5F8C7ED2887F708002EE16A /* ChangeHabitVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeHabitVIew.swift; sourceTree = "<group>"; };
@@ -92,7 +92,9 @@
 				B5280F62284B85F00043409A /* HabbitTrackerApp.swift */,
 				B5842CDC287AB7680077AECD /* LaunchScreen.storyboard */,
 				B5D065872857814B00388545 /* ViewModel */,
+				B5B84DFA288C20D800E8C8D5 /* Helpers */,
 				B574C8BF284B8ABB00879410 /* MainView */,
+				B5B84DFD288C31F300E8C8D5 /* HabitEditingViews */,
 				B5F666982857306900A89F54 /* SmallView */,
 				B574C8C2284B8CFE00879410 /* DataModel */,
 				B5280F68284B85F10043409A /* Preview Content */,
@@ -117,9 +119,6 @@
 				B5280F64284B85F00043409A /* ContentView.swift */,
 				B5ACB201286461F900730456 /* StatisticsView.swift */,
 				B5ACB2032864625A00730456 /* AchievementsView.swift */,
-				B574C8BB284B864B00879410 /* AddHabbitView.swift */,
-				B5F8C7ED2887F708002EE16A /* ChangeHabitVIew.swift */,
-				B574C8BD284B8A9E00879410 /* HabbitDetailView.swift */,
 			);
 			path = MainView;
 			sourceTree = "<group>";
@@ -131,6 +130,23 @@
 				B5D065822857733800388545 /* HabbitTracker.xcdatamodeld */,
 			);
 			path = DataModel;
+			sourceTree = "<group>";
+		};
+		B5B84DFA288C20D800E8C8D5 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				B5B84DFB288C213300E8C8D5 /* ViewModifires.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		B5B84DFD288C31F300E8C8D5 /* HabitEditingViews */ = {
+			isa = PBXGroup;
+			children = (
+				B574C8BB284B864B00879410 /* AddHabbitView.swift */,
+				B5F8C7ED2887F708002EE16A /* ChangeHabitVIew.swift */,
+			);
+			path = HabitEditingViews;
 			sourceTree = "<group>";
 		};
 		B5C6B630287C4DAA00CB6976 /* HabitLabelViews */ = {
@@ -146,7 +162,7 @@
 		B5D065872857814B00388545 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				B5E4CB6F284B9C5F00DABAA1 /* HabbitViewModel.swift */,
+				B5E4CB6F284B9C5F00DABAA1 /* HabitViewModel.swift */,
 			);
 			name = ViewModel;
 			path = DataModel;
@@ -252,12 +268,12 @@
 				B5F666972857305E00A89F54 /* HabitLabel.swift in Sources */,
 				B54102FE288706FF004CB3E6 /* ChooseHabitFrequencyView.swift in Sources */,
 				B5F8C7EE2887F708002EE16A /* ChangeHabitVIew.swift in Sources */,
-				B574C8BE284B8A9E00879410 /* HabbitDetailView.swift in Sources */,
 				B574C8BC284B864B00879410 /* AddHabbitView.swift in Sources */,
 				B54103002887078C004CB3E6 /* ChooseHabitColorView.swift in Sources */,
 				B5F9ECF6287430FA009B3971 /* CurrentWeekView.swift in Sources */,
 				B5D06586285774CF00388545 /* DataController.swift in Sources */,
-				B5E4CB70284B9C5F00DABAA1 /* HabbitViewModel.swift in Sources */,
+				B5B84DFC288C213300E8C8D5 /* ViewModifires.swift in Sources */,
+				B5E4CB70284B9C5F00DABAA1 /* HabitViewModel.swift in Sources */,
 				B5ACB2042864625A00730456 /* AchievementsView.swift in Sources */,
 				B5280F63284B85F00043409A /* HabbitTrackerApp.swift in Sources */,
 			);

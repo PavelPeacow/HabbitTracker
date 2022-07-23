@@ -9,7 +9,7 @@ import SwiftUI
 import UserNotifications
 
 struct AddHabbitView: View {
-    @EnvironmentObject var habitViewModel: HabbitViewModel
+    @EnvironmentObject var habitViewModel: HabitViewModel
     
     @Environment(\.dismiss) var dismiss
     @Environment(\.managedObjectContext) var  moc
@@ -20,21 +20,21 @@ struct AddHabbitView: View {
             VStack {
                 
                 VStack {
-                    TextField("Enter name of habbit", text:  $habitViewModel.nameHabbit)
-                        .colorStrokeRectangle(color: Color(habitViewModel.color))
+                    TextField("Enter name of habbit", text:  $habitViewModel.habitName)
+                        .colorStrokeRectangle(color: Color(habitViewModel.habitColor))
                     
-                    TextField("Enter description", text: $habitViewModel.decriptionHabbit)
-                        .colorStrokeRectangle(color: Color(habitViewModel.color))
+                    TextField("Enter description", text: $habitViewModel.habitDecription)
+                        .colorStrokeRectangle(color: Color(habitViewModel.habitColor))
                 }
                 
                 VStack {
                     ChooseHabitColorView()
                         .environmentObject(habitViewModel)
-                        .colorStrokeRectangle(color: Color(habitViewModel.color))
+                        .colorStrokeRectangle(color: Color(habitViewModel.habitColor))
                     
                     ChooseHabitFrequencyView()
                         .environmentObject(habitViewModel)
-                        .colorStrokeRectangle(color: Color(habitViewModel.color))
+                        .colorStrokeRectangle(color: Color(habitViewModel.habitColor))
                 }
                 
                 
@@ -48,7 +48,7 @@ struct AddHabbitView: View {
                         
                     }
                 }
-                .colorStrokeRectangle(color: Color(habitViewModel.color))
+                .colorStrokeRectangle(color: Color(habitViewModel.habitColor))
                 
                 VStack {
                     Button {
@@ -59,8 +59,8 @@ struct AddHabbitView: View {
                         }
                     } label: {
                         Text("Add habit")
-                            .foregroundColor(Color(habitViewModel.color))
-                            .colorStrokeRectangle(color: Color(habitViewModel.color))
+                            .foregroundColor(Color(habitViewModel.habitColor))
+                            .colorStrokeRectangle(color: Color(habitViewModel.habitColor))
                     }
                 }
             }
@@ -93,7 +93,7 @@ extension View {
 struct AddHabbitView_Previews: PreviewProvider {
     static var previews: some View {
         AddHabbitView()
-            .environmentObject(HabbitViewModel())
+            .environmentObject(HabitViewModel())
             .preferredColorScheme(.dark)
     }
 }

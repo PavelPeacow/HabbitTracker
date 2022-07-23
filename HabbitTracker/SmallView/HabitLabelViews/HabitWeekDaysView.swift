@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HabitWeekDaysView: View {
-    @EnvironmentObject var habitViewModel: HabbitViewModel
+    @EnvironmentObject var habitViewModel: HabitViewModel
     
     let habitItem: FetchedResults<Habit>.Element
     
@@ -30,6 +30,6 @@ struct WeekDaysView_Previews: PreviewProvider {
     static var previews: some View {
         HabitWeekDaysView(habitItem: habbit)
             .preferredColorScheme(.dark)
-            .environmentObject(HabbitViewModel())
+            .environmentObject(HabitViewModel())
     }
 }

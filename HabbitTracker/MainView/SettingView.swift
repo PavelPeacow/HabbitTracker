@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SettingView: View {
-    @EnvironmentObject var habitViewModel: HabbitViewModel
+    @EnvironmentObject var habitViewModel: HabitViewModel
     @Environment(\.managedObjectContext) var moc
     
     @FetchRequest(sortDescriptors: []) var habits: FetchedResults<Habit>
@@ -22,7 +22,7 @@ struct SettingView: View {
                 
                 
                 Button("Delete all habits") {
-                    habitViewModel.deleteAllHabits(context: moc, habits: habits)
+                    habitViewModel.deleteAllHabits(habits: habits, context: moc)
                 }
                 .foregroundColor(.red)
             }
@@ -38,6 +38,6 @@ struct SettingView_Previews: PreviewProvider {
     static var previews: some View {
         SettingView()
             .preferredColorScheme(.dark)
-            .environmentObject(HabbitViewModel())
+            .environmentObject(HabitViewModel())
     }
 }

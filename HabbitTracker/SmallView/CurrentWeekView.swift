@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CurrentWeekView: View {
-    @EnvironmentObject var habitViewModel: HabbitViewModel
+    @EnvironmentObject var habitViewModel: HabitViewModel
     
     var body: some View {
         VStack {
@@ -16,17 +16,17 @@ struct CurrentWeekView: View {
                 ForEach(habitViewModel.fetchCurrentWeek().sorted(by: <), id: \.key) { _, dayDate in
                     
                     VStack {
-                        Text(habitViewModel.extractDate(date: dayDate, format: "dd"))
+                        Text(habitViewModel.extractDateToString(date: dayDate, format: "dd"))
                             .font(.title2)
                         
-                        Text(habitViewModel.extractDate(date: dayDate, format: "EEE"))
+                        Text(habitViewModel.extractDateToString(date: dayDate, format: "EEE"))
                             .font(.callout)
                         
                     }
                     .foregroundColor(.white)
                     .frame(maxWidth: .infinity)
                     .background(
-                        ZStack() {
+                        ZStack {
                             Capsule()
                                 .stroke(lineWidth: 2)
                                 .fill(.gray)
@@ -53,6 +53,6 @@ struct ButtonsTest_Previews: PreviewProvider {
     static var previews: some View {
         CurrentWeekView()
             .preferredColorScheme(.dark)
-            .environmentObject(HabbitViewModel())
+            .environmentObject(HabitViewModel())
     }
 }

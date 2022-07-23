@@ -11,7 +11,7 @@ import FSCalendar
 import SwiftUICharts
 
 struct StatisticsView: View {
-    @EnvironmentObject var habitViewModel: HabbitViewModel
+    @EnvironmentObject var habitViewModel: HabitViewModel
     var habitItem: Habit
     
     @State private var isShowingAlert = false
@@ -34,10 +34,9 @@ struct StatisticsView: View {
         NavigationView {
             ScrollView {
                 VStack {
-                    VStack {
-                        Text(habitItem.name ?? "Habit")
-                            .font(.largeTitle)
-                    }
+                    
+                    Text(habitItem.name ?? "Habit")
+                        .font(.largeTitle)
                     
                     CalendarView(habit: habitItem)
                         .environmentObject(habitViewModel)
@@ -49,27 +48,12 @@ struct StatisticsView: View {
                         Text("Selected frequency")
                             .textHeadline()
                         HStack {
-                            let weekDays = Calendar.current.weekdaySymbols
-                            ForEach(weekDays, id: \.self) { day in
-                                let index = habitItem.frequency?.firstIndex { value in
-                                    return value == day
-                                } ?? -1
-                                Text(day.prefix(2))
-                                    .foregroundColor(.white)
-                                    .font(.headline)
-                                    .frame(maxWidth: .infinity)
-                                    .padding(.vertical, 12)
-                                    .background {
-                                        Circle()
-                                            .fill(index != -1 ? Color(habitItem.color ?? "Color-1") : Color(habitItem.color ?? "Color-1").opacity(0.4))
-                                    }
-                            }
+                            habitFrequency
                         }
                     }
                     .padding()
                     .orangeRectangle()
                     .padding(.horizontal, 16)
-                    
                     
                     VStack {
                         HorizontalBarChartView(dataPoints: habitViewModel.getChartData(daysCompleteCount: daysCompleteCount, daysLostCount: daysLostCount))
@@ -79,7 +63,6 @@ struct StatisticsView: View {
                             .fixedSize()
                             .padding()
                     }
-                    
                     
                     HStack {
                         HStack {
@@ -107,8 +90,6 @@ struct StatisticsView: View {
                         .orangeRectangle()
                     }
                     
-                    
-                    
                     HStack(spacing: 25) {
                         Button {
                             isShowingSheet.toggle()
@@ -134,84 +115,46 @@ struct StatisticsView: View {
                 }
                 .alert("Are you shure?", isPresented: $isShowingAlert) {
                     Button("Delete", role: .destructive) {
-                        habitViewModel.deleteHabit(context: moc, habitItem: habitItem)
+                        habitViewModel.deleteHabit(habit: habitItem, context: moc)
                     }
                 }
                 .sheet(isPresented: $isShowingSheet) {
                     habitViewModel.resetData()
                 } content: {
                     ChangeHabitVIew(habit: habitItem)
-                        .environmentObject(HabbitViewModel())
+                        .environmentObject(HabitViewModel())
                 }
             }
             .navigationBarHidden(true)
         }
-        
-    }
-}
-
-
-//MARK: Custom modifiers
-struct OrangeRectangle: ViewModifier {
-    func body(content: Content) -> some View {
-            content
-                .background(
-                    RoundedRectangle(cornerRadius: 20)
-                        .foregroundColor(.orange)
-                        .opacity(0.96)
-                        .shadow(color: .orange, radius: 4, x: 0, y: 0)
-                )
-    }
-}
-
-struct ButtonGradient: ViewModifier {
-    
-    let shadowColor: Color
-    let firstGradientColor: Color
-    let secondGradientColor: Color
-    
-    func body(content: Content) -> some View {
-        content
-            .background(
-                LinearGradient(gradient: Gradient(colors: [firstGradientColor, secondGradientColor]), startPoint: .trailing, endPoint: .leading)
-                    .mask({
-                        RoundedRectangle(cornerRadius: 20)
-                    })
-                    .shadow(color: shadowColor, radius: 8, x: 0, y: 0)
-            )
-    }
-}
-
-struct TextHeadline: ViewModifier {
-    func body(content: Content) -> some View {
-        content
-            .font(.headline)
-            .foregroundColor(.black)
-    }
-}
-
-extension View {
-    func orangeRectangle() -> some View {
-        self.modifier(OrangeRectangle())
     }
     
-    func buttonGradient(shadowColor: Color, firstGradColor: Color, secondGradColor: Color) -> some View {
-        self.modifier(ButtonGradient(shadowColor: shadowColor, firstGradientColor: firstGradColor, secondGradientColor: secondGradColor))
-    }
-    
-    func textHeadline() -> some View {
-        self.modifier(TextHeadline())
+    @ViewBuilder
+    private var habitFrequency: some View {
+        let weekDays = Calendar.current.weekdaySymbols
+        ForEach(weekDays, id: \.self) { day in
+            let index = habitItem.frequency?.firstIndex { value in
+                return value == day
+            } ?? -1
+            Text(day.prefix(2))
+                .foregroundColor(.white)
+                .font(.headline)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 12)
+                .background {
+                    Circle()
+                        .fill(index != -1 ? Color(habitItem.color ?? "Color-1") : Color(habitItem.color ?? "Color-1").opacity(0.4))
+                }
+        }
     }
 }
-
 
 
 //MARK: FSCalendar implementation
 struct CalendarView: UIViewRepresentable {
-    @EnvironmentObject var habitViewModel: HabbitViewModel
+    @EnvironmentObject var habitViewModel: HabitViewModel
     var habit: Habit
     var calendar = FSCalendar()
-    
     
     func updateUIView(_ uiView: FSCalendar, context: Context) {
     }
@@ -249,7 +192,7 @@ struct CalendarView: UIViewRepresentable {
         
         func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillDefaultColorFor date: Date) -> UIColor? {
             
-            let dateString = parent.habitViewModel.extractDate(date: date, format: "yyyy-MM-dd")
+            let dateString = parent.habitViewModel.extractDateToString(date: date, format: "yyyy-MM-dd")
             
             guard parent.habit.daysComplete != nil else {
                 return nil
@@ -280,6 +223,6 @@ struct StatisticsView_Previews: PreviewProvider {
     static var previews: some View {
         StatisticsView(habitItem: habbit)
             .preferredColorScheme(.dark)
-            .environmentObject(HabbitViewModel())
+            .environmentObject(HabitViewModel())
     }
 }

@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @EnvironmentObject var habitViewModel: HabbitViewModel
+    @EnvironmentObject var habitViewModel: HabitViewModel
     
     @State private var isSheetActive = false
     @Environment(\.managedObjectContext) var moc
@@ -72,7 +72,8 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
-            .environmentObject(HabbitViewModel())
+            .environmentObject(HabitViewModel())
+            .preferredColorScheme(.dark)
     }
 }
 

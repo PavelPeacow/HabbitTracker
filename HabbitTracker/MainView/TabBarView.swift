@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TabBarView: View {
     
-    @StateObject var habitViewModel = HabbitViewModel()
+    @StateObject var habitViewModel = HabitViewModel()
     
     var body: some View {
         TabView {

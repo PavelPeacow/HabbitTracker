@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ChooseHabitColorView: View {
-    @EnvironmentObject var habitViewModel: HabbitViewModel
+    @EnvironmentObject var habitViewModel: HabitViewModel
     
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
@@ -19,7 +19,7 @@ struct ChooseHabitColorView: View {
                         .fill(Color(color))
                         .frame(maxWidth: .infinity)
                         .overlay(content: {
-                            if color == habitViewModel.color {
+                            if color == habitViewModel.habitColor {
                                 Image(systemName: "checkmark")
                                     .font(.caption.bold())
                                     .foregroundColor(.black)
@@ -27,7 +27,7 @@ struct ChooseHabitColorView: View {
                         })
                         .onTapGesture {
                             withAnimation {
-                                habitViewModel.color = color
+                                habitViewModel.habitColor = color
                             }
                            
                         }
@@ -41,6 +41,6 @@ struct ChooseHabitColorView: View {
 struct ChooseHabitColorView_Previews: PreviewProvider {
     static var previews: some View {
         ChooseHabitColorView()
-            .environmentObject(HabbitViewModel())
+            .environmentObject(HabitViewModel())
     }
 }
