@@ -21,7 +21,7 @@ struct ChooseHabitColorView: View {
                         .overlay(content: {
                             if color == habitViewModel.habitColor {
                                 Image(systemName: "checkmark")
-                                    .font(.caption.bold())
+                                    .font(.headline.bold())
                                     .foregroundColor(.black)
                             }
                         })

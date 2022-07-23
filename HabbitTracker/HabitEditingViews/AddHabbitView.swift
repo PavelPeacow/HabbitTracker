@@ -17,54 +17,67 @@ struct AddHabbitView: View {
     var body: some View {
         NavigationView {
             
-            VStack {
-                
+            ScrollView(showsIndicators: false) {
                 VStack {
-                    TextField("Enter name of habbit", text:  $habitViewModel.habitName)
-                        .colorStrokeRectangle(color: Color(habitViewModel.habitColor))
                     
-                    TextField("Enter description", text: $habitViewModel.habitDecription)
-                        .colorStrokeRectangle(color: Color(habitViewModel.habitColor))
-                }
-                
-                VStack {
-                    ChooseHabitColorView()
-                        .environmentObject(habitViewModel)
-                        .colorStrokeRectangle(color: Color(habitViewModel.habitColor))
-                    
-                    ChooseHabitFrequencyView()
-                        .environmentObject(habitViewModel)
-                        .colorStrokeRectangle(color: Color(habitViewModel.habitColor))
-                }
-                
-                
-                VStack {
-                    Toggle(isOn: $habitViewModel.isRemainderOn.animation()) {
-                        Text("Do you want get notifications?")
-                    }
-                    
-                    if habitViewModel.isRemainderOn {
-                        DatePicker("Pick time", selection: $habitViewModel.remainderDate, displayedComponents: .hourAndMinute)
+                    VStack {
+                        TextField("Enter name of habbit", text:  $habitViewModel.habitName)
+                            .colorStrokeRectangle(color: Color(habitViewModel.habitColor))
                         
+                        TextField("Enter description", text: $habitViewModel.habitDecription)
+                            .colorStrokeRectangle(color: Color(habitViewModel.habitColor))
                     }
-                }
-                .colorStrokeRectangle(color: Color(habitViewModel.habitColor))
-                
-                VStack {
-                    Button {
-                        Task {
-                            if try await habitViewModel.addHabit(context: moc) {
+                    
+                    VStack {
+                        ChooseHabitColorView()
+                            .environmentObject(habitViewModel)
+                            .colorStrokeRectangle(color: Color(habitViewModel.habitColor))
+                        
+                        ChooseHabitFrequencyView()
+                            .environmentObject(habitViewModel)
+                            .colorStrokeRectangle(color: Color(habitViewModel.habitColor))
+                    }
+                    
+                    
+                    VStack {
+                        Toggle(isOn: $habitViewModel.isRemainderOn.animation()) {
+                            Text("Do you want get notifications?")
+                        }
+                        
+                        if habitViewModel.isRemainderOn {
+                            DatePicker("Pick time", selection: $habitViewModel.remainderDate, displayedComponents: .hourAndMinute)
+                            
+                        }
+                    }
+                    .colorStrokeRectangle(color: Color(habitViewModel.habitColor))
+                    
+                    VStack {
+                        Button {
+                            Task {
+                                if try await habitViewModel.addHabit(context: moc) {
+                                    dismiss()
+                                }
+                            }
+                        } label: {
+                            Text("Add habit")
+                                .foregroundColor(Color(habitViewModel.habitColor))
+                                .colorStrokeRectangle(color: Color(habitViewModel.habitColor))
+                                .opacity(habitViewModel.isHabitFieldsEmpty() ? 0.5 : 1)
+                        }
+                    }
+                    .disabled (
+                        habitViewModel.isHabitFieldsEmpty()
+                    )
+                    .toolbar {
+                        ToolbarItem(placement: .navigationBarLeading) {
+                            Button("Cancel") {
                                 dismiss()
                             }
                         }
-                    } label: {
-                        Text("Add habit")
-                            .foregroundColor(Color(habitViewModel.habitColor))
-                            .colorStrokeRectangle(color: Color(habitViewModel.habitColor))
                     }
                 }
+                .navigationTitle("Add new habbit")
             }
-            .navigationTitle("Add new habbit")
         }
     }
 }

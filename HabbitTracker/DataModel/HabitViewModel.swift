@@ -37,6 +37,15 @@ class HabitViewModel: ObservableObject {
     @Published var onFirstWeek: Bool = false
     
     
+    func isHabitFieldsEmpty() -> Bool {
+        if habitName.isEmpty || habitFrequency.isEmpty || habitDecription.isEmpty {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    
     //MARK: when user change habit, habit takes its data to show in ChangeHabitView
     func whenChangeHabit(habit: Habit) {
         habitName = habit.name ?? ""
