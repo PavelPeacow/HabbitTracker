@@ -14,6 +14,7 @@
 		B54102FE288706FF004CB3E6 /* ChooseHabitFrequencyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54102FD288706FF004CB3E6 /* ChooseHabitFrequencyView.swift */; };
 		B54103002887078C004CB3E6 /* ChooseHabitColorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54102FF2887078C004CB3E6 /* ChooseHabitColorView.swift */; };
 		B54AAE4E2869BCEF00413374 /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = B54AAE4D2869BCEF00413374 /* FSCalendar */; };
+		B557A28C288E9F8900EE40BC /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B557A28B288E9F8900EE40BC /* CalendarView.swift */; };
 		B574C8BC284B864B00879410 /* AddHabbitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B574C8BB284B864B00879410 /* AddHabbitView.swift */; };
 		B57E4E9128644DBB00937D9B /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57E4E9028644DBB00937D9B /* TabBarView.swift */; };
 		B5842CDD287AB7680077AECD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5842CDC287AB7680077AECD /* LaunchScreen.storyboard */; };
@@ -23,7 +24,6 @@
 		B5C6B62D287C43D000CB6976 /* HabitWeekDaysView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C6B62C287C43D000CB6976 /* HabitWeekDaysView.swift */; };
 		B5D065842857733800388545 /* HabbitTracker.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B5D065822857733800388545 /* HabbitTracker.xcdatamodeld */; };
 		B5D06586285774CF00388545 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D06585285774CF00388545 /* DataController.swift */; };
-		B5D8AB59287DC1AA006D5B1D /* SwiftUICharts in Frameworks */ = {isa = PBXBuildFile; productRef = B5D8AB58287DC1AA006D5B1D /* SwiftUICharts */; };
 		B5E4CB70284B9C5F00DABAA1 /* HabitViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E4CB6F284B9C5F00DABAA1 /* HabitViewModel.swift */; };
 		B5E66A5C287F06BA007A830C /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E66A5B287F06BA007A830C /* SettingView.swift */; };
 		B5F666972857305E00A89F54 /* HabitLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F666962857305E00A89F54 /* HabitLabel.swift */; };
@@ -40,6 +40,7 @@
 		B5280F69284B85F10043409A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		B54102FD288706FF004CB3E6 /* ChooseHabitFrequencyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseHabitFrequencyView.swift; sourceTree = "<group>"; };
 		B54102FF2887078C004CB3E6 /* ChooseHabitColorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseHabitColorView.swift; sourceTree = "<group>"; };
+		B557A28B288E9F8900EE40BC /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		B574C8BB284B864B00879410 /* AddHabbitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddHabbitView.swift; sourceTree = "<group>"; };
 		B57E4E9028644DBB00937D9B /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
 		B5842CDC287AB7680077AECD /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -63,7 +64,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B54AAE4E2869BCEF00413374 /* FSCalendar in Frameworks */,
-				B5D8AB59287DC1AA006D5B1D /* SwiftUICharts in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -171,6 +171,7 @@
 		B5F666982857306900A89F54 /* SmallView */ = {
 			isa = PBXGroup;
 			children = (
+				B557A28B288E9F8900EE40BC /* CalendarView.swift */,
 				B54102FF2887078C004CB3E6 /* ChooseHabitColorView.swift */,
 				B54102FD288706FF004CB3E6 /* ChooseHabitFrequencyView.swift */,
 				B5F9ECF5287430FA009B3971 /* CurrentWeekView.swift */,
@@ -197,7 +198,6 @@
 			name = HabbitTracker;
 			packageProductDependencies = (
 				B54AAE4D2869BCEF00413374 /* FSCalendar */,
-				B5D8AB58287DC1AA006D5B1D /* SwiftUICharts */,
 			);
 			productName = HabbitTracker;
 			productReference = B5280F5F284B85F00043409A /* HabbitTracker.app */;
@@ -229,7 +229,6 @@
 			mainGroup = B5280F56284B85F00043409A;
 			packageReferences = (
 				B54AAE4C2869BCEF00413374 /* XCRemoteSwiftPackageReference "FSCalendar" */,
-				B5D8AB57287DC1AA006D5B1D /* XCRemoteSwiftPackageReference "SwiftUICharts" */,
 			);
 			productRefGroup = B5280F60284B85F00043409A /* Products */;
 			projectDirPath = "";
@@ -270,6 +269,7 @@
 				B5F8C7EE2887F708002EE16A /* ChangeHabitVIew.swift in Sources */,
 				B574C8BC284B864B00879410 /* AddHabbitView.swift in Sources */,
 				B54103002887078C004CB3E6 /* ChooseHabitColorView.swift in Sources */,
+				B557A28C288E9F8900EE40BC /* CalendarView.swift in Sources */,
 				B5F9ECF6287430FA009B3971 /* CurrentWeekView.swift in Sources */,
 				B5D06586285774CF00388545 /* DataController.swift in Sources */,
 				B5B84DFC288C213300E8C8D5 /* ViewModifires.swift in Sources */,
@@ -488,14 +488,6 @@
 				minimumVersion = 2.0.0;
 			};
 		};
-		B5D8AB57287DC1AA006D5B1D /* XCRemoteSwiftPackageReference "SwiftUICharts" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/mecid/SwiftUICharts";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -503,11 +495,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B54AAE4C2869BCEF00413374 /* XCRemoteSwiftPackageReference "FSCalendar" */;
 			productName = FSCalendar;
-		};
-		B5D8AB58287DC1AA006D5B1D /* SwiftUICharts */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B5D8AB57287DC1AA006D5B1D /* XCRemoteSwiftPackageReference "SwiftUICharts" */;
-			productName = SwiftUICharts;
 		};
 /* End XCSwiftPackageProductDependency section */
 

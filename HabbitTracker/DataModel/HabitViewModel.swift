@@ -9,7 +9,6 @@ import Foundation
 import CoreData
 import NotificationCenter
 import SwiftUI
-import SwiftUICharts
 
 class HabitViewModel: ObservableObject {
     
@@ -361,31 +360,22 @@ class HabitViewModel: ObservableObject {
         return currentWeek
     }
     
-    //Extract date to date format yyyy-mm-dd
+    //MARK: Extract date to date format yyyy-mm-dd
     func extractDateToProperForm(date: Date) -> Date {
         let calendar = Calendar.current.dateComponents([.year,.month,.day], from: date)
         return Calendar.current.date(from: calendar)!
     }
     
-    //Extract data to string
+    //MARK: Extract data to string
     func extractDateToString(date: Date, format: String) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = format
         return formatter.string(from: date)
     }
     
-    
-    //MARK: Get data for chart bar
-    func getChartData(daysCompleteCount: Double, daysLostCount: Double) -> [DataPoint] {
-        let daysComplete = Legend(color: .green, label: "Days complete", order: 1)
-        let daysLost = Legend(color: .red, label: "Days lost", order: 2)
-        
-        let points: [DataPoint] = [
-            .init(value: daysCompleteCount, label: "\(daysCompleteCount.formatted())", legend: daysComplete),
-            .init(value: daysLostCount, label: "\(daysLostCount.formatted())", legend: daysLost)
-        ]
-        
-        return points
+    //MARK: some sort of kostil
+    func reloadView() {
+        objectWillChange.send()
     }
     
 }

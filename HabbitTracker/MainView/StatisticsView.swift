@@ -6,29 +6,15 @@
 //
 
 import SwiftUI
-import UIKit
-import FSCalendar
-import SwiftUICharts
 
 struct StatisticsView: View {
     @EnvironmentObject var habitViewModel: HabitViewModel
-    var habitItem: Habit
+    @Environment(\.managedObjectContext) var moc
     
     @State private var isShowingAlert = false
     @State private var isShowingSheet = false
-    @Environment(\.managedObjectContext) var moc
     
-    private var daysCompleteCount: Double {
-        var completeDays = 0.0
-        completeDays += Double(habitItem.daysComplete?.count ?? 0)
-        return completeDays
-    }
-    
-    private var daysLostCount: Double {
-        var lostDays = 0.0
-        lostDays += Double(habitItem.daysLost?.count ?? 0)
-        return lostDays
-    }
+    var habitItem: Habit
     
     var body: some View {
         NavigationView {
@@ -55,14 +41,27 @@ struct StatisticsView: View {
                     .orangeRectangle()
                     .padding(.horizontal, 16)
                     
-                    VStack {
-                        HorizontalBarChartView(dataPoints: habitViewModel.getChartData(daysCompleteCount: daysCompleteCount, daysLostCount: daysLostCount))
-                            .textHeadline()
-                            .padding()
-                            .orangeRectangle()
-                            .fixedSize()
-                            .padding()
+                    VStack(alignment: .leading) {
+                        HStack {
+                            Circle()
+                                .foregroundColor(.green)
+                                .frame(width: 15, height: 15)
+                            
+                            Text("\(habitItem.daysComplete?.count ?? 0) Days Complete")
+                        }
+                        
+                        HStack {
+                            Circle()
+                                .foregroundColor(.red)
+                                .frame(width: 15, height: 15)
+                            
+                            Text("\(habitItem.daysLost?.count ?? 0) Days lost")
+                        }
                     }
+                    .textHeadline()
+                    .padding()
+                    .orangeRectangle()
+                    .padding()
                     
                     HStack {
                         HStack {
@@ -146,122 +145,6 @@ struct StatisticsView: View {
                         .fill(index != -1 ? Color(habitItem.color ?? "Color-1") : Color(habitItem.color ?? "Color-1").opacity(0.4))
                 }
         }
-    }
-}
-
-
-//MARK: FSCalendar implementation
-struct CalendarView: UIViewRepresentable {
-    @EnvironmentObject var habitViewModel: HabitViewModel
-    @Environment(\.managedObjectContext) var moc
-    var habit: Habit
-    var calendar = FSCalendar()
-    
-    func updateUIView(_ uiView: FSCalendar, context: Context) {
-    }
-    
-    
-    func alertMessage(dateString: String) {
-        let title: String = "Mark day"
-        var message: String = ""
-        
-        let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        
-        let uncompleteAction = UIAlertAction(title: "Mark habit as uncomplete", style: .default) { (action: UIAlertAction) in
-            
-            if let remove = habit.daysComplete?.firstIndex(where: { dayDate in
-                dayDate == dateString
-            }) {
-                habit.daysComplete?.remove(at: remove)
-                habit.streak -= 1
-                try? moc.save()
-            }
-            
-        }
-        
-        let completeAction = UIAlertAction(title: "Mark habit as complete", style: .default) { (action: UIAlertAction) in
-            habit.daysComplete?.append(dateString)
-            habit.streak += 1
-            try? moc.save()
-        }
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .destructive) { (action: UIAlertAction) in }
-        
-        
-        if habit.daysComplete!.contains(dateString) {
-            alertVC.addAction(uncompleteAction)
-            message = "Do you want mark day as uncomlete?"
-        } else {
-            alertVC.addAction(completeAction)
-            message = "Do you wantnmark day as comlete?"
-        }
-        
-        alertVC.addAction(cancelAction)
-        
-        let viewController = UIApplication.shared.windows.first!.rootViewController!
-        viewController.present(alertVC, animated: true, completion: nil)
-    }
-    
-    //MARK: Make UI
-    func makeUIView(context: Context) -> FSCalendar {
-        calendar.delegate = context.coordinator
-        calendar.dataSource = context.coordinator
-        
-        calendar.appearance.eventDefaultColor = .green
-        calendar.appearance.headerDateFormat = "dd MMMM yyyy EEEE"
-        
-        calendar.appearance.headerTitleColor = .black
-        calendar.appearance.weekdayTextColor = .black
-        calendar.appearance.weekdayFont = UIFont.systemFont(ofSize: 12)
-        calendar.appearance.titleFont = UIFont.systemFont(ofSize: 18)
-        calendar.appearance.todayColor = .black
-        
-        return calendar
-    }
-    
-    func makeCoordinator() -> Coordinator {
-        Coordinator(self)
-    }
-    
-    //MARK: Calendar logic
-    class Coordinator: NSObject, FSCalendarDelegate, FSCalendarDataSource, FSCalendarDelegateAppearance {
-        var parent: CalendarView
-        
-        init(_ parent: CalendarView) {
-            self.parent = parent
-        }
-        
-        
-        func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillDefaultColorFor date: Date) -> UIColor? {
-            
-            let dateString = parent.habitViewModel.extractDateToString(date: date, format: "yyyy-MM-dd")
-            
-            guard parent.habit.daysComplete != nil else {
-                return nil
-            }
-            
-            guard parent.habit.daysLost != nil else {
-                return nil
-            }
-            
-            if parent.habit.daysComplete!.contains(dateString) {
-                return .green
-            } else if parent.habit.daysLost!.contains(dateString) {
-                return .red
-            }
-            
-            return nil
-        }
-        
-        func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
-            
-            let dateString = parent.habitViewModel.extractDateToString(date: date, format: "yyyy-MM-dd")
-            parent.alertMessage(dateString: dateString)
-            
-            calendar.reloadData()
-        }
-        
-        
     }
 }
 
