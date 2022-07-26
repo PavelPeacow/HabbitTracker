@@ -81,6 +81,14 @@ struct ChangeHabitVIew: View {
                             dismiss()
                         }
                     }
+                    
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button("Reset") {
+                            withAnimation {
+                                habitViewModel.whenChangeHabit(habit: habit)
+                            }
+                        }
+                    }
                 }
             }
         }

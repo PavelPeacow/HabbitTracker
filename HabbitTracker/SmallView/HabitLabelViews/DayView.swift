@@ -87,6 +87,10 @@ struct DayView: View {
                 isOn = false
             }
             
+            if !habitViewModel.showSelectedDays(frequency: habitItem.frequency ?? []).contains(dayNum) {
+                isOnFirstWeek = false
+            }
+            
             //check if new week came, set days to active, if not, to none active
             habitViewModel.whenFirstWeekCreate(habit: habitItem, context: moc)
             
