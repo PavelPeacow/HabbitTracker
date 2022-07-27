@@ -205,11 +205,7 @@ struct CalendarView: UIViewRepresentable {
         
         func calendar(_ calendar: FSCalendar, imageFor date: Date) -> UIImage? {
             
-            guard parent.habit.frequency != nil else {
-                return nil
-            }
-            
-            if parent.habit.frequency!.contains(parent.habitViewModel.extractDateToString(date: date, format: "EEEE")) {
+            if parent.habitViewModel.showCalendarCirclesFromDateCreatedToDateNow(habit: parent.habit, date: date) {
             return resizeImage(image: .init(systemName: "circle")!, targetSize: CGSize(width: 27, height: 27))
             } else {
                 return nil

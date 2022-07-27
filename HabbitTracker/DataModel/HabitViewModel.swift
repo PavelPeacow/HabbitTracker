@@ -36,12 +36,23 @@ class HabitViewModel: ObservableObject {
     @Published var onFirstWeek: Bool = false
     
     
+    func showCalendarCirclesFromDateCreatedToDateNow(habit: Habit, date: Date) -> Bool {
+        
+        guard habit.frequency != nil else { return false }
+        
+        let dateCreated = extractDateToYYYYMMDDFormat(date: habit.dateCreated ?? Date.now)
+        let todayDate = extractDateToYYYYMMDDFormat(date: Date.now)
+        let calendarDate = extractDateToYYYYMMDDFormat(date: date)
+        
+        return habit.frequency!.contains(extractDateToString(date: date, format: "EEEE"))
+        && dateCreated <= calendarDate
+        && todayDate >= calendarDate
+    }
+    
+    
     func isHabitFieldsEmpty() -> Bool {
-        if habitName.isEmpty || habitFrequency.isEmpty || habitDecription.isEmpty {
-            return true
-        } else {
-            return false
-        }
+        if habitName.isEmpty || habitFrequency.isEmpty || habitDecription.isEmpty { return true }
+        else { return false }
     }
     
     
@@ -60,12 +71,10 @@ class HabitViewModel: ObservableObject {
 
     //MARK: set to none active days that < today day, when new week appear, set days to active
     func whenFirstWeekCreate(habit: Habit, context: NSManagedObjectContext) {
-        let todayDate = extractDateToProperForm(date: Date.now)
+        let todayDate = extractDateToYYYYMMDDFormat(date: Date.now)
         let startWeek = (Calendar.current.dateInterval(of: .weekOfMonth, for: Date.now)?.start)!
 
         if todayDate == startWeek {
-            print("amahasla \(startWeek) true 12")
-            print("amahasla \(todayDate) true 12")
             habit.onFirstWeek = false
             try? context.save()
         }
@@ -133,13 +142,10 @@ class HabitViewModel: ObservableObject {
     
     //MARK: if today date > dayDate, dayDate is lost
     func isDayLost(dayDate: Date) -> Bool {
-        let calendar = Calendar.current.dateComponents([.year,.month,.day], from: Date())
-        let todayDate = Calendar.current.date(from: calendar)!
-        if todayDate > dayDate {
-            return true
-        } else {
-            return false
-        }
+        let todayDate = extractDateToYYYYMMDDFormat(date: Date.now)
+        
+        if todayDate > dayDate { return true }
+        else { return false }
     }
     
     
@@ -156,13 +162,12 @@ class HabitViewModel: ObservableObject {
     
     //MARK: if day lost, add it to daysLost array
     func dayLostAdd(habit: Habit, dayDate: Date, context: NSManagedObjectContext) {
-        let date = extractDateToString(date: dayDate, format: "yyyy-MM-dd")
+        let date = extractDateToString(date: dayDate, format: "yyyy-dateCreatedMM-dd")
         
         if habit.daysLost!.contains(where: { dateDay in
             dateDay == date
-        }) != true {
-            habit.daysLost?.append(date)
-        }
+        }) != true { habit.daysLost?.append(date) }
+        
         try? context.save()
     }
     
@@ -186,9 +191,7 @@ class HabitViewModel: ObservableObject {
     
     //MARK: check isDay already tapped: if contains today Date - delete
     func isDayAlreadyTapped(habit: Habit, dayDate: Date, context: NSManagedObjectContext) -> Bool {
-        guard habit.daysComplete != nil else {
-            return false
-        }
+        guard habit.daysComplete != nil else { return false }
         
         guard let removeDate = habit.daysComplete?.firstIndex(where: { key in
             key == extractDateToString(date: dayDate, format: "yyyy-MM-dd")
@@ -204,17 +207,12 @@ class HabitViewModel: ObservableObject {
     
     //MARK: When ContentView appears, check days that already marked, then color it
     func isDaysAppear(habit: Habit, dayDate: Date) -> Bool {
-        guard habit.daysComplete != nil else {
-            return false
-        }
+        guard habit.daysComplete != nil else { return false }
         
         if habit.daysComplete!.contains(where: { date in
             date == extractDateToString(date: dayDate, format: "yyyy-MM-dd")
-        }) {
-            return true
-        } else {
-            return false
-        }
+        }) { return true }
+        else { return false }
         
     }
     
@@ -234,6 +232,7 @@ class HabitViewModel: ObservableObject {
         habit.daysComplete = daysComplete
         habit.daysLost = daysLost
         habit.onFirstWeek = true
+        habit.dateCreated = currentDay
         
         if isRemainderOn {
             if let ids = try? await scheduleNotification() {
@@ -361,7 +360,7 @@ class HabitViewModel: ObservableObject {
     }
     
     //MARK: Extract date to date format yyyy-mm-dd
-    func extractDateToProperForm(date: Date) -> Date {
+    func extractDateToYYYYMMDDFormat(date: Date) -> Date {
         let calendar = Calendar.current.dateComponents([.year,.month,.day], from: date)
         return Calendar.current.date(from: calendar)!
     }
