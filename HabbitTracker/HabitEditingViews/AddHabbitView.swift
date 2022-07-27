@@ -85,26 +85,6 @@ struct AddHabbitView: View {
     }
 }
 
-struct ColorStrokeRectangle: ViewModifier {
-    let strokeColor: Color
-    
-    func body(content: Content) -> some View {
-        content
-            .padding()
-            .background(
-                RoundedRectangle(cornerRadius: 12)
-                    .stroke()
-                    .fill(strokeColor)
-            )
-            .padding()
-    }
-}
-
-extension View {
-    func colorStrokeRectangle(color: Color) -> some View {
-        self.modifier(ColorStrokeRectangle(strokeColor: color))
-    }
-}
 
 struct AddHabbitView_Previews: PreviewProvider {
     static var previews: some View {

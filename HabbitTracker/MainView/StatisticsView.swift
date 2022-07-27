@@ -11,9 +11,6 @@ struct StatisticsView: View {
     @EnvironmentObject var habitViewModel: HabitViewModel
     @Environment(\.managedObjectContext) var moc
     
-    @State private var isShowingAlert = false
-    @State private var isShowingSheet = false
-    
     var habitItem: Habit
     
     var body: some View {
@@ -91,7 +88,7 @@ struct StatisticsView: View {
                     
                     HStack(spacing: 25) {
                         Button {
-                            isShowingSheet.toggle()
+                            habitViewModel.isShowingChangeHabitSheet.toggle()
                         } label: {
                             Text("Change habit")
                                 .textHeadline()
@@ -101,7 +98,7 @@ struct StatisticsView: View {
                         
                         
                         Button {
-                            isShowingAlert.toggle()
+                            habitViewModel.isShowingDeleteAlert.toggle()
                         } label: {
                             Text("Delete habit")
                                 .textHeadline()
@@ -112,12 +109,12 @@ struct StatisticsView: View {
                     .padding()
                     
                 }
-                .alert("Are you shure?", isPresented: $isShowingAlert) {
+                .alert("Are you shure?", isPresented: $habitViewModel.isShowingDeleteAlert) {
                     Button("Delete", role: .destructive) {
                         habitViewModel.deleteHabit(habit: habitItem, context: moc)
                     }
                 }
-                .sheet(isPresented: $isShowingSheet) {
+                .sheet(isPresented: $habitViewModel.isShowingChangeHabitSheet) {
                     habitViewModel.resetData()
                 } content: {
                     ChangeHabitVIew(habit: habitItem)

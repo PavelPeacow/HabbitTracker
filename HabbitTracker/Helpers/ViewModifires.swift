@@ -21,6 +21,21 @@ struct OrangeRectangle: ViewModifier {
     }
 }
 
+struct ColorStrokeRectangle: ViewModifier {
+    let strokeColor: Color
+    
+    func body(content: Content) -> some View {
+        content
+            .padding()
+            .background(
+                RoundedRectangle(cornerRadius: 12)
+                    .stroke()
+                    .fill(strokeColor)
+            )
+            .padding()
+    }
+}
+
 struct ButtonGradient: ViewModifier {
     
     let shadowColor: Color
@@ -48,6 +63,10 @@ struct TextHeadline: ViewModifier {
 }
 
 extension View {
+    func colorStrokeRectangle(color: Color) -> some View {
+        self.modifier(ColorStrokeRectangle(strokeColor: color))
+    }
+    
     func orangeRectangle() -> some View {
         self.modifier(OrangeRectangle())
     }

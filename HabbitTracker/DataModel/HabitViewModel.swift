@@ -35,6 +35,13 @@ class HabitViewModel: ObservableObject {
     //When user create habit, set onFirstWeek - true, when new week appear set onFirstWeek - false
     @Published var onFirstWeek: Bool = false
     
+    //ContentView
+    @Published var isShowingAddHabitSheet = false
+    
+    //CalendarView
+    @Published var isShowingDeleteAlert = false
+    @Published var isShowingChangeHabitSheet = false
+
     
     //MARK: the name speaks for itself
     func showCalendarCirclesFromDateCreatedToDateNow(habit: Habit, date: Date) -> Bool {

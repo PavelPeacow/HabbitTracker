@@ -12,7 +12,6 @@ struct ContentView: View {
     
     @EnvironmentObject var habitViewModel: HabitViewModel
     
-    @State private var isSheetActive = false
     @Environment(\.managedObjectContext) var moc
     @FetchRequest(sortDescriptors: []) var habits: FetchedResults<Habit>
     
@@ -25,7 +24,8 @@ struct ContentView: View {
                         .environmentObject(habitViewModel)
                     
                     if habits.isEmpty {
-                        AddFirstHabitView(isShowingAddView: $isSheetActive)
+                        AddFirstHabitView()
+                            .environmentObject(habitViewModel)
                     }
                     
                     ForEach(habits) { habitItem in
@@ -53,14 +53,14 @@ struct ContentView: View {
             .toolbar {
                 ToolbarItem {
                     Button {
-                        isSheetActive.toggle()
+                        habitViewModel.isShowingAddHabitSheet.toggle()
                     } label: {
                         Image(systemName: "plus.circle")
                             .foregroundColor(.white)
                     }
                 }
             }
-            .sheet(isPresented: $isSheetActive) {
+            .sheet(isPresented: $habitViewModel.isShowingAddHabitSheet) {
                 habitViewModel.resetData()
             } content: {
                 AddHabbitView()

@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct AddFirstHabitView: View {
-    @Binding var isShowingAddView: Bool
+    @EnvironmentObject var habitViewModel: HabitViewModel
     
     var body: some View {
         Button {
-            isShowingAddView.toggle()
+            habitViewModel.isShowingAddHabitSheet.toggle()
         } label: {
             HStack {
                 Image(systemName: "plus.circle")
@@ -33,7 +33,8 @@ struct AddFirstHabitView: View {
 
 struct AddFirstHabitView_Previews: PreviewProvider {
     static var previews: some View {
-        AddFirstHabitView(isShowingAddView: .constant(false))
+        AddFirstHabitView()
             .preferredColorScheme(.dark)
+            .environmentObject(HabitViewModel())
     }
 }
