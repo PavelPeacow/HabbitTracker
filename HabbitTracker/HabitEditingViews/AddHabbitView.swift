@@ -70,8 +70,11 @@ struct AddHabbitView: View {
                     )
                     .toolbar {
                         ToolbarItem(placement: .navigationBarLeading) {
-                            Button("Cancel") {
+                            Button {
                                 dismiss()
+                            } label: {
+                                Image(systemName: "xmark.circle")
+                                    .foregroundColor(.white)
                             }
                         }
                     }

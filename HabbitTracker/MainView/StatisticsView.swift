@@ -142,7 +142,7 @@ struct StatisticsView: View {
                 .padding(.vertical, 12)
                 .background {
                     Circle()
-                        .fill(index != -1 ? Color(habitItem.color ?? "Color-1") : Color(habitItem.color ?? "Color-1").opacity(0.4))
+                        .fill(index != -1 ? Color(habitItem.color ?? "Color-1") : Color(habitItem.color ?? "Color-1").opacity(0.2))
                 }
         }
     }

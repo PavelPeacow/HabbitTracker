@@ -21,7 +21,7 @@ struct CalendarView: UIViewRepresentable {
     //MARK: alertComplete controller implementation
     func alertComplete(dateString: String, date: Date) {
         let title: String = "Mark day"
-        var message: String = "Do you want mark day as comlete?"
+        let message: String = "Do you want mark day as complete?"
         
         let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
 
@@ -58,7 +58,7 @@ struct CalendarView: UIViewRepresentable {
     //MARK: alertUncomplete controller implementation
     func alertUncomplete(dateString: String, date: Date) {
         let title: String = "Mark day"
-        var message: String = "Do you want mark day as uncomlete?"
+        let message: String = "Do you want mark day as uncomplete?"
         
         let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
         

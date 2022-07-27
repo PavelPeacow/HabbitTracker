@@ -36,6 +36,7 @@ class HabitViewModel: ObservableObject {
     @Published var onFirstWeek: Bool = false
     
     
+    //MARK: the name speaks for itself
     func showCalendarCirclesFromDateCreatedToDateNow(habit: Habit, date: Date) -> Bool {
         
         guard habit.frequency != nil else { return false }
@@ -50,6 +51,7 @@ class HabitViewModel: ObservableObject {
     }
     
     
+    //MARK: validation in textfields
     func isHabitFieldsEmpty() -> Bool {
         if habitName.isEmpty || habitFrequency.isEmpty || habitDecription.isEmpty { return true }
         else { return false }

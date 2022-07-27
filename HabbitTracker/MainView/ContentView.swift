@@ -18,11 +18,15 @@ struct ContentView: View {
     
     var body: some View {
         NavigationView {
-            ScrollView {
+            ScrollView(habits.isEmpty ? .init() : .vertical, showsIndicators: false) {
                 LazyVStack {
                     
                     CurrentWeekView()
                         .environmentObject(habitViewModel)
+                    
+                    if habits.isEmpty {
+                        AddFirstHabitView(isShowingAddView: $isSheetActive)
+                    }
                     
                     ForEach(habits) { habitItem in
                         
@@ -31,7 +35,7 @@ struct ContentView: View {
                         
                         Divider()
                             .frame(height: 1)
-                            .background(Color.orange)
+                            .background(Color(habitItem.color ?? "Color-1"))
                             .padding(.horizontal, 5)
                         
                         NavigationLink {
@@ -52,6 +56,7 @@ struct ContentView: View {
                         isSheetActive.toggle()
                     } label: {
                         Image(systemName: "plus.circle")
+                            .foregroundColor(.white)
                     }
                 }
             }
