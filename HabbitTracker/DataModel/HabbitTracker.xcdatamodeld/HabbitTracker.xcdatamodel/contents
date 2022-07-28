@@ -5,7 +5,6 @@
         <attribute name="dateCreated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="daysComplete" optional="YES" attributeType="Transformable" customClassName="[String]"/>
         <attribute name="daysLost" optional="YES" attributeType="Transformable" customClassName="[String]"/>
-        <attribute name="descr" optional="YES" attributeType="String"/>
         <attribute name="frequency" optional="YES" attributeType="Transformable" customClassName="[String]"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="isRemainderOn" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
@@ -13,6 +12,7 @@
         <attribute name="notificationsIDs" optional="YES" attributeType="Transformable" customClassName="[String]"/>
         <attribute name="onFirstWeek" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="remainderDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="remainderText" optional="YES" attributeType="String"/>
         <attribute name="streak" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
     </entity>
     <elements>

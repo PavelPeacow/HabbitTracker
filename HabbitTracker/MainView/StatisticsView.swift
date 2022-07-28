@@ -109,7 +109,7 @@ struct StatisticsView: View {
                     .padding()
                     
                 }
-                .alert("Are you shure?", isPresented: $habitViewModel.isShowingDeleteAlert) {
+                .alert("Are you sure?", isPresented: $habitViewModel.isShowingDeleteAlert) {
                     Button("Delete", role: .destructive) {
                         habitViewModel.deleteHabit(habit: habitItem, context: moc)
                     }

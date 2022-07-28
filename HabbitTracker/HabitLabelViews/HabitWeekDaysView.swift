@@ -15,7 +15,7 @@ struct HabitWeekDaysView: View {
     var body: some View {
             HStack(spacing: 0) {
                 ForEach(habitViewModel.fetchCurrentWeek().sorted(by: <), id: \.key) { dayNum, dayDate in
-                    DayView(habitItem: habitItem, dayDate: dayDate, dayNum: dayNum)
+                    OneDayView(habitItem: habitItem, dayDate: dayDate, dayNum: dayNum)
                         .environmentObject(habitViewModel)
                 }
             }

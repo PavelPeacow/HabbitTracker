@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct HabitLabel: View {
+struct HabitLabelView: View {
     let habitItem: Habit
     @Environment(\.managedObjectContext) var moc
     @ObservedObject var habitViewModel = HabitViewModel()
@@ -18,8 +18,6 @@ struct HabitLabel: View {
                 
                 VStack(alignment: .leading) {
                     Text(habitItem.name ?? "Read")
-                    Text(habitItem.descr ?? "Read more books")
-                        .font(.caption2)
                 }
                 
                 HStack {
@@ -33,6 +31,7 @@ struct HabitLabel: View {
                     Image(systemName: "calendar")
                     Image(systemName: "arrow.right")
                 }
+                
             }
         }
         .padding()
@@ -44,13 +43,13 @@ struct HabitLabel: View {
     }
 }
 
-struct HabitLabel_Previews: PreviewProvider {
+struct HabitLabelView_Previews: PreviewProvider {
     
     static let context = DataController().container.viewContext
     static let habbit = Habit(context: context)
     
     static var previews: some View {
-        HabitLabel(habitItem: habbit)
+        HabitLabelView(habitItem: habbit)
             .preferredColorScheme(.dark)
     }
 }

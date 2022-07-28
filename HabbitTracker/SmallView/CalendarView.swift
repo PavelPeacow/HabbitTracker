@@ -123,48 +123,36 @@ struct CalendarView: UIViewRepresentable {
             self.parent = parent
         }
         
-        func maximumDate(for calendar: FSCalendar) -> Date {
-            Date.now
-        }
+        func maximumDate(for calendar: FSCalendar) -> Date { Date.now }
         
+        //MARK: set colors for days: complete and lost
         func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillDefaultColorFor date: Date) -> UIColor? {
             
             let dateString = parent.habitViewModel.extractDateToString(date: date, format: "yyyy-MM-dd")
             
-            guard parent.habit.daysComplete != nil else {
-                return nil
-            }
+            guard parent.habit.daysComplete != nil else { return nil }
             
-            guard parent.habit.daysLost != nil else {
-                return nil
-            }
+            guard parent.habit.daysLost != nil else { return nil }
             
-            if parent.habit.daysComplete!.contains(dateString) {
-                return .green
-            } else if parent.habit.daysLost!.contains(dateString) {
-                return .red
-            }
+            if parent.habit.daysComplete!.contains(dateString) { return .green }
+            else if parent.habit.daysLost!.contains(dateString) { return .red }
             
             return nil
         }
         
+        //MARK: show alerts
         func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
             
             let dateString = parent.habitViewModel.extractDateToString(date: date, format: "yyyy-MM-dd")
             
-            guard parent.habit.frequency != nil else {
-                return
-            }
+            guard parent.habit.frequency != nil else { return }
             
-            guard parent.habit.daysComplete != nil else {
-                return
-            }
+            guard parent.habit.daysComplete != nil else { return }
             
-            guard parent.habit.daysLost != nil else {
-                return
-            }
+            guard parent.habit.daysLost != nil else { return }
 
-            if parent.habit.frequency!.contains(parent.habitViewModel.extractDateToString(date: date, format: "EEEE")) {
+            
+            if parent.habitViewModel.isTappedOnRightDays(habit: parent.habit, date: date) {
                 
                 if parent.habit.daysComplete!.contains(dateString) {
                     parent.alertUncomplete(dateString: dateString, date: date)
@@ -176,44 +164,15 @@ struct CalendarView: UIViewRepresentable {
             
         }
         
-        func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
-           let size = image.size
-
-           let widthRatio  = targetSize.width  / size.width
-           let heightRatio = targetSize.height / size.height
-
-           // Figure out what our orientation is, and use that to form the rectangle
-           var newSize: CGSize
-           if(widthRatio > heightRatio) {
-               newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
-           } else {
-               newSize = CGSize(width: size.width * widthRatio,  height: size.height * widthRatio)
-           }
-
-           // This is the rect that we've calculated out and this is what is actually used below
-           let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
-
-           // Actually do the resizing to the rect using the ImageContext stuff
-           UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
-           image.draw(in: rect)
-           let newImage = UIGraphicsGetImageFromCurrentImageContext()
-           UIGraphicsEndImageContext()
-
-           return newImage!
-       }
-
-        
+        //MARK: set circles
         func calendar(_ calendar: FSCalendar, imageFor date: Date) -> UIImage? {
             
             if parent.habitViewModel.showCalendarCirclesFromDateCreatedToDateNow(habit: parent.habit, date: date) {
-            return resizeImage(image: .init(systemName: "circle")!, targetSize: CGSize(width: 27, height: 27))
-            } else {
-                return nil
-            }
-        }
-        
-        func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, imageOffsetFor date: Date) -> CGPoint {
-            CGPoint(x: 0, y: -1)
+                
+                let configuration = UIImage.SymbolConfiguration(pointSize: 26.5)
+                return UIImage(systemName: "circle", withConfiguration: configuration)?.withTintColor(.black, renderingMode: .alwaysOriginal)
+                
+            } else { return nil }
         }
         
     }

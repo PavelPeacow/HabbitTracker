@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct DayView: View {
+struct OneDayView: View {
     @EnvironmentObject var habitViewModel: HabitViewModel
     @Environment(\.managedObjectContext) var moc
     
@@ -15,7 +15,7 @@ struct DayView: View {
     let dayDate: Date
     let dayNum: Int
     
-    @State private var isOn = false
+    @State private var isMarked = false
     @State private var isDayLost = false
     @State private var isOnFirstWeek = false
     
@@ -44,9 +44,9 @@ struct DayView: View {
                                 
                                 withAnimation(.easeInOut(duration: 0.5)) {
                                     
-                                    isOn.toggle()
+                                    isMarked.toggle()
                                     
-                                    if habitViewModel.isToday(date: dayDate) != true {
+                                    if !habitViewModel.isToday(date: dayDate) {
                                         
                                         isDayLost.toggle()
                                         
@@ -65,11 +65,13 @@ struct DayView: View {
         }
         .frame(maxWidth: .infinity)
         .onAppear() {
+            //When days appear set isMarked true to days that mark by user
             if habitViewModel.isDaysAppear(habit: habitItem, dayDate: dayDate) {
-                isOn = true
+                isMarked = true
             }
             else if isDayLostAndContained {
                 
+                //When habit created or changed, set true
                 if habitItem.onFirstWeek {
                     isOnFirstWeek = true
                 } else {
@@ -84,7 +86,7 @@ struct DayView: View {
             }
             else {
                 isDayLost = false
-                isOn = false
+                isMarked = false
             }
             
             if !habitViewModel.showSelectedDays(frequency: habitItem.frequency ?? []).contains(dayNum) {
@@ -152,26 +154,26 @@ struct DayView: View {
     }
     
     private var isOnColor: Color {
-        isOn
+        isMarked
         ? Color(habitItem.color ?? "Color-1")
         : .gray
     }
     
     private var isOnOpacity: Double {
-        isOn
+        isMarked
         ? 1.0
         : 0.1
     }
         
 }
 
-struct DayView_Previews: PreviewProvider {
+struct OneDayView_Previews: PreviewProvider {
     
     static let context = DataController().container.viewContext
     static let habbit = Habit(context: context)
     
     static var previews: some View {
-        DayView(habitItem: habbit, dayDate: Date.now, dayNum: 0)
+        OneDayView(habitItem: habbit, dayDate: Date.now, dayNum: 0)
             .preferredColorScheme(.dark)
             .environmentObject(HabitViewModel())
     }

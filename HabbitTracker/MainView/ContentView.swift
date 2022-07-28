@@ -42,7 +42,7 @@ struct ContentView: View {
                             StatisticsView(habitItem: habitItem)
                                 .environmentObject(habitViewModel)
                         } label: {
-                            HabitLabel(habitItem: habitItem)
+                            HabitLabelView(habitItem: habitItem)
                                 .environmentObject(habitViewModel)
                         }
                         

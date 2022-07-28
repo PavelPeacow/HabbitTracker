@@ -23,9 +23,6 @@ struct AddHabbitView: View {
                     VStack {
                         TextField("Enter name of habbit", text:  $habitViewModel.habitName)
                             .colorStrokeRectangle(color: Color(habitViewModel.habitColor))
-                        
-                        TextField("Enter description", text: $habitViewModel.habitDecription)
-                            .colorStrokeRectangle(color: Color(habitViewModel.habitColor))
                     }
                     
                     VStack {
@@ -47,6 +44,7 @@ struct AddHabbitView: View {
                         if habitViewModel.isRemainderOn {
                             DatePicker("Pick time", selection: $habitViewModel.remainderDate, displayedComponents: .hourAndMinute)
                             
+                            TextField("Enter remainder text", text: $habitViewModel.remainderText)
                         }
                     }
                     .colorStrokeRectangle(color: Color(habitViewModel.habitColor))
