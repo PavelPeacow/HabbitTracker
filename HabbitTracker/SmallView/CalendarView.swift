@@ -51,7 +51,7 @@ struct CalendarView: UIViewRepresentable {
         alertVC.addAction(completeAction)
         alertVC.addAction(cancelAction)
         
-        let viewController = UIApplication.shared.windows.first!.rootViewController!
+        let viewController = UIApplication.shared.currentUIWindow()!.rootViewController!
         viewController.present(alertVC, animated: true, completion: nil)
     }
     
@@ -86,7 +86,7 @@ struct CalendarView: UIViewRepresentable {
         alertVC.addAction(uncompleteAction)
         alertVC.addAction(cancelAction)
         
-        let viewController = UIApplication.shared.windows.first!.rootViewController!
+        let viewController = UIApplication.shared.currentUIWindow()!.rootViewController!
         viewController.present(alertVC, animated: true, completion: nil)
     }
     
@@ -174,6 +174,23 @@ struct CalendarView: UIViewRepresentable {
                 
             } else { return nil }
         }
+        
+    }
+}
+
+//MARK: thanks to StackOverFlow
+public extension UIApplication {
+    func currentUIWindow() -> UIWindow? {
+        let connectedScenes = UIApplication.shared.connectedScenes
+            .filter({
+                $0.activationState == .foregroundActive})
+            .compactMap({$0 as? UIWindowScene})
+        
+        let window = connectedScenes.first?
+            .windows
+            .first { $0.isKeyWindow }
+
+        return window
         
     }
 }
