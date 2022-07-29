@@ -14,7 +14,6 @@ class HabitViewModel: ObservableObject {
     
     //Habit
     @Published var habitName: String = ""
-    @Published var remainderText: String = ""
     @Published var habitStreak: Int = 0
     @Published var habitColor: String = "Color-1"
     
@@ -24,6 +23,7 @@ class HabitViewModel: ObservableObject {
     //Remainder
     @Published var isRemainderOn: Bool = false
     @Published var remainderDate = Date()
+    @Published var remainderText: String = ""
     
     //CurrentDate
     @Published var currentDay = Date()
@@ -49,9 +49,24 @@ class HabitViewModel: ObservableObject {
     }
     
     
+    func daysStreak(habit: Habit, context: NSManagedObjectContext) {
+       let sortedHabit = habit.daysComplete?.sorted()
+       print(sortedHabit ?? [])
+        
+        guard habit.daysLost != nil else { return }
+        
+        if habit.daysLost!.contains(where: { dateString in
+            dateString > sortedHabit?.last ?? ""
+        }) {
+            habit.streak = 0
+            try? context.save()
+        }
+    }
+    
+    
     //MARK: validation in textfields
     func isHabitFieldsEmpty() -> Bool {
-        if habitName.isEmpty || habitFrequency.isEmpty || remainderText.isEmpty { return true }
+        if habitName.isEmpty || habitFrequency.isEmpty { return true }
         else { return false }
     }
     
@@ -105,7 +120,7 @@ class HabitViewModel: ObservableObject {
     
     //MARK: if day lost, add it to daysLost array
     func dayLostAdd(habit: Habit, dayDate: Date, context: NSManagedObjectContext) {
-        let date = extractDateToString(date: dayDate, format: "yyyy-dateCreatedMM-dd")
+        let date = extractDateToString(date: dayDate, format: "yyyy-MM-dd")
         
         if habit.daysLost!.contains(where: { dateDay in
             dateDay == date

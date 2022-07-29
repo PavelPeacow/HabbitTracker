@@ -68,6 +68,7 @@ struct OneDayView: View {
             //When days appear set isMarked true to days that mark by user
             if habitViewModel.isDaysAppear(habit: habitItem, dayDate: dayDate) {
                 isMarked = true
+                isDayLost = false
             }
             else if isDayLostAndContained {
                 
@@ -81,6 +82,7 @@ struct OneDayView: View {
                 if !isOnFirstWeek {
                     habitViewModel.dayLostAdd(habit: habitItem, dayDate: dayDate, context: moc)
                     isDayLost = true
+                    isMarked = false
                 }
                  
             }

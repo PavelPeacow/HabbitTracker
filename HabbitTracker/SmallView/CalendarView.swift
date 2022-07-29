@@ -68,13 +68,16 @@ struct CalendarView: UIViewRepresentable {
                 dayDate == dateString
             }) {
                 habit.daysComplete?.remove(at: remove)
-                habit.streak -= 1
-   
-                calendar.deselect(date)
-                calendar.reloadData()
-                habitViewModel.reloadView()
-                try? moc.save()
+                
             }
+            
+            habit.streak -= 1
+            habit.daysLost?.append(dateString)
+            
+            calendar.deselect(date)
+            calendar.reloadData()
+            habitViewModel.reloadView()
+            try? moc.save()
             
         }
         

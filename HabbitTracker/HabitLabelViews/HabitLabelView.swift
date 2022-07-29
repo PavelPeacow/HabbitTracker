@@ -40,6 +40,9 @@ struct HabitLabelView: View {
                 .foregroundColor(Color(habitItem.color ?? "Color-1"))
         )
         .padding(.bottom, 40)
+        .onChange(of: habitItem.streak) { _ in
+            habitViewModel.daysStreak(habit: habitItem, context: moc)
+        }
     }
 }
 
