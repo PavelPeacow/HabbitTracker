@@ -14,7 +14,7 @@ class HabitViewModel: ObservableObject {
     
     //Habit
     @Published var habitName: String = ""
-    @Published var habitStreak: Int = 0
+    @Published var habitStreak: [String] = []
     @Published var habitColor: String = "Color-1"
     
     //Choosen weekdays
@@ -49,17 +49,50 @@ class HabitViewModel: ObservableObject {
     }
     
     
-    func daysStreak(habit: Habit, context: NSManagedObjectContext) {
-       let sortedHabit = habit.daysComplete?.sorted()
-       print(sortedHabit ?? [])
-        
+    //MARK: When user didn't enter in app for a time greater than week, add all lost days in array
+    func lostDaysCalendarAdd(habit: Habit, date: Date, context: NSManagedObjectContext) {
+        guard habit.frequency != nil else { return }
+        guard habit.daysComplete != nil else { return }
         guard habit.daysLost != nil else { return }
         
-        if habit.daysLost!.contains(where: { dateString in
-            dateString > sortedHabit?.last ?? ""
-        }) {
-            habit.streak = 0
+        
+        let stringDate = extractDateToString(date: date, format: "yyyy-MM-dd")
+        let formatedDate = extractDateToYYYYMMDDFormat(date: date)
+        let todayDate = extractDateToYYYYMMDDFormat(date: Date.now)
+        let habitCreateDate = extractDateToYYYYMMDDFormat(date: habit.dateCreated ?? Date.now)
+        
+        if !habit.daysComplete!.contains(stringDate)
+            && !habit.daysLost!.contains(stringDate)
+            && habit.frequency!.contains(extractDateToString(date: date, format: "EEEE"))
+            && formatedDate < todayDate && formatedDate >= habitCreateDate {
+            
+            habit.daysLost?.append(stringDate)
             try? context.save()
+            
+        }
+        
+    }
+    
+    
+    func daysStreak(habit: Habit, context: NSManagedObjectContext) {
+        let sortedHabit = habit.daysComplete?.sorted()
+        let lostSort = habit.daysLost?.sorted()
+ 
+        
+        guard habit.streak != nil else { return }
+                
+        for item in sortedHabit! {
+            if item > lostSort!.last ?? "" {
+                if !habit.streak!.contains(item) {
+                    habit.streak?.append(item)
+                    try? context.save()
+                }
+            
+            } else {
+                habit.streak?.removeAll()
+                try? context.save()
+            }
+            
         }
     }
     
@@ -70,7 +103,7 @@ class HabitViewModel: ObservableObject {
         else { return false }
     }
     
-
+    
     //MARK: tap on days than > dateCreated and than contained in habit frequency
     func isTappedOnRightDays(habit: Habit, date: Date) -> Bool {
         
@@ -97,15 +130,16 @@ class HabitViewModel: ObservableObject {
     
     
     //MARK: set to none active days that < today day, when new week appear, set days to active
-    func whenFirstWeekCreate(habit: Habit, context: NSManagedObjectContext) {
-        let todayDate = extractDateToYYYYMMDDFormat(date: Date.now)
-        let startWeek = (Calendar.current.dateInterval(of: .weekOfMonth, for: Date.now)?.start)!
-
-        if todayDate == startWeek {
-            habit.onFirstWeek = false
-            try? context.save()
+    func whenFirstWeekCreate(habit: Habit, context: NSManagedObjectContext, dayDate: Date) -> Bool {
+        let date = extractDateToYYYYMMDDFormat(date: dayDate)
+        let dateCreated = extractDateToYYYYMMDDFormat(date: habit.dateCreated ?? Date.now)
+        
+        if date < dateCreated {
+            return true
+        } else {
+            return false
         }
-          
+        
     }
     
     
@@ -122,9 +156,9 @@ class HabitViewModel: ObservableObject {
     func dayLostAdd(habit: Habit, dayDate: Date, context: NSManagedObjectContext) {
         let date = extractDateToString(date: dayDate, format: "yyyy-MM-dd")
         
-        if habit.daysLost!.contains(where: { dateDay in
-            dateDay == date
-        }) != true { habit.daysLost?.append(date) }
+        guard habit.daysLost != nil else { return }
+        
+        if !habit.daysLost!.contains(date) { habit.daysLost?.append(date) }
         
         try? context.save()
     }
@@ -132,9 +166,9 @@ class HabitViewModel: ObservableObject {
     
     //MARK: when user taps on lost day, remove it from dayLost Array
     func removeFromDayLostArray(habit: Habit, dayDate: Date, context: NSManagedObjectContext) {
-        let removeDate = habit.daysLost?.firstIndex(where: { date in
-            date == extractDateToString(date: dayDate, format: "yyyy-MM-dd")
-        })
+        let date = extractDateToString(date: dayDate, format: "yyyy-MM-dd")
+        
+        let removeDate = habit.daysLost?.firstIndex(of: date)
         
         habit.daysLost?.remove(at: removeDate ?? -1)
         try? context.save()
@@ -144,8 +178,8 @@ class HabitViewModel: ObservableObject {
     //MARK: if user tapted on day, check if he already tapted, delete it, or save if doesn't
     func isTaptedOnDay(habitItem: Habit, dayDate: Date, moc: NSManagedObjectContext)  {
         if isDayAlreadyTapped(habit: habitItem, dayDate: dayDate, context: moc) != true {
-                dayComplete(habit: habitItem, dayDate: dayDate, context: moc)
-            }
+            dayComplete(habit: habitItem, dayDate: dayDate, context: moc)
+        }
     }
     
     
@@ -153,9 +187,9 @@ class HabitViewModel: ObservableObject {
     func isDaysAppear(habit: Habit, dayDate: Date) -> Bool {
         guard habit.daysComplete != nil else { return false }
         
-        if habit.daysComplete!.contains(where: { date in
-            date == extractDateToString(date: dayDate, format: "yyyy-MM-dd")
-        }) { return true }
+        let date = extractDateToString(date: dayDate, format: "yyyy-MM-dd")
+        
+        if habit.daysComplete!.contains(date) { return true }
         else { return false }
         
     }
@@ -165,21 +199,24 @@ class HabitViewModel: ObservableObject {
     func dayComplete(habit: Habit, dayDate: Date, context: NSManagedObjectContext) {
         let date = extractDateToString(date: dayDate, format: "yyyy-MM-dd")
         habit.daysComplete?.append(date)
-        habit.streak += 1
+        habit.streak?.append(date)
         try? context.save()
     }
     
     
     //MARK: check isDay already tapped: if contains today Date - delete
     func isDayAlreadyTapped(habit: Habit, dayDate: Date, context: NSManagedObjectContext) -> Bool {
-        guard habit.daysComplete != nil else { return false }
         
-        guard let removeDate = habit.daysComplete?.firstIndex(where: { key in
-            key == extractDateToString(date: dayDate, format: "yyyy-MM-dd")
-        }) else { return false }
+        let date = extractDateToString(date: dayDate, format: "yyyy-MM-dd")
+        
+        guard let removeDate = habit.daysComplete?.firstIndex(of: date) else { return false }
         
         habit.daysComplete?.remove(at: removeDate)
-        habit.streak -= 1
+        
+        if let remove = habit.streak?.firstIndex(of: date) {
+            habit.streak?.remove(at: remove)
+        }
+       
         
         try? context.save()
         return true
@@ -191,7 +228,7 @@ class HabitViewModel: ObservableObject {
         let habit = Habit(context: context)
         habit.name = habitName
         habit.remainderText = remainderText
-        habit.streak = Int16(habitStreak)
+        habit.streak = habitStreak
         habit.color = habitColor
         habit.frequency = habitFrequency
         habit.id = UUID()
@@ -252,7 +289,7 @@ class HabitViewModel: ObservableObject {
     //MARK: when user change habit, habit takes its data to show in ChangeHabitView
     func whenChangeHabit(habit: Habit) {
         habitName = habit.name ?? ""
-       
+        
         isRemainderOn = habit.isRemainderOn
         if isRemainderOn {
             remainderDate = habit.remainderDate ?? Date.now
@@ -266,7 +303,7 @@ class HabitViewModel: ObservableObject {
     func resetData() {
         habitName = ""
         remainderText = ""
-        habitStreak = 0
+        habitStreak = []
         habitColor = "Color-1"
         habitFrequency = []
         
@@ -274,7 +311,7 @@ class HabitViewModel: ObservableObject {
         remainderDate = Date()
     }
     
-
+    
     //MARK: Delete habit
     func deleteHabit(habit: Habit, context: NSManagedObjectContext) {
         context.delete(habit)

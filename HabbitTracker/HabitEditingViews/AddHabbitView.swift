@@ -72,7 +72,7 @@ struct AddHabbitView: View {
                                 dismiss()
                             } label: {
                                 Image(systemName: "xmark.circle")
-                                    .foregroundColor(.white)
+                                    .foregroundColor(.primary)
                             }
                         }
                     }

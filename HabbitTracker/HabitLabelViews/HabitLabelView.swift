@@ -21,7 +21,7 @@ struct HabitLabelView: View {
                 }
                 
                 HStack {
-                    Text("\(habitItem.streak)")
+                    Text("\(habitItem.streak?.count ?? 0)")
                     Image(systemName: "flame")
                     Image(systemName: habitItem.isRemainderOn ? "bell.fill" : "bell.slash.fill")
                 }
@@ -42,6 +42,10 @@ struct HabitLabelView: View {
         .padding(.bottom, 40)
         .onChange(of: habitItem.streak) { _ in
             habitViewModel.daysStreak(habit: habitItem, context: moc)
+        }
+        .onAppear {
+            habitViewModel.daysStreak(habit: habitItem, context: moc)
+
         }
     }
 }

@@ -17,9 +17,11 @@ struct CurrentWeekView: View {
                     
                     VStack {
                         Text(habitViewModel.extractDateToString(date: dayDate, format: "dd"))
+                            .foregroundColor(.primary)
                             .font(.title2)
                         
-                        Text(habitViewModel.extractDateToString(date: dayDate, format: "EEE"))
+                        Text(habitViewModel.extractDateToString(date: dayDate, format: "EEEEEE"))
+                            .foregroundColor(.primary)
                             .font(.callout)
                         
                     }

@@ -13,7 +13,7 @@
         <attribute name="onFirstWeek" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="remainderDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="remainderText" optional="YES" attributeType="String"/>
-        <attribute name="streak" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="streak" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName="[String]"/>
     </entity>
     <elements>
         <element name="Habit" positionX="-63" positionY="-18" width="128" height="224"/>

@@ -16,14 +16,14 @@ struct AddFirstHabitView: View {
         } label: {
             HStack {
                 Image(systemName: "plus.circle")
-                    .foregroundColor(.white)
+                    .foregroundColor(.primary)
                 Text("New habit")
-                    .foregroundColor(.white)
+                    .foregroundColor(.primary)
             }
             .padding()
             .background(
                 Capsule()
-                    .foregroundColor(.gray)
+                    .foregroundColor(.secondary)
                     .opacity(0.2)
             )
         }

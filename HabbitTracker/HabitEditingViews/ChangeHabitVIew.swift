@@ -62,7 +62,7 @@ struct ChangeHabitVIew: View {
                             Text("Change habit")
                                 .foregroundColor(Color(habitViewModel.habitColor))
                                 .colorStrokeRectangle(color: Color(habitViewModel.habitColor))
-                                .opacity(habitViewModel.isHabitFieldsEmpty() ? 0.5 : 1)
+                                .opacity(habitViewModel.isHabitFieldsEmpty() ? 0.3 : 1)
                         }
                     }
                     .disabled (
@@ -79,7 +79,7 @@ struct ChangeHabitVIew: View {
                             dismiss()
                         } label: {
                             Image(systemName: "xmark.circle")
-                                .foregroundColor(.white)
+                                .foregroundColor(.primary)
                         }
                     }
                     

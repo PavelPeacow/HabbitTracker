@@ -21,25 +21,6 @@ struct TabBarView: View {
                 }
                 .environmentObject(habitViewModel)
             
-//            AddHabbitView()
-//                .tabItem {
-//                    Image(systemName: "plus.circle")
-//                    Text("Add habit")
-//                }
-//                .environmentObject(habitViewModel)
-            
-//            StatisticsView()
-//                .tabItem {
-//                    Image(systemName: "calendar.circle")
-//                    Text("Statistics")
-//                }
-//                .environmentObject(habitViewModel)
-            
-            AchievementsView()
-                .tabItem {
-                    Image(systemName: "star.circle")
-                    Text("Achievements")
-                }
             
             SettingView()
                 .tabItem {

@@ -34,7 +34,7 @@ struct CalendarView: UIViewRepresentable {
             }
             
             habit.daysComplete?.append(dateString)
-            habit.streak += 1
+            habit.streak?.append(dateString)
             
             calendar.deselect(date)
             calendar.reloadData()
@@ -71,8 +71,14 @@ struct CalendarView: UIViewRepresentable {
                 
             }
             
-            habit.streak -= 1
-            habit.daysLost?.append(dateString)
+            if let remove = habit.streak?.firstIndex(of: dateString) {
+                habit.streak?.remove(at: remove)
+            }
+            
+            if habitViewModel.extractDateToYYYYMMDDFormat(date: date) != habitViewModel.extractDateToYYYYMMDDFormat(date: Date.now) {
+                habit.daysLost?.append(dateString)
+            }
+           
             
             calendar.deselect(date)
             calendar.reloadData()
@@ -147,14 +153,7 @@ struct CalendarView: UIViewRepresentable {
         func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
             
             let dateString = parent.habitViewModel.extractDateToString(date: date, format: "yyyy-MM-dd")
-            
-            guard parent.habit.frequency != nil else { return }
-            
-            guard parent.habit.daysComplete != nil else { return }
-            
-            guard parent.habit.daysLost != nil else { return }
-
-            
+                        
             if parent.habitViewModel.isTappedOnRightDays(habit: parent.habit, date: date) {
                 
                 if parent.habit.daysComplete!.contains(dateString) {
@@ -169,6 +168,8 @@ struct CalendarView: UIViewRepresentable {
         
         //MARK: set circles
         func calendar(_ calendar: FSCalendar, imageFor date: Date) -> UIImage? {
+            parent.habitViewModel.lostDaysCalendarAdd(habit: parent.habit, date: date, context: parent.moc)
+            parent.habitViewModel.reloadView()
             
             if parent.habitViewModel.showCalendarCirclesFromDateCreatedToDateNow(habit: parent.habit, date: date) {
                 

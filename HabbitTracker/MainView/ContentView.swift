@@ -49,14 +49,14 @@ struct ContentView: View {
                     }
                 }
             }
-            .tint(.white)
+            .tint(.primary)
             .toolbar {
                 ToolbarItem {
                     Button {
                         habitViewModel.isShowingAddHabitSheet.toggle()
                     } label: {
                         Image(systemName: "plus.circle")
-                            .foregroundColor(.white)
+                            .foregroundColor(.primary)
                     }
                 }
             }

@@ -37,67 +37,75 @@ struct OneDayView: View {
                     )
                 
                     .onTapGesture {
-                        if !isOnFirstWeek {
-                            if whenTap  {
-                                
-                                habitViewModel.isTaptedOnDay(habitItem: habitItem, dayDate: dayDate, moc: moc)
-                                
-                                withAnimation(.easeInOut(duration: 0.5)) {
-                                    
-                                    isMarked.toggle()
-                                    
-                                    if !habitViewModel.isToday(date: dayDate) {
-                                        
-                                        isDayLost.toggle()
-                                        
-                                        if isDayLostContainTodayDate {
-                                            habitViewModel.removeFromDayLostArray(habit: habitItem, dayDate: dayDate, context: moc)
-                                        } else {
-                                            habitViewModel.dayLostAdd(habit: habitItem, dayDate: dayDate, context: moc)
-                                        }
-                                        
-                                    }
-                                }
-                            }
-                        }
+                        onTapGestureLogic
                     }
             )
         }
         .frame(maxWidth: .infinity)
         .onAppear() {
-            //When days appear set isMarked true to days that mark by user
-            if habitViewModel.isDaysAppear(habit: habitItem, dayDate: dayDate) {
-                isMarked = true
-                isDayLost = false
-            }
-            else if isDayLostAndContained {
+            onAppearLogic
+        }
+    }
+    
+    private var onTapGestureLogic: Void {
+        if !isOnFirstWeek {
+            if whenTap  {
                 
-                //When habit created or changed, set true
-                if habitItem.onFirstWeek {
-                    isOnFirstWeek = true
-                } else {
-                    isOnFirstWeek = false
-                }
+                habitViewModel.isTaptedOnDay(habitItem: habitItem, dayDate: dayDate, moc: moc)
                 
-                if !isOnFirstWeek {
-                    habitViewModel.dayLostAdd(habit: habitItem, dayDate: dayDate, context: moc)
-                    isDayLost = true
-                    isMarked = false
+                withAnimation(.easeInOut(duration: 0.5)) {
+                    
+                    isMarked.toggle()
+                    
+                    if !habitViewModel.isToday(date: dayDate) {
+                        
+                        isDayLost.toggle()
+                        
+                        if isDayLostContainTodayDate {
+                            habitViewModel.removeFromDayLostArray(habit: habitItem, dayDate: dayDate, context: moc)
+                        } else {
+                            habitViewModel.dayLostAdd(habit: habitItem, dayDate: dayDate, context: moc)
+                        }
+                        
+                    }
                 }
-                 
             }
-            else {
-                isDayLost = false
+        }
+
+    }
+    
+    
+    private var onAppearLogic: Void {
+        
+        if habitViewModel.showSelectedDays(frequency: habitItem.frequency ?? []).contains(dayNum) {
+            whenHabitOnFirstWeek
+        }
+        
+        //When days appear set isMarked true to days that mark by user
+        if habitViewModel.isDaysAppear(habit: habitItem, dayDate: dayDate) {
+            isMarked = true
+            isDayLost = false
+        }
+        else if isDayLostAndContained {
+            if !isOnFirstWeek {
+                habitViewModel.dayLostAdd(habit: habitItem, dayDate: dayDate, context: moc)
+                isDayLost = true
                 isMarked = false
             }
-            
-            if !habitViewModel.showSelectedDays(frequency: habitItem.frequency ?? []).contains(dayNum) {
-                isOnFirstWeek = false
-            }
-            
-            //check if new week came, set days to active, if not, to none active
-            habitViewModel.whenFirstWeekCreate(habit: habitItem, context: moc)
-            
+        }
+        else {
+            isDayLost = false
+            isMarked = false
+        }
+        
+    }
+    
+    
+    private var whenHabitOnFirstWeek: Void {
+        if habitViewModel.whenFirstWeekCreate(habit: habitItem, context: moc, dayDate: dayDate) {
+            isOnFirstWeek = true
+        } else {
+            isOnFirstWeek = false
         }
     }
     

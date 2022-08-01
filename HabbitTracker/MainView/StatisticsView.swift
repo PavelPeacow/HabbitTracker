@@ -62,7 +62,7 @@ struct StatisticsView: View {
                     
                     HStack {
                         HStack {
-                            Text("Days in a row 7")
+                            Text("Days in a row \(habitItem.streak?.count ?? 0)")
                                 .textHeadline()
                             Image(systemName: "flame")
                                 .textHeadline()
