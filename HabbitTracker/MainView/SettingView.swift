@@ -11,7 +11,6 @@ struct SettingView: View {
     @EnvironmentObject var habitViewModel: HabitViewModel
     @Environment(\.managedObjectContext) var moc
     
-    @StateObject private var settingViewModel = SettingsViewModel()
     @StateObject private var settings = Settings.shared
     
     @FetchRequest(sortDescriptors: []) var habits: FetchedResults<Habit>
