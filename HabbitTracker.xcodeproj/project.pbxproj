@@ -18,6 +18,7 @@
 		B574C8BC284B864B00879410 /* AddHabbitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B574C8BB284B864B00879410 /* AddHabbitView.swift */; };
 		B57E4E9128644DBB00937D9B /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57E4E9028644DBB00937D9B /* TabBarView.swift */; };
 		B5842CDD287AB7680077AECD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5842CDC287AB7680077AECD /* LaunchScreen.storyboard */; };
+		B5A6DA1A2897C2BA00E222F2 /* SettingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A6DA192897C2BA00E222F2 /* SettingsModel.swift */; };
 		B5ABB9B22891502100AB1BBF /* AddFirstHabitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5ABB9B12891502100AB1BBF /* AddFirstHabitView.swift */; };
 		B5ACB202286461F900730456 /* StatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5ACB201286461F900730456 /* StatisticsView.swift */; };
 		B5B84DFC288C213300E8C8D5 /* ViewModifires.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B84DFB288C213300E8C8D5 /* ViewModifires.swift */; };
@@ -44,6 +45,7 @@
 		B574C8BB284B864B00879410 /* AddHabbitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddHabbitView.swift; sourceTree = "<group>"; };
 		B57E4E9028644DBB00937D9B /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
 		B5842CDC287AB7680077AECD /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		B5A6DA192897C2BA00E222F2 /* SettingsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModel.swift; sourceTree = "<group>"; };
 		B5ABB9B12891502100AB1BBF /* AddFirstHabitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFirstHabitView.swift; sourceTree = "<group>"; };
 		B5ACB201286461F900730456 /* StatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsView.swift; sourceTree = "<group>"; };
 		B5B84DFB288C213300E8C8D5 /* ViewModifires.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModifires.swift; sourceTree = "<group>"; };
@@ -126,6 +128,7 @@
 		B574C8C2284B8CFE00879410 /* DataModel */ = {
 			isa = PBXGroup;
 			children = (
+				B5A6DA192897C2BA00E222F2 /* SettingsModel.swift */,
 				B5D06585285774CF00388545 /* DataController.swift */,
 				B5D065822857733800388545 /* HabbitTracker.xcdatamodeld */,
 			);
@@ -263,6 +266,7 @@
 				B5F9ECF828743787009B3971 /* OneDayView.swift in Sources */,
 				B57E4E9128644DBB00937D9B /* TabBarView.swift in Sources */,
 				B5280F65284B85F00043409A /* ContentView.swift in Sources */,
+				B5A6DA1A2897C2BA00E222F2 /* SettingsModel.swift in Sources */,
 				B5E66A5C287F06BA007A830C /* SettingView.swift in Sources */,
 				B5F666972857305E00A89F54 /* HabitLabelView.swift in Sources */,
 				B54102FE288706FF004CB3E6 /* ChooseHabitFrequencyView.swift in Sources */,
